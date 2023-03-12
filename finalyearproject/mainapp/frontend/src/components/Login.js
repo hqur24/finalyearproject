@@ -1,29 +1,58 @@
-import React, { useContext, useState } from "react";
-// import Header from "../../components/Header/Header";
-// import "../../components/Button/button.css";
-// import "./login.css";
-// import Axios from "axios";
-// import { Link, useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from 'react';
 
-const Login = () => {
+function Login() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+      const response = await fetch('http://127.0.0.1:8000/login/', {
+      method: 'POST',
+      headers: { 
+        'Content-Type' : 'application/json',
+      },
+      body: JSON.stringify({
+        username, 
+        password,
+      })
+      });
+      if (response.ok) {
+        setIsLoggedIn(true);
+      }
+    const data = await response.json();
+    console.log(data); 
+  }
+  ;
+
+  if (isLoggedIn) {
+    return <p>You are logged in!</p>;
+  }
+
+
   return (
-     
- < div class="container-fluid">
-  <div class="row justify-content-center">
- <form>
-  <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Username</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-  </div>
-  <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1"/>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>     
-</div>
-</div>    
+    <form onSubmit={handleSubmit}>
+      <label>
+        Username:
+        <input type="text" value={username} onChange={handleUsernameChange} />
+      </label>
+      <label>
+        Password:
+        <input type="password" value={password} onChange={handlePasswordChange} />
+      </label>
+      <button type="submit">Login</button>
+    </form>
   );
-};
-
+}
 export default Login;
+

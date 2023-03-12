@@ -2,9 +2,18 @@ from rest_framework import serializers
 from .models import CustomUser, Mood, Assignment, Exam
 
 class UserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(max_length=254)
+    email = serializers.CharField(max_length=254)
+    password = serializers.CharField(min_length=6, write_only=True)
+
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = 'id', 'username', 'email', 'password'
+
+    
+    def create(self, validated_data):
+        return CustomUser.objects.create_user(**validated_data)
+
 
 class MoodSerializer(serializers.ModelSerializer):
     # author = serializers.SerializerMethodField()   

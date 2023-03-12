@@ -1,16 +1,38 @@
 import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login.js';
+import Register from './components/Register.js';
 import axios from "axios";
+import { useState, useEffect } from 'react';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
+
+
+    useEffect(() => {
+      fetch('http://127.0.0.1:8000/authenticated/')
+        .then(response => response.json())
+        .then(data => setIsLoggedIn(data.is_logged_in));
+    }, []);
+  
+    
+
+
   return (
     <div className="App">
         <p>      
           <h1>React Testing</h1>
-          <Login></Login>
+          <Login onLoginSuccess></Login>
+          {/* <Register></Register> */}
         </p>
+  <div>
+      {isLoggedIn ? (
+        <p>You are logged in!</p>
+      ) : (
+        <p>You are not logged in.</p>
+      )}
     </div>
+  </div>
   );
 }
 

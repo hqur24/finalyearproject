@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'mainapp',
     'corsheaders',
     'rest_framework',
+    # 'rest_framework.authtoken',
 
 ]
 
@@ -56,12 +57,14 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
+     'http://localhost:3000',
+    "http://127.0.0.1:3000"
 
 ]
 
 CORS_ALLOWED_ORIGINS = [
-     'http://localhost:3000'
+     'http://localhost:3000',
+    "http://127.0.0.1:3000"
 
 ]
 
@@ -149,7 +152,7 @@ AUTH_USER_MODEL = "mainapp.CustomUser"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
 }
@@ -157,3 +160,8 @@ REST_FRAMEWORK = {
 
 # Redirect to homepage after login (Default redirects to /accounts/profile/)
 # LOGIN_REDIRECT_URL = '/'
+
+# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_AGE = 3600
+SESSION_COOKIE_NAME = 'sessionid'

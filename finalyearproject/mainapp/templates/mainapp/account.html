@@ -1,0 +1,40 @@
+{% comment %} {%extends 'base.html' %} {% endcomment %}
+
+
+{% block content %}
+<h1>Account</h1>
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+
+    {% for field in login_form%}
+    <p>
+        {{field.label_tag}}
+        {{field}}
+
+        {% if field.help_text  %}
+        <small style="color: blue";>{{field.help_text}}</small>
+        {% endif %}
+
+        {% for error in field.errors %}
+        <p style="color: red";> {{error}}</p>
+        {% endfor %}
+
+        {% if login_form.non_field_errors %}
+        <div style="color:red";>
+            <p>{{login_form.non_field_errors}}</p>
+        </div>
+
+    {% endif %}
+
+    </p>
+
+    {% endfor %}
+
+
+
+    {% comment %} {{ form.as_p }} {% endcomment %}
+    
+    <button class="btn btn-primary" type="submit">Login</button>
+</form>
+
+ {% endblock content  %}
