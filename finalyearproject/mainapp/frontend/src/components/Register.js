@@ -1,72 +1,64 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import { formToJSON } from "axios";
+import React, { useState } from "react";
+import { Navigate, Link } from "react-router-dom"
+import { connect } from 'react-redux'
+import { register } from "../actions/authActions";
+import CSRFToken from "./CSRFToken";
 
-const RegistrationForm = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+const Register = ({ register, isAuthenticated }) => {
+    const [registerData, setRegisterData] = useState({
+        username: '',
+        email: '',
+        password: ''
+    });
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
+    const [accountSuccessfullyCreated, setAccountSuccessfullyCreated] = useState(false);
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
+    const { username, email, password } = registerData;
+    const onChange = e => setRegisterData({...registerData, [e.target.name]: e.target.value})
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+    const onSubmit = e => {
+        e.preventDefault();
+        register(username, email, password);
+        setAccountSuccessfullyCreated(true)
+    };
+    if (isAuthenticated)
+        return <Navigate to='/dashboard'/>
+    else if(accountSuccessfullyCreated)
+        return <Navigate to='/' />
 
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/register/', {
-        username,
-        email,
-        password,
-      });
-      console.log(response.data);
-    } catch (error) {
-      setError(error.response.data.detail);
-    }
-  };
+    return (
+        <div className="container">
+            <h1>Registration</h1>
+            <form onSubmit={e=> onSubmit(e)}>
+                <CSRFToken />
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={handleUsernameChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-      </div>
-      {error && <p>{error}</p>}
-      <button type="submit">Register</button>
-    </form>
-  );
-};
+                <div className="form-group">
+                    <label className="form-label">Username</label>
+                    <input className="form-control" type="text" placeholder="Enter username" onChange={e=> onChange(e)} value={username} name='username' required/>
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Email Address</label>
+                    <input className="form-control" type="email" placeholder="Enter email address" onChange={e=> onChange(e)} value={email} name='email' required/>
+                </div>
+                <div className="form-group">
+                    <label className="form-label">Password</label>
+                    <input className="form-control" type="password" placeholder="Enter password" onChange={e=> onChange(e)} value={password} name='password' required/>
+                </div>
+  
+                <button type="submit" className="btn btn-primary">Register</button>
+            </form>
+            <br></br>
+            <h6> <Link to='/login'> If you already have an account, click here to log in.</Link></h6>
 
-export default RegistrationForm;
+        </div>
+    )
+
+}
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register }) (Register);

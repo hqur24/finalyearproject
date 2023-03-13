@@ -17,17 +17,16 @@ from django import views
 from django.contrib import admin
 from django.urls import path, include
 # from rest_framework import routers
-from mainapp.views import UserView, login_api, register_api, authenticated_api
+from mainapp.views import UserView,RegisterAPI, LoginAPI, CSRFTokenRetrieve, AuthenticationCheckAPI, LogoutAPI, UsersViewAPI # login_api, register_api, authenticated_api, logout_api, 
 from rest_framework import routers
-
-router = routers.DefaultRouter()
-router.register(r'users', UserView, 'user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/', include(router.urls)),
-    path('login/', login_api, name='login'),
-    path('register/', register_api, name='register'),
-    path('authenticated/', authenticated_api, name='authenticated'),
+    path('login/', LoginAPI.as_view(), name='login'),
+    path('register/', RegisterAPI.as_view(), name='register'),
+    path('authenticated/', AuthenticationCheckAPI.as_view(), name='authenticated'),
+    path('logout/', LogoutAPI.as_view(), name='logout'),
+    path('csrf_token/', CSRFTokenRetrieve.as_view(), name='csrf'),
+    path('viewusers/', UsersViewAPI.as_view(), name='usersview'),
     path('', include('mainapp.urls')),
 ]

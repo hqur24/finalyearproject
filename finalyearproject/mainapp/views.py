@@ -3,7 +3,7 @@ from urllib import response
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse, JsonResponse
 import datetime, json
-from rest_framework import viewsets, generics, status
+from rest_framework import viewsets, generics, status, permissions
 from .forms import RegistrationForm, LoginForm
 from .serializers import MoodSerializer, AssignmentSerializer, ExamSerializer, UserSerializer
 from .models import CustomUser, Mood, Exam, Assignment
@@ -16,6 +16,9 @@ from django.http.multipartparser import MultiPartParser
 from django.views.decorators.http import require_http_methods
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 
 
 # Create your views here.
@@ -26,55 +29,71 @@ def index(request):
         return HttpResponse("logged in")
     else:
         return HttpResponse("not logged in")
-
-@api_view(['POST', 'GET'])
-@csrf_exempt
-def register_api(request):
-    # if request.method == 'POST':
-
-    serializer = UserSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        response = {"message": "User Created Successfully", "data": serializer.data}
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['POST', 'GET'])
-@csrf_exempt
-def login_api(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
-    user = authenticate(request, username=username, password=password)
-    if user:
-        login(request, user)
-        serializer = UserSerializer(user)
-        #print(request.session)
-        request.session.modified = True
-        return Response(serializer.data)#, JsonResponse({'authenticated': True})
-
     
-    return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)# , JsonResponse({'authenticated': True})
+@method_decorator(csrf_exempt, name='dispatch')
+class RegisterAPI(APIView):
+    permission_classes = (permissions.AllowAny,)
 
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# @csrf_exempt
-# def is_authenticated(request):
-#     if request.user.is_authenticated:
-#         print user.is_authenticated
+    def post(self, request, format=None):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.create(request.data)
+            Response({"message": "User Created Successfully", "data": serializer.data})
 
-#         print("user is authenticated")
-#         return HttpResponse('not auth')
-#     else: 
-#         return HttpResponse('not authenticated')
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET'])
-def authenticated_api(request):
-    if request.user.is_authenticated:
-        return Response({"is_authenticated": True})
-    else:
-        return Response({"is_authenticated": False})
+@method_decorator(csrf_exempt, name='dispatch')
+class LoginAPI(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(request, username=username, password=password)
+        if user:
+            login(request, user)
+            serializer = UserSerializer(user)
+            #print(request.session)
+            request.session.modified = True
+            return Response({'Success': 'Logged in successfully' , 'User' : serializer.data['username']})#, JsonResponse({'authenticated': True})
+        return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)# , JsonResponse({'authenticated': True})
+
+@method_decorator(ensure_csrf_cookie, name='dispatch')
+class CSRFTokenRetrieve(APIView):
+    permission_classes = (permissions.AllowAny,)
+    def get(self, request, format=None):
+        return Response({ 'Operation successful': 'CSRF has been set ' })
+    
+# @method_decorator(csrf_exempt, name='dispatch')
+class AuthenticationCheckAPI(APIView):
+    def get(self, request, format=None):
+        user = self.request.user 
+
+        isAuthenticated = user.is_authenticated
+
+        if isAuthenticated:
+            return Response({ 'isAuthenticated': 'success' })
+        else:
+            return Response({ 'isAuthenticated': 'failure' })
+
+class LogoutAPI(APIView):
+    def post(self, request, format=None):
+        try:
+            logout(request)
+            return Response({'success': 'Logged out successfully'})
+        except:
+            return Response({'Failure': 'An error occurred when logging out.'})
+
+
+class UsersViewAPI(APIView):
+    permission_classes = (permissions.AllowAny, )
+
+    def get(self, request, format=None):
+        users = CustomUser.objects.all()
+
+        users = UserSerializer(users, many=True)
+        return Response(users.data)
     
 #These work with serializers 
 class UserView(viewsets.ModelViewSet):

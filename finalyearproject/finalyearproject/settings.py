@@ -161,7 +161,10 @@ REST_FRAMEWORK = {
 # Redirect to homepage after login (Default redirects to /accounts/profile/)
 # LOGIN_REDIRECT_URL = '/'
 
-# SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
-SESSION_COOKIE_AGE = 3600
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+# SESSION_COOKIE_AGE = 3600
 SESSION_COOKIE_NAME = 'sessionid'
+
+SESSION_COOKIE_SECURE = False  # Set to True if using HTTPS
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Set to False if you want sessions to persist after the browser is closed

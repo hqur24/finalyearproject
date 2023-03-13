@@ -1,13 +1,30 @@
 from django.conf import settings
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from datetime import date
 
 
 # Create your models here.
+
+
+class CustomUserManager(BaseUserManager):
+    def create_user(self, username, email, password=None, **extra_fields):
+        """
+        Creates and saves a User with the given email and password.
+        """
+        if not email or not username:
+            raise ValueError('The Email and username field must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+    
 class CustomUser(AbstractUser):
     email = models.EmailField(max_length = 254, unique = True, blank=False)
 
+    objects = CustomUserManager() 
+    
     def __str__(self):
         return self.username
     
@@ -15,7 +32,7 @@ class CustomUser(AbstractUser):
         return {
             'email': self.email,
         }
-
+    
 
 class Mood(models.Model):
     HAPPY = "HPY"
