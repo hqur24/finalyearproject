@@ -6,7 +6,7 @@ import Dashboard from './pages/Dashboard.js';
 import Login from './components/Login.js';
 import Register from './components/Register.js';
 import Layout from './components/Layout.js';
-
+import PrivateRouter from './components/PrivateRouter.js';
 import axios from "axios";
 import { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
@@ -19,8 +19,13 @@ const App = () => (
       <Router>
         <Layout>
           <Routes>
+          <Route path='/dashboard' element={<PrivateRouter><Dashboard/></PrivateRouter>}/>
+              {/* <Route path='/dashboard' element={
+                  <PrivateRouter>
+                     <Dashboard/>
+                  </PrivateRouter>
+                } /> */}
               <Route exact path='/' element={<Home/>} />
-              <Route exact path='/dashboard' element={<Dashboard/>} />
               <Route exact path='/register' element={<Register/>} />
               <Route exact path='/login' element={<Login/>} />
           </Routes>

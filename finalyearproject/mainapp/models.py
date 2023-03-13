@@ -35,11 +35,11 @@ class CustomUser(AbstractUser):
     
 
 class Mood(models.Model):
-    HAPPY = "HPY"
-    SAD = "SAD"
-    TIRED = "TRD"
-    ANGRY = "ANG"
-    EXCITED = "EXC"
+    HAPPY = "Happy"
+    SAD = "Sad"
+    TIRED = "Tired"
+    ANGRY = "Angry"
+    EXCITED = "Excited"
 
     MOOD_CHOICES = [
         (HAPPY, "Happy"),
@@ -50,7 +50,7 @@ class Mood(models.Model):
     ]
 
     mood_date = models.DateField(default = date.today, null=False)
-    mood_choice = models.CharField(max_length=3, choices=MOOD_CHOICES, default=HAPPY, null=False)
+    mood_choice = models.CharField(max_length=10, choices=MOOD_CHOICES, default=HAPPY, null=False)
     #CURRENTLY DEFAULT user is SET TO ADMIN - NEED TO CHANGE TO CURRENT USER
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1, null=False)
 
@@ -85,10 +85,10 @@ class Assignment(models.Model):
 
 class Exam(models.Model):
 
-    FINAL = "FNL"
-    MIDTERM = "MTM"
-    TERMTIME = "TRM"
-    QUIZ = "QUZ"
+    FINAL = "Final"
+    MIDTERM = "Midterm"
+    TERMTIME = "Termtime"
+    QUIZ = "Quiz"
 
     EXAM_CHOICES = [
         (FINAL, "Final Exam"),
@@ -99,7 +99,7 @@ class Exam(models.Model):
 
     exam_name = models.CharField(max_length=254)
     exam_date = models.DateField(default=date.today)
-    exam_type = models.CharField(max_length=3,choices=EXAM_CHOICES, default=FINAL)
+    exam_type = models.CharField(max_length=10,choices=EXAM_CHOICES, default=FINAL)
     #CURRENTLY DEFAULT user is SET TO ADMIN - NEED TO CHANGE TO CURRENT USER
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
 

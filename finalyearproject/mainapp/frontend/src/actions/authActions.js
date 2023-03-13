@@ -37,21 +37,6 @@ export const authenticationCheck = () => async dispatch => {
             payload: false
         });
     }
-
-    // if (response.data.error ||  response.data.isAuthenticated === 'failure') {
-    //     dispatch({
-    //         type: AUTHENTICATION_FAIL,
-    //         payload: false
-    //     })
-    // }
-    // else if (response.data.isAuthenticated === 'success') {
-    //     dispatch({
-    //         type: AUTHENTICATION_SUCCESS,
-    //         payload: true
-    //     })
-    // }
-
-
 }
 
 export const login = (username, password) => async dispatch => {
@@ -115,8 +100,6 @@ export const register = (username, email, password) => async dispatch => {
     };
 
     const body = JSON.stringify({username, email, password});
-
-    // const response = await axios.post('http://127.0.0.1:8000/register/', body, config)
     const response = await axios.post(`http://127.0.0.1:8000/register/`, body, config)
 
     if (response.data.error) {
