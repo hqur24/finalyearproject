@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect } from "react";
 import Navbar from '../components/Navbar';
 import { connect } from "react-redux";
-import { authenticationCheck } from "../actions/authActions";
+import { checkAuthenticated } from "../actions/authActions";
 
 
-const Layout = ({ children, authenticationCheck }) => {
+const Layout = ({ children, checkAuthenticated }) => {
 
     useEffect(() => {
-        authenticationCheck();
+        checkAuthenticated();
     }, [] );
 
 return (
@@ -18,4 +18,4 @@ return (
 )
 };
 
-export default connect(null, { authenticationCheck })(Layout);
+export default connect(null, { checkAuthenticated })(Layout);

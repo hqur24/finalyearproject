@@ -11,8 +11,7 @@ import {
     AUTHENTICATION_FAIL
 } from './types';
 
-export const authenticationCheck = () => async dispatch => {
-
+export const checkAuthenticated = () => async dispatch => {
     const config = {
         headers: {
             'Accept': 'application/json',
@@ -20,24 +19,36 @@ export const authenticationCheck = () => async dispatch => {
         }
     };
 
-    const response = await axios.get(`http://127.0.0.1:8000/authenticated/`, config)
-    console.log(response.data.isAuthenticated)
+    //try{
+        const response = await axios.get(`http://127.0.0.1:8000/auth/authenticated`, config)
+        console.log(response.data.isAuthenticated)
 
-    if (response.data.success || response.data.isAuthenticated === 'success') {
-        // console.log(response.data.isAuthenticated)
-        dispatch({
-            type: AUTHENTICATION_SUCCESS,
-            payload: true
-        });
-    }
-    else if (response.data.error ||  response.data.isAuthenticated === 'failure') {
-        // console.log(response.data)
-        dispatch({
-            type: AUTHENTICATION_FAIL,
-            payload: false
-        });
-    }
-}
+        if (response.data.success || response.data.isAuthenticated === 'success') {
+        console.log('isAuthenticated:', response.data.isAuthenticated);
+            dispatch({
+                    type: AUTHENTICATION_SUCCESS,
+                    payload: true
+                });
+        }
+        else if (response.data.error ||  response.data.isAuthenticated === 'error') {
+            // console.log('isAuthenticated:', response.data.isAuthenticated);
+            dispatch({
+                    type: AUTHENTICATION_FAIL,
+                    payload: false
+                });
+        }
+    //}
+
+    // catch(err) {
+    //     dispatch({
+    //         type: AUTHENTICATION_FAIL,
+    //         payload: false
+    //     });
+
+    // }
+
+
+};
 
 export const login = (username, password) => async dispatch => {
     console.log('username:', username);
@@ -52,7 +63,7 @@ export const login = (username, password) => async dispatch => {
     };
 
     const body = JSON.stringify({username, password});
-    const response = await axios.post(`http://127.0.0.1:8000/login/`, body, config)
+    const response = await axios.post(`http://127.0.0.1:8000/auth/login/`, body, config)
     if (response.data.error) {
         dispatch(
             {
@@ -75,7 +86,7 @@ export const logout = () => async dispatch => {
         }
     };
 
-    const response = await axios.post(`http://127.0.0.1:8000/logout/`, config)
+    const response = await axios.post(`http://127.0.0.1:8000/auth/logout/`, config)
 
     if (response.data.success) {
         dispatch(
@@ -100,7 +111,7 @@ export const register = (username, email, password) => async dispatch => {
     };
 
     const body = JSON.stringify({username, email, password});
-    const response = await axios.post(`http://127.0.0.1:8000/register/`, body, config)
+    const response = await axios.post(`http://127.0.0.1:8000/auth/register/`, body, config)
 
     if (response.data.error) {
         dispatch(

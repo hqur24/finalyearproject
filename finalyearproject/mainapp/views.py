@@ -24,11 +24,14 @@ from builtins import list
 # Create your views here.
 
 #EDIT FOR REDIRECTION
-def index(request):
-    if request.user.is_authenticated:
-        return HttpResponse("logged in")
-    else:
-        return HttpResponse("not logged in")
+# def index(request):
+#     if request.user.is_authenticated:
+#         return HttpResponse("logged in")
+#     else:
+#         return HttpResponse("not logged in")
+
+# def index(request):
+#     return render(request, "index.html")
     
 
 
@@ -129,9 +132,9 @@ class LoginAPI(APIView):
 class CSRFTokenRetrieve(APIView):
     permission_classes = (permissions.AllowAny,)
     def get(self, request, format=None):
-        return Response({ 'Operation successful': 'CSRF has been set ' })
+        return Response({ 'success': 'CSRF has been set ' })
     
-# @method_decorator(csrf_exempt, name='dispatch')
+# @method_decorator(csrf_protect, name='dispatch')
 class AuthenticationCheckAPI(APIView):
     def get(self, request, format=None):
         user = self.request.user 
@@ -141,7 +144,7 @@ class AuthenticationCheckAPI(APIView):
         if isAuthenticated:
             return Response({ 'isAuthenticated': 'success' })
         else:
-            return Response({ 'isAuthenticated': 'failure' })
+            return Response({ 'isAuthenticated': 'error' })
 
 #Logout View Function
 class LogoutAPI(APIView):

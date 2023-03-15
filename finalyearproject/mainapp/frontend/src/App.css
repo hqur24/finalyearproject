@@ -36,3 +36,21 @@
     transform: rotate(360deg);
   }
 }
+
+.row{
+  padding: 1%;
+
+}
+
+.btn-homepage {
+  padding: 3%;
+  background-color: white;
+  border-style: solid;
+  border-color: rgb(151, 117, 117);
+  border-width: 2px;
+  
+}
+
+.container-fluid {
+  background-color: rgb(247, 242, 236);
+}

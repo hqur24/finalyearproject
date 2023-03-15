@@ -9,9 +9,11 @@ import ViewExams from "../components/ViewExams";
 
 const Dashboard = () => {
     return (
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <h1>Dashboard</h1>
+            <h6> <Link to='/login'> If you already have an account, click here to log in.</Link></h6>
+
         </div>
         <div class="row">
             <div class="col-sm">

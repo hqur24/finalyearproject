@@ -17,7 +17,7 @@ router.register(r'exams', views.ExamView, 'exam')
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    # path('', views.index, name='index'),
     path('api/', include(router.urls)),
     path('items/moods/', MoodsAPI.as_view()),
     path('items/assignments/', AssignmentAPI.as_view()),
