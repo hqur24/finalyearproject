@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 
 from . import views
 
@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 from django.conf import settings 
 from rest_framework import routers
 from .views import MoodsAPI, ExamsAPI, AssignmentAPI
+from django.views.generic import TemplateView
 
 
 router = routers.DefaultRouter()
@@ -22,5 +23,9 @@ urlpatterns = [
     path('items/moods/', MoodsAPI.as_view()),
     path('items/assignments/', AssignmentAPI.as_view()),
     path('items/exams/', ExamsAPI.as_view()),
+    # re_path('.*/', views.index, name='index'),
+
 
 ]
+
+urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]

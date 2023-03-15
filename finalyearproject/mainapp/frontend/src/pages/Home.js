@@ -29,6 +29,13 @@ const Home = () => {
         </div>
        
 
+<<<<<<< Updated upstream
+=======
+const Home = () => (
+    <div>
+        <h1>Hello</h1>
+        <h2>hi</h2>
+>>>>>>> Stashed changes
     </div>
 
         </Layout>

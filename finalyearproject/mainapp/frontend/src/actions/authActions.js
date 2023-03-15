@@ -19,6 +19,7 @@ export const checkAuthenticated = () => async dispatch => {
         }
     };
 
+<<<<<<< Updated upstream
     //try{
         const response = await axios.get(`http://127.0.0.1:8000/auth/authenticated`, config)
         console.log(response.data.isAuthenticated)
@@ -49,6 +50,27 @@ export const checkAuthenticated = () => async dispatch => {
 
 
 };
+=======
+    const response = await axios.get(`http://127.0.0.1:8000/authenticated/`, config)
+    console.log(response.data.isAuthenticated)
+    if (response.data.error ||  response.data.isAuthenticated === 'failure') {
+        console.log(response.data)
+        dispatch({
+            type: AUTHENTICATION_FAIL,
+            payload: false
+        });
+    }
+
+    else if (response.data.isAuthenticated === 'success') {
+        console.log(response.data.isAuthenticated)
+        dispatch({
+            type: AUTHENTICATION_SUCCESS,
+            payload: true
+        });
+    }
+
+}
+>>>>>>> Stashed changes
 
 export const login = (username, password) => async dispatch => {
     console.log('username:', username);
@@ -78,27 +100,38 @@ export const login = (username, password) => async dispatch => {
 }
 
 export const logout = () => async dispatch => {
+    const csrftoken = Cookies.get('csrftoken')
+
     const config = {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'X-CSRFToken': Cookies.get('csrftoken')
+            'X-CSRFToken': csrftoken,
         }
     };
 
+<<<<<<< Updated upstream
     const response = await axios.post(`http://127.0.0.1:8000/auth/logout/`, config)
+=======
+    const body = JSON.stringify({
+        'withCredentials': true
+    });
+
+    const response = await axios.post(`http://127.0.0.1:8000/logout/`, body, config)
+>>>>>>> Stashed changes
 
     if (response.data.success) {
+        console.log(response.data)
         dispatch(
             {
                 type: LOGOUT_SUCCESS,
             });
     } else {
+        console.log(response.data)
         dispatch({
             type: LOGOUT_FAIL
         });
     }
-
 }
 
 export const register = (username, email, password) => async dispatch => {
@@ -111,7 +144,11 @@ export const register = (username, email, password) => async dispatch => {
     };
 
     const body = JSON.stringify({username, email, password});
+<<<<<<< Updated upstream
     const response = await axios.post(`http://127.0.0.1:8000/auth/register/`, body, config)
+=======
+    const response = await axios.post(`http://127.0.0.1:8000/register`, body, config)
+>>>>>>> Stashed changes
 
     if (response.data.error) {
         dispatch(

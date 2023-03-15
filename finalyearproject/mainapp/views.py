@@ -17,6 +17,7 @@ from django.views.decorators.http import require_http_methods
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from django.views.generic import ListView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from builtins import list
@@ -24,6 +25,7 @@ from builtins import list
 # Create your views here.
 
 #EDIT FOR REDIRECTION
+<<<<<<< Updated upstream
 # def index(request):
 #     if request.user.is_authenticated:
 #         return HttpResponse("logged in")
@@ -32,6 +34,14 @@ from builtins import list
 
 # def index(request):
 #     return render(request, "index.html")
+=======
+def index(request):
+    return render(request, 'index.html')
+    # if request.user.is_authenticated:
+    #     return HttpResponse("logged in")
+    # else:
+    #     return HttpResponse("not logged in")
+>>>>>>> Stashed changes
     
 
 
@@ -56,6 +66,7 @@ class MoodsAPI(APIView):
             mood_data.append(mood_item)
         return JsonResponse({'moods': mood_data})
     
+@method_decorator(csrf_exempt, name='dispatch')
 class AssignmentAPI(APIView):
     permission_classes =(permissions.AllowAny, )
 
@@ -134,7 +145,12 @@ class CSRFTokenRetrieve(APIView):
     def get(self, request, format=None):
         return Response({ 'success': 'CSRF has been set ' })
     
+<<<<<<< Updated upstream
 # @method_decorator(csrf_protect, name='dispatch')
+=======
+    
+@method_decorator(csrf_exempt, name='dispatch')
+>>>>>>> Stashed changes
 class AuthenticationCheckAPI(APIView):
     def get(self, request, format=None):
         user = self.request.user 
@@ -147,6 +163,7 @@ class AuthenticationCheckAPI(APIView):
             return Response({ 'isAuthenticated': 'error' })
 
 #Logout View Function
+@method_decorator(csrf_exempt, name='dispatch')
 class LogoutAPI(APIView):
     def post(self, request, format=None):
         try:

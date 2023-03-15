@@ -56,25 +56,46 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# -------------- CSRF/CORS SETTINGS ------------------ 
 CORS_ORIGIN_WHITELIST = [
      'http://localhost:3000',
+<<<<<<< Updated upstream
     "http://127.0.0.1:3000",
     "http://127.0.0.1:8000",
+=======
+    "http://127.0.0.1:8000"
+
+>>>>>>> Stashed changes
 ]
 
 CORS_ALLOWED_ORIGINS = [
      'http://localhost:3000',
     "http://127.0.0.1:3000",
+<<<<<<< Updated upstream
     "http://127.0.0.1:8000",
+=======
+    "http://127.0.0.1:8000"
+>>>>>>> Stashed changes
 
 ]
 
 CSRF_TRUSTED_ORIGINS = [
 'http://127.0.0.1:8000',
+<<<<<<< Updated upstream
 'http://localhost:3000',
+=======
+'http://127.0.0.1:3000',
+     'http://localhost:3000',
+>>>>>>> Stashed changes
 
 ]
 
+CSRF_COOKIE_SAME_SITE = 'Strict'
+SESSION_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = True
+
+# -------------- OTHER SETTINGS --------------------
 
 ROOT_URLCONF = 'finalyearproject.urls'
 
@@ -82,8 +103,13 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+<<<<<<< Updated upstream
                 # os.path.join(BASE_DIR, r'templates')
                 os.path.join(BASE_DIR, 'mainapp/frontend/build'),
+=======
+                # os.path.join(BASE_DIR, r'templates'),
+                os.path.join(BASE_DIR, 'mainapp/frontend/build')
+>>>>>>> Stashed changes
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -150,7 +176,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mainapp/frontend/build/static'),  # update the STATICFILES_DIRS
     # os.path.join(BASE_DIR, r'templates'),
 
+<<<<<<< Updated upstream
 ]
+=======
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'mainapp/frontend/build/static')
+]
+
+>>>>>>> Stashed changes
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -173,8 +206,6 @@ REST_FRAMEWORK = {
 # LOGIN_REDIRECT_URL = '/'
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-# SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
-# SESSION_COOKIE_AGE = 3600
 SESSION_COOKIE_NAME = 'sessionid'
 
 SESSION_COOKIE_SECURE = False  # Set to True if using HTTPS
