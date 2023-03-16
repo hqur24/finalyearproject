@@ -9,15 +9,13 @@ import ViewExams from "../components/ViewExams";
 
 const Dashboard = () => {
     return (
-    <div class="container">
-        <div class="row">
-            <h1>Dashboard</h1>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                <ViewMoods></ViewMoods>
+    <div>
+    <div class="row">
+    <h3>Dashboard</h3>
+</div>
+        <div className="dashboard-container">
 
-            </div>
+        <div class="row">
             <div class="col-sm">
             <  ViewAssignments></ViewAssignments>
             
@@ -25,6 +23,13 @@ const Dashboard = () => {
             <div class="col-sm">
                 <ViewExams></ViewExams>
             </div>
+
+            <div class="col-sm">
+                <ViewMoods></ViewMoods>
+
+            </div>
+
+        </div>
         </div>
     </div>
     )

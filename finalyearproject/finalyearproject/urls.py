@@ -17,16 +17,10 @@ from django import views
 from django.contrib import admin
 from django.urls import path, include
 # from rest_framework import routers
-from mainapp.views import UserView,RegisterAPI, LoginAPI, CSRFTokenRetrieve, AuthenticationCheckAPI, LogoutAPI, UsersViewAPI # login_api, register_api, authenticated_api, logout_api, 
+# from mainapp.views import UserView,RegisterAPI, LoginAPI, CSRFTokenRetrieve, AuthenticationCheckAPI, LogoutAPI, UsersViewAPI # login_api, register_api, authenticated_api, logout_api, 
 from rest_framework import routers
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', LoginAPI.as_view(), name='login'),
-    path('register/', RegisterAPI.as_view(), name='register'),
-    path('authenticated/', AuthenticationCheckAPI.as_view(), name='authenticated'),
-    path('logout/', LogoutAPI.as_view(), name='logout'),
-    path('csrf_token/', CSRFTokenRetrieve.as_view(), name='csrf'),
-    path('viewusers/', UsersViewAPI.as_view(), name='usersview'),
     path('', include('mainapp.urls')),
 ]

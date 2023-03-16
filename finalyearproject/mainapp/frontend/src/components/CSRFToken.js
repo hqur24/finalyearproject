@@ -23,7 +23,7 @@ const CSRFToken = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://127.0.0.1:8000/csrf_token`);
+                await axios.get(`http://127.0.0.1:8000/accounts/csrf_token/`);
             } catch (err) {
 
             }

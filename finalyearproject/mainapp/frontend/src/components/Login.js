@@ -83,7 +83,13 @@ const Login = ({ login, isAuthenticated }) => {
     }
 
     return (
-        <div className="container">
+        <div className="container-fluid">
+            <div>
+            <Link to='/'>
+                <button type="button" class="btn btn-primary" >Back to landing page</button>
+            </Link>
+            </div>
+            < div className="form-container">
             <h1>Login</h1>
             <form onSubmit={e=> onSubmit(e)}>
                 <CSRFToken />
@@ -101,7 +107,7 @@ const Login = ({ login, isAuthenticated }) => {
             </form>
             <br></br>
             <h6> <Link to='/register'> If you do not have an account, click here to register.</Link></h6>
-
+          </div>
         </div>
     )
 

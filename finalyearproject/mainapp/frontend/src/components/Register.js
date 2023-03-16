@@ -29,7 +29,11 @@ const Register = ({ register, isAuthenticated }) => {
         return <Navigate to='/' />
 
     return (
-        <div className="container">
+        <div className="container-fluid">
+            <Link to='/'>
+                <button type="button" class="btn btn-primary" >Back to landing page</button>
+            </Link>
+            <div className="form-container">
             <h1>Registration</h1>
             <form onSubmit={e=> onSubmit(e)}>
                 <CSRFToken />
@@ -52,6 +56,7 @@ const Register = ({ register, isAuthenticated }) => {
             <br></br>
             <h6> <Link to='/login'> If you already have an account, click here to log in.</Link></h6>
 
+        </div>
         </div>
     )
 

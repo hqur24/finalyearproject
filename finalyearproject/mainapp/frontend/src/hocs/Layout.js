@@ -12,7 +12,7 @@ const Layout = ({ children, authenticationCheck }) => {
 
 return (
     <Fragment>
-        <Navbar/>
+        {/* <Navbar/> */}
         {children}
     </Fragment>
 )

@@ -1,5 +1,3 @@
-import statistics
-from urllib import response
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse, JsonResponse
 import datetime, json
@@ -8,18 +6,14 @@ from .forms import RegistrationForm, LoginForm
 from .serializers import MoodSerializer, AssignmentSerializer, ExamSerializer, UserSerializer
 from .models import CustomUser, Mood, Exam, Assignment
 from django.views.decorators.csrf import csrf_exempt
-from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.http.multipartparser import MultiPartParser
 from django.views.decorators.http import require_http_methods
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
-from builtins import list
 
 # Create your views here.
 
@@ -36,16 +30,22 @@ def index(request):
 ##### ------------------ ITEM (Moods, Assignments, Exams) VIEW FUNCTIONS ------------------------
 @method_decorator(csrf_exempt, name='dispatch')
 class MoodsAPI(APIView):
-    permission_classes =(permissions.AllowAny, )
+    # permission_classes =(permissions.AllowAny, )
+    permission_classes =(permissions.AllowAny,)
 
     def get(self, request):
+        # print('Authentication:', request.auth)
+
+        # username = request.user.username
+        # print('Current user:', username)
+
         mood_data = []
+        # for mood in Mood.objects.filter(author__username=username):
         for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
             }
-
             mood_item['mood_date'] = mood.mood_date
             mood_item['mood_choice'] = mood.mood_choice
             mood_item['author'] = user_data['username']
@@ -126,10 +126,10 @@ class LoginAPI(APIView):
 
 #CSRF Token View Function
 @method_decorator(ensure_csrf_cookie, name='dispatch')
-class CSRFTokenRetrieve(APIView):
+class CSRFTokenRetrieveAPI(APIView):
     permission_classes = (permissions.AllowAny,)
     def get(self, request, format=None):
-        return Response({ 'Operation successful': 'CSRF has been set ' })
+        return Response({ 'success': 'CSRF token set ' })
     
 # @method_decorator(csrf_exempt, name='dispatch')
 class AuthenticationCheckAPI(APIView):

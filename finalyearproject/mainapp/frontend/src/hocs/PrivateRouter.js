@@ -1,9 +1,17 @@
 import React from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Navbar from '../components/Navbar';
 
 const PrivateRouter = ({ children, isAuthenticated }) => {
-    return isAuthenticated  ?  children :  <Navigate to='/login' />
+    return (
+    <>
+    <div className='container-fluid'>
+    <div className='authpages-container'>
+    {isAuthenticated ?  <Navbar /> : <Navigate to="/" />}
+    {children}</div></div>
+  </>
+    )
 };
 
 const mapStateToProps = state => ({

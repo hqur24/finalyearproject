@@ -20,7 +20,7 @@ export const authenticationCheck = () => async dispatch => {
         }
     };
 
-    const response = await axios.get(`http://127.0.0.1:8000/authenticated/`, config)
+    const response = await axios.get(`http://127.0.0.1:8000/accounts/authenticated/`, config)
     console.log(response.data.isAuthenticated)
 
     if (response.data.success || response.data.isAuthenticated === 'success') {
@@ -52,7 +52,7 @@ export const login = (username, password) => async dispatch => {
     };
 
     const body = JSON.stringify({username, password});
-    const response = await axios.post(`http://127.0.0.1:8000/login/`, body, config)
+    const response = await axios.post(`http://127.0.0.1:8000/accounts/login/`, body, config)
     if (response.data.error) {
         dispatch(
             {
@@ -75,7 +75,7 @@ export const logout = () => async dispatch => {
         }
     };
 
-    const response = await axios.post(`http://127.0.0.1:8000/logout/`, config)
+    const response = await axios.post(`http://127.0.0.1:8000/accounts/logout/`, config)
 
     if (response.data.success) {
         dispatch(
@@ -100,7 +100,7 @@ export const register = (username, email, password) => async dispatch => {
     };
 
     const body = JSON.stringify({username, email, password});
-    const response = await axios.post(`http://127.0.0.1:8000/register/`, body, config)
+    const response = await axios.post(`http://127.0.0.1:8000/accounts/register/`, body, config)
 
     if (response.data.error) {
         dispatch(
