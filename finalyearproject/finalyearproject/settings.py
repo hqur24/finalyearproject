@@ -41,8 +41,7 @@ INSTALLED_APPS = [
     'mainapp',
     'corsheaders',
     'rest_framework',
-    # 'rest_framework.authtoken',
-
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +80,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-                os.path.join(BASE_DIR, r'templates')
+                # os.path.join(BASE_DIR, r'templates')
+                os.path.join(BASE_DIR, 'finalyearproject/build/'),
+
+
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -145,6 +147,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'finalyearproject/build/static'),
+)
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -170,3 +176,8 @@ SESSION_COOKIE_NAME = 'sessionid'
 
 SESSION_COOKIE_SECURE = False  # Set to True if using HTTPS
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Set to False if you want sessions to persist after the browser is closed
+
+GRAPH_MODELS ={
+'all_applications': True,
+'graph_models': True,
+}

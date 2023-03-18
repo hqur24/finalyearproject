@@ -18,11 +18,11 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 # Create your views here.
 
 #EDIT FOR REDIRECTION
-def index(request):
-    if request.user.is_authenticated:
-        return HttpResponse("logged in")
-    else:
-        return HttpResponse("not logged in")
+# def index(request):
+#     if request.user.is_authenticated:
+#         return HttpResponse("logged in")
+#     else:
+#         return HttpResponse("not logged in")
     
 
 
@@ -34,14 +34,13 @@ class MoodsAPI(APIView):
     permission_classes =(permissions.AllowAny,)
 
     def get(self, request):
-        # print('Authentication:', request.auth)
 
-        # username = request.user.username
-        # print('Current user:', username)
+        username = request.user.username
+        print('Current user:', username)
 
         mood_data = []
-        # for mood in Mood.objects.filter(author__username=username):
-        for mood in Mood.objects.all():
+        for mood in Mood.objects.filter(author__username=username):
+        # for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -58,7 +57,10 @@ class AssignmentAPI(APIView):
 
     def get(self, request):
         assignment_data = []
-        for assignment in Assignment.objects.all():
+        username = request.user.username
+
+        for assignment in Assignment.objects.filter(author__username=username):
+        # for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
@@ -78,7 +80,11 @@ class ExamsAPI(APIView):
 
     def get(self, request):
         exam_data = []
-        for exam in Exam.objects.all():
+        username = request.user.username
+
+        for exam in Exam.objects.filter(author__username=username):
+
+        # for exam in Exam.objects.all():
             exam_item = {}
             user_data= {
                 'username' : exam.author.username,
@@ -150,7 +156,7 @@ class LogoutAPI(APIView):
             logout(request)
             return Response({'success': 'Logged out successfully'})
         except:
-            return Response({'Failure': 'An error occurred when logging out.'})
+            return Response({'error': 'An error occurred when logging out.'})
 
 #View all users API Function
 class UsersViewAPI(APIView):

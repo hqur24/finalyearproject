@@ -75,7 +75,13 @@ export const logout = () => async dispatch => {
         }
     };
 
-    const response = await axios.post(`http://127.0.0.1:8000/accounts/logout/`, config)
+    const body = JSON.stringify({
+        'withCredentials': true
+    });
+
+    try {
+
+    const response = await axios.post(`http://127.0.0.1:8000/accounts/logout/`, body, config)
 
     if (response.data.success) {
         dispatch(
@@ -87,6 +93,13 @@ export const logout = () => async dispatch => {
             type: LOGOUT_FAIL
         });
     }
+}
+catch(err) {
+    console.log(err)
+    dispatch({
+        type: LOGOUT_FAIL
+    })
+}
 
 }
 

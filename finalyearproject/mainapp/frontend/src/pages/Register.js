@@ -1,9 +1,8 @@
-import { formToJSON } from "axios";
 import React, { useState } from "react";
 import { Navigate, Link } from "react-router-dom"
 import { connect } from 'react-redux'
 import { register } from "../actions/authActions";
-import CSRFToken from "./CSRFToken";
+import CSRFToken from "../components/CSRFToken";
 
 const Register = ({ register, isAuthenticated }) => {
     const [registerData, setRegisterData] = useState({
