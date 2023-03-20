@@ -66,6 +66,10 @@
     padding: 5%;
   }
 
+  .form-group {
+    max-width: 75%;
+  }
+
 .authpages-container {
   background-color: aliceblue;
   left: 1%;
@@ -75,6 +79,12 @@
   /* position: absolute; */
   padding: 1%;
 }
+
+.error-text {
+  color: red;
+  font-size: larger;
+}
+
 
 .dashboard-container {
   background-color: rgb(255, 255, 255);
@@ -86,7 +96,11 @@
   padding: 1%;
 }
 
-/* Testing  */
+.navbar {
+  background-color:white;
+}
+
+/* LANDING PAGE BACKGROUND ANIMATIONS  */
 .circles{
   position: absolute;
   top: 0;
@@ -185,7 +199,6 @@
 }
 
 
-
 @keyframes animate {
 
   0%{
@@ -201,7 +214,3 @@
   }
 
 }
-/* 
-* {
-  font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-} */

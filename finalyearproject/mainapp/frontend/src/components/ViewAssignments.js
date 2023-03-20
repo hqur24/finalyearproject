@@ -35,6 +35,7 @@ render() {
                     <h6 class="card-subtitle mb-2 text-muted">Due date: {assignment.due_date}</h6>
                     <p>{assignment.assignment_desc}</p>
                     <p>Author: {assignment.author}</p>
+                    <p>Completed: {assignment.assignment_status.toString()} </p>
                 </div>
             </div>
         ))}

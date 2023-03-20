@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.response import Response
 from .models import CustomUser, Mood, Assignment, Exam
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,6 +15,11 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         email = validated_data.get('email')
         username = validated_data.get('username')
+
+        # if CustomUser.objects.filter(username=username).exists():
+        #     return Response({"error1": "Username already exists."})
+        # if CustomUser.objects.filter(email=email).exists():
+        #     return Response({"error2": "Email already exists."})
 
         if CustomUser.objects.filter(username=username).exists():
             raise serializers.ValidationError("Username already exists")

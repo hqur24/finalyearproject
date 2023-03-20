@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse, JsonResponse
 import datetime, json
-from rest_framework import viewsets, generics, status, permissions
+from rest_framework import viewsets, generics, status, permissions, serializers, exceptions
 from .forms import RegistrationForm, LoginForm
 from .serializers import MoodSerializer, AssignmentSerializer, ExamSerializer, UserSerializer
 from .models import CustomUser, Mood, Exam, Assignment
@@ -59,8 +59,11 @@ class AssignmentAPI(APIView):
         assignment_data = []
         username = request.user.username
 
-        for assignment in Assignment.objects.filter(author__username=username):
-        # for assignment in Assignment.objects.all():
+        # This if frontend is running on same port as Django
+        # for assignment in Assignment.objects.filter(author__username=username):
+
+        #This if frontend is running on :3000 port 
+        for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
@@ -68,10 +71,14 @@ class AssignmentAPI(APIView):
 
             assignment_item['assignment_title'] = assignment.assignment_title
             assignment_item['assignment_desc'] = assignment.assignment_desc
-            assignment_item['due_date'] = assignment.due_date
+            assignment_item['assignment_due_date'] = assignment.assignment_due_date
+            assignment_item['assignment_status'] = assignment.assignment_status
             assignment_item['author'] = user_data['username']
 
             assignment_data.append(assignment_item)
+
+        
+        assignment_data.sort(key=lambda x: x['assignment_due_date'])
         return JsonResponse({'assignments': assignment_data})
     
 @method_decorator(csrf_exempt, name='dispatch')
@@ -82,9 +89,11 @@ class ExamsAPI(APIView):
         exam_data = []
         username = request.user.username
 
-        for exam in Exam.objects.filter(author__username=username):
+        # This if frontend is running on same port as Django
+        # for exam in Exam.objects.filter(author__username=username):
 
-        # for exam in Exam.objects.all():
+        #This if frontend is running on :3000 port 
+        for exam in Exam.objects.all():
             exam_item = {}
             user_data= {
                 'username' : exam.author.username,
@@ -93,6 +102,7 @@ class ExamsAPI(APIView):
             exam_item['exam_name'] = exam.exam_name
             exam_item['exam_date'] = exam.exam_date
             exam_item['exam_type'] = exam.exam_type
+            exam_item['exam_status'] = exam.exam_status
             exam_item['author'] = user_data['username']
 
             exam_data.append(exam_item)
@@ -105,13 +115,25 @@ class RegisterAPI(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
+    #     try:
+    #         serializer = UserSerializer(data=request.data)
+    #         if serializer.is_valid():
+    #             serializer.create(request.data)
+    #             return Response({"success": "User Created Successfully"})#, "data": serializer.data})
+
+    #     except exceptions.ValidationError as e :
+    #         return Response({"error": 'Error occured'})
+        
+        # else:
+        #     return Response({"error": "An error occurred."})
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.create(request.data)
-            Response({"message": "User Created Successfully", "data": serializer.data})
+            return Response({"success": "User Created Successfully"})#, "data": serializer.data})
 
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            # return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response({"error": "An error occurred."})
 
 #Login View Function
 @method_decorator(csrf_exempt, name='dispatch')
@@ -127,8 +149,9 @@ class LoginAPI(APIView):
             serializer = UserSerializer(user)
             #print(request.session)
             request.session.modified = True
-            return Response({'Success': 'Logged in successfully' , 'User' : serializer.data['username']})#, JsonResponse({'authenticated': True})
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_400_BAD_REQUEST)# , JsonResponse({'authenticated': True})
+            return Response({'success': 'Logged in successfully' , 'User' : serializer.data['username']})#, JsonResponse({'authenticated': True})
+        else:
+            return Response({'error': 'Invalid credentials'}) #status=status.HTTP_400_BAD_REQUEST)# , JsonResponse({'authenticated': True})
 
 #CSRF Token View Function
 @method_decorator(ensure_csrf_cookie, name='dispatch')

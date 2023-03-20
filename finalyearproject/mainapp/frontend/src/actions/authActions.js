@@ -53,6 +53,7 @@ export const login = (username, password) => async dispatch => {
 
     const body = JSON.stringify({username, password});
     const response = await axios.post(`http://127.0.0.1:8000/accounts/login/`, body, config)
+
     if (response.data.error) {
         dispatch(
             {
@@ -118,11 +119,11 @@ export const register = (username, email, password) => async dispatch => {
     if (response.data.error) {
         dispatch(
             {
-                type: REGISTER_FAIL
+                type: REGISTER_FAIL,
             });
     } else {
         dispatch({
-            type: REGISTER_SUCCESS
+            type: REGISTER_SUCCESS,
         });
     }
 };

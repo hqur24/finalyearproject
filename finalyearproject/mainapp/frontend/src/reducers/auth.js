@@ -44,9 +44,13 @@ export default function(state = initialState, action) {
                 isAuthenticated: payload
             }
         case LOGIN_FAIL:
-            return state
+            return { 
+                ...state, 
+                loginError: 'Invalid credentials entered. Please try again.'
+            }
         case REGISTER_FAIL:
-            return state
+            return {
+                ...state,            }
         case LOGOUT_FAIL:
             return state
         default:

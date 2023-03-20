@@ -35,6 +35,7 @@ render() {
                     <h6 class="card-subtitle mb-2 text-muted">Date: {exam.exam_date}</h6>
                     <p>Exam Type: {exam.exam_type}</p>
                     <p>Author: {exam.author}</p>
+                    <p>Completed: {exam.exam_status.toString()} </p>
                 </div>
             </div>
         ))}
