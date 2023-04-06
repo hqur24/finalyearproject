@@ -6,7 +6,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings 
 from rest_framework import routers
-from .views import MoodsAPI, ExamsAPI, AssignmentAPI, RegisterAPI, LoginAPI, LogoutAPI, AuthenticationCheckAPI, CSRFTokenRetrieveAPI, UsersViewAPI
+from .views import MoodsAPI, ExamsAPI, AssignmentAPI, RegisterAPI, LoginAPI, LogoutAPI, AuthenticationCheckAPI, CSRFTokenRetrieveAPI, UsersViewAPI, GetCurrentUserAPI
 
 
 router = routers.DefaultRouter()
@@ -24,10 +24,12 @@ urlpatterns = [
     path('accounts/authenticated/', AuthenticationCheckAPI.as_view(), name='authenticated'),
     path('accounts/logout/', LogoutAPI.as_view(), name='logout'),
     path('accounts/csrf_token/', CSRFTokenRetrieveAPI.as_view(), name='csrf'),
-    path('viewusers/', UsersViewAPI.as_view(), name='usersview'),    
+    path('accounts/currentuser/', GetCurrentUserAPI.as_view(), name='currentuser'),
+    path('accounts/viewusers/', UsersViewAPI.as_view(), name='usersview'),    
     path('items/moods/', MoodsAPI.as_view()),
     path('items/assignments/', AssignmentAPI.as_view(), name='assignments'),
     path('items/exams/', ExamsAPI.as_view()),
+
 ]
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]

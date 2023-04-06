@@ -27,12 +27,11 @@ render() {
 
   return (
     <div>
-        <h5>Current Assignments</h5>
         {assignments.map(assignment => (
             <div class="card bg-light mb-3" style={{width: '18rem'}}>
                 <div class="card-body">
                     <h5 class="card-title">{assignment.assignment_title}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Due date: {assignment.due_date}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Due date: {assignment.assignment_due_date}</h6>
                     <p>{assignment.assignment_desc}</p>
                     <p>Author: {assignment.author}</p>
                     <p>Completed: {assignment.assignment_status.toString()} </p>

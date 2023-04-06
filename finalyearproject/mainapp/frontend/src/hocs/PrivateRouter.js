@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar';
 const PrivateRouter = ({ children, isAuthenticated }) => {
     return (
     <>
-    <div className='container-fluid'>
+    <div className='container-fluid fluid-auth'>
     <div className='authpages-container'>
     {isAuthenticated ?  <Navbar /> : <Navigate to="/" />}
     {children}</div></div>

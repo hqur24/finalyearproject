@@ -73,6 +73,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'finalyearproject.urls'
 

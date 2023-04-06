@@ -27,7 +27,6 @@ render() {
 
   return (
     <div>
-        <h5>Upcoming Exams</h5>
         {exams.map(exam => (
             <div class="card bg-light mb-3" style={{width: '18rem'}}>
                 <div class="card-body">

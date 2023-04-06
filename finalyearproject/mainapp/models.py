@@ -71,8 +71,7 @@ class Assignment(models.Model):
     assignment_due_date = models.DateField(default= date.today)
     assignment_status = models.BooleanField(default=False)
     #CURRENTLY DEFAULT user is SET TO ADMIN - NEED TO CHANGE TO CURRENT USER
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)
-
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1)#, default=1)
 
     def __str__(self):
         return self.assignment_title
@@ -81,7 +80,7 @@ class Assignment(models.Model):
         return{
             'assignment_title': self.assignment_title,
             'assignment_desc': self.assignment_desc,
-            'due_date': self.due_date,
+            'assignment_due_date': self.assignment_due_date,
         }
 
 class Exam(models.Model):

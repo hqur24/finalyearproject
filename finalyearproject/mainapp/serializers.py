@@ -16,10 +16,6 @@ class UserSerializer(serializers.ModelSerializer):
         email = validated_data.get('email')
         username = validated_data.get('username')
 
-        # if CustomUser.objects.filter(username=username).exists():
-        #     return Response({"error1": "Username already exists."})
-        # if CustomUser.objects.filter(email=email).exists():
-        #     return Response({"error2": "Email already exists."})
 
         if CustomUser.objects.filter(username=username).exists():
             raise serializers.ValidationError("Username already exists")
@@ -30,35 +26,49 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class MoodSerializer(serializers.ModelSerializer):
-    # author = serializers.SerializerMethodField()   
+    author = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
     class Meta:
         model = Mood
-        fields = ('id', 'mood_choice', 'mood_date', 'author')
+        fields = '__all__'
 
     def get_author(self, obj):
         print(self)
         print(obj)
         return obj.author.username
-
 
 class AssignmentSerializer(serializers.ModelSerializer):
-    # author = serializers.SerializerMethodField()
+    author = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
+
+    # def to_internal_value(self, data):
+    #     print('to_internal_value', data)
+    #     return super().to_internal_value(data)
+
+    # def to_internal_value(self, data):
+    #     data['author'] = int(data['author'])
+    #     return super().to_internal_value(data)
+
+    # def to_representation(self, instance):
+    #     print('to_representation', instance)
+    #     return super().to_representation(instance)
+    
     class Meta:
         model = Assignment
-        fields = ('id', 'assignment_title', 'assignment_desc', 'due_date', 'author')
+        fields = '__all__'
 
-    def get_author(self, obj):
-        print(self)
-        print(obj)
-        return obj.author.username
 
 class ExamSerializer(serializers.ModelSerializer):
-    # author = serializers.SerializerMethodField()
+    author = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
     class Meta:
         model = Exam
-        fields = ('id', 'exam_name', 'exam_date', 'exam_type', 'author')
+        fields = '__all__'
 
     def get_author(self, obj):
         print(self)
         print(obj)
         return obj.author.username
+
+
+class ExamTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Exam
+        fields = ('exam_type')

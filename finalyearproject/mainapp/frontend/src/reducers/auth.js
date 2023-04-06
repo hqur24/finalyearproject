@@ -7,12 +7,13 @@ import {
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
     AUTHENTICATION_SUCCESS,
-    AUTHENTICATION_FAIL
+    AUTHENTICATION_FAIL,
+    GET_USER_SUCCESS
 } from '../actions/types.js';
 
 const initialState = {
     isAuthenticated: null,
-    username: '',
+    user: '',
 }
 export default function(state = initialState, action) {
     const { type, payload} = action;
@@ -38,6 +39,11 @@ export default function(state = initialState, action) {
                 ...state,
                 isAuthenticated: payload
             } 
+        case GET_USER_SUCCESS:
+            return {
+                ...state,
+                user: payload
+            }
         case AUTHENTICATION_FAIL:
             return {
                 ...state,

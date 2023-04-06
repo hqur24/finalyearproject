@@ -10,21 +10,6 @@ const Home = () => {
 
     return (
     <div className="container-fluid">
-        <div class="area" >
-            <ul class="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-            </ul>
-        </div >
-
     <div className="landingpage-container">
         <div className="row" align="center">
             <h5 className="centertext">Welcome</h5>

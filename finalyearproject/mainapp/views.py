@@ -3,7 +3,7 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 import datetime, json
 from rest_framework import viewsets, generics, status, permissions, serializers, exceptions
 from .forms import RegistrationForm, LoginForm
-from .serializers import MoodSerializer, AssignmentSerializer, ExamSerializer, UserSerializer
+from .serializers import ExamTypeSerializer, MoodSerializer, AssignmentSerializer, ExamSerializer, UserSerializer
 from .models import CustomUser, Mood, Exam, Assignment
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
@@ -30,13 +30,29 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 ##### ------------------ ITEM (Moods, Assignments, Exams) VIEW FUNCTIONS ------------------------
 @method_decorator(csrf_exempt, name='dispatch')
 class MoodsAPI(APIView):
-    # permission_classes =(permissions.AllowAny, )
     permission_classes =(permissions.AllowAny,)
 
-    def get(self, request):
+    def post(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data['author'] = int|(request.user.id)
+        print('Request data:', data)
 
+        serializer = MoodSerializer(data=data)
+        # if serializer.is_valid(raise_exception=True):
+        #     serializer.save()
+        #     print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
         username = request.user.username
-        print('Current user:', username)
+        #print('Current user:', username)
 
         mood_data = []
         for mood in Mood.objects.filter(author__username=username):
@@ -51,19 +67,38 @@ class MoodsAPI(APIView):
 
             mood_data.append(mood_item)
         return JsonResponse({'moods': mood_data})
-    
+
+@method_decorator(csrf_exempt, name='dispatch')
 class AssignmentAPI(APIView):
     permission_classes =(permissions.AllowAny, )
+
+    def post(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data['author'] = int(request.user.id)
+        print('Request data:', data)
+
+        serializer = AssignmentSerializer(data=data)
+        # if serializer.is_valid(raise_exception=True):
+        #     serializer.save()
+        #     print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         assignment_data = []
         username = request.user.username
 
         # This if frontend is running on same port as Django
-        # for assignment in Assignment.objects.filter(author__username=username):
+        for assignment in Assignment.objects.filter(author__username=username):
 
         #This if frontend is running on :3000 port 
-        for assignment in Assignment.objects.all():
+        # for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
@@ -84,16 +119,34 @@ class AssignmentAPI(APIView):
 @method_decorator(csrf_exempt, name='dispatch')
 class ExamsAPI(APIView):
     permission_classes =(permissions.AllowAny, )
+    def post(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data['author'] = int|(request.user.id)
+        print('Request data:', data)
+
+        serializer = ExamSerializer(data=data)
+        # if serializer.is_valid(raise_exception=True):
+        #     serializer.save()
+        #     print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def get(self, request):
         exam_data = []
         username = request.user.username
 
         # This if frontend is running on same port as Django
-        # for exam in Exam.objects.filter(author__username=username):
+        for exam in Exam.objects.filter(author__username=username):
 
         #This if frontend is running on :3000 port 
-        for exam in Exam.objects.all():
+        # for exam in Exam.objects.all():
             exam_item = {}
             user_data= {
                 'username' : exam.author.username,
@@ -107,6 +160,7 @@ class ExamsAPI(APIView):
 
             exam_data.append(exam_item)
         return JsonResponse({'exams': exam_data})
+    
 
 ##### ----------------- AUTHENTICATION VIEW FUNCTIONS -------------------------------------
 #Register View Function
@@ -191,6 +245,15 @@ class UsersViewAPI(APIView):
         users = UserSerializer(users, many=True)
         return Response(users.data)
     
+class GetCurrentUserAPI(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, format=None):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+
+
+    
 #------------------- DJANGO REST FRAMEWORK VIEW FUNCTIONS (mainly for browsable rest api) -----------------------------
 #These work with serializers 
 class UserView(viewsets.ModelViewSet):
@@ -210,3 +273,7 @@ class AssignmentView(viewsets.ModelViewSet):
 class ExamView(viewsets.ModelViewSet):
     serializer_class = ExamSerializer
     queryset = Exam.objects.all()
+
+# class ExamTypeView(APIView):
+#     serializer_class = ExamTypeSerializer
+#     queryset = Exam.objects.all()

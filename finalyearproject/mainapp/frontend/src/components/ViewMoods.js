@@ -27,7 +27,6 @@ render() {
 
   return (
     <div>
-        <h5>Moods</h5>
         {moods.map(mood => (
             <div class="card bg-light mb-3" style={{width: '18rem'}}>
                 <div class="card-body">
