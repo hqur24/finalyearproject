@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.response import Response
-from .models import CustomUser, Mood, Assignment, Exam
+from .models import CustomUser, Mood, Assignment, Exam, Application
 
 class UserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=254)
@@ -72,3 +72,15 @@ class ExamTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exam
         fields = ('exam_type')
+
+
+class ApplicationSerializer(serializers.ModelSerializer):
+    author = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
+    class Meta:
+        model = Application
+        fields = '__all__'
+
+    def get_author(self, obj):
+        print(self)
+        print(obj)
+        return obj.author.username

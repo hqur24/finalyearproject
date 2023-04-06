@@ -6,7 +6,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings 
 from rest_framework import routers
-from .views import MoodsAPI, ExamsAPI, AssignmentAPI, RegisterAPI, LoginAPI, LogoutAPI, AuthenticationCheckAPI, CSRFTokenRetrieveAPI, UsersViewAPI, GetCurrentUserAPI
+from .views import MoodAPI, ExamAPI, AssignmentAPI, ApplicationAPI, RegisterAPI, LoginAPI, LogoutAPI, AuthenticationCheckAPI, CSRFTokenRetrieveAPI, UsersViewAPI, GetCurrentUserAPI
 
 
 router = routers.DefaultRouter()
@@ -14,6 +14,7 @@ router = routers.DefaultRouter()
 router.register(r'moods', views.MoodView, 'mood')
 router.register(r'assignments', views.AssignmentView, 'assignment')
 router.register(r'exams', views.ExamView, 'exam')
+router.register(r'applications', views.ApplicationView, 'application')
 
 
 urlpatterns = [
@@ -26,10 +27,10 @@ urlpatterns = [
     path('accounts/csrf_token/', CSRFTokenRetrieveAPI.as_view(), name='csrf'),
     path('accounts/currentuser/', GetCurrentUserAPI.as_view(), name='currentuser'),
     path('accounts/viewusers/', UsersViewAPI.as_view(), name='usersview'),    
-    path('items/moods/', MoodsAPI.as_view()),
+    path('items/moods/', MoodAPI.as_view()),
     path('items/assignments/', AssignmentAPI.as_view(), name='assignments'),
-    path('items/exams/', ExamsAPI.as_view()),
-
+    path('items/exams/', ExamAPI.as_view()),
+    path('items/applications/', ApplicationAPI.as_view()),
 ]
 
 urlpatterns += [re_path(r'^.*', TemplateView.as_view(template_name='index.html'))]

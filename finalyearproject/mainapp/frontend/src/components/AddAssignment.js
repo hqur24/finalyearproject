@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-
-
 const AddAssignment = () => {
   const [assignmentData, setAssignmentData] = useState({
     assignment_title: "",

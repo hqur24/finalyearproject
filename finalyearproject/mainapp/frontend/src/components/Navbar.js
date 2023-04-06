@@ -24,7 +24,7 @@ const Navbar = ({isAuthenticated, logout}) => {
       <NavLink className="nav-link active" to="/exams">Exams</NavLink>
       </li>
       <li className="nav-item">
-      <NavLink className="nav-link active" to="#">Applications (n.w)</NavLink>
+      <NavLink className="nav-link active" to="/applications">Applications</NavLink>
       </li>
       <li className="nav-item">
       <NavLink className="nav-link active" to="/moods">Moods</NavLink>

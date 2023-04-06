@@ -10,6 +10,7 @@ import PrivateRouter from "./hocs/PrivateRouter.js";
 import Assignments from "./pages/Assignments.js";
 import Exams from "./pages/Exams";
 import Moods from "./pages/Moods";
+import Applications from "./pages/Applications";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -50,6 +51,14 @@ const App = () => (
               </PrivateRouter>
             }
           />
+          <Route
+            path="/applications"
+            element={
+              <PrivateRouter>
+                <Applications />
+              </PrivateRouter>
+            }
+          />         
           <Route
             path="/moods"
             element={

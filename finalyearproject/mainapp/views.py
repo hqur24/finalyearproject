@@ -3,8 +3,8 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 import datetime, json
 from rest_framework import viewsets, generics, status, permissions, serializers, exceptions
 from .forms import RegistrationForm, LoginForm
-from .serializers import ExamTypeSerializer, MoodSerializer, AssignmentSerializer, ExamSerializer, UserSerializer
-from .models import CustomUser, Mood, Exam, Assignment
+from .serializers import ExamTypeSerializer, MoodSerializer, AssignmentSerializer, ExamSerializer, ApplicationSerializer, UserSerializer
+from .models import CustomUser, Mood, Exam, Assignment, Application
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -29,7 +29,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 
 ##### ------------------ ITEM (Moods, Assignments, Exams) VIEW FUNCTIONS ------------------------
 @method_decorator(csrf_exempt, name='dispatch')
-class MoodsAPI(APIView):
+class MoodAPI(APIView):
     permission_classes =(permissions.AllowAny,)
 
     def post(self, request, *args, **kwargs):
@@ -117,7 +117,7 @@ class AssignmentAPI(APIView):
         return JsonResponse({'assignments': assignment_data})
     
 @method_decorator(csrf_exempt, name='dispatch')
-class ExamsAPI(APIView):
+class ExamAPI(APIView):
     permission_classes =(permissions.AllowAny, )
     def post(self, request, *args, **kwargs):
         data = request.data.copy()
@@ -160,6 +160,55 @@ class ExamsAPI(APIView):
 
             exam_data.append(exam_item)
         return JsonResponse({'exams': exam_data})
+    
+@method_decorator(csrf_exempt, name='dispatch')
+class ApplicationAPI(APIView):
+    permission_classes =(permissions.AllowAny, )
+
+    def post(self, request, *args, **kwargs):
+        data = request.data.copy()
+        data['author'] = int(request.user.id)
+        print('Request data:', data)
+
+        serializer = ApplicationSerializer(data=data)
+        # if serializer.is_valid(raise_exception=True):
+        #     serializer.save()
+        #     print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request):
+        application_data = []
+        username = request.user.username
+
+        # This if frontend is running on same port as Django
+        for application in Application.objects.filter(author__username=username):
+
+        #This if frontend is running on :3000 port 
+        # for assignment in Assignment.objects.all():
+            application_item = {}
+            user_data= {
+                'username' : application.author.username,
+            }
+
+            application_item['application_company'] = application.application_company
+            application_item['application_deadline'] = application.application_deadline
+            application_item['application_type'] = application.application_type
+            application_item['application_notes'] = application.application_notes
+            application_item['application_status'] = application.application_status
+            application_item['author'] = user_data['username']
+
+            application_data.append(application_item)
+
+        
+        application_data.sort(key=lambda x: x['application_deadline'])
+        return JsonResponse({'applications': application_data})
     
 
 ##### ----------------- AUTHENTICATION VIEW FUNCTIONS -------------------------------------
@@ -273,6 +322,10 @@ class AssignmentView(viewsets.ModelViewSet):
 class ExamView(viewsets.ModelViewSet):
     serializer_class = ExamSerializer
     queryset = Exam.objects.all()
+
+class ApplicationView(viewsets.ModelViewSet):
+    serializer_class = ApplicationSerializer
+    queryset = Application.objects.all()
 
 # class ExamTypeView(APIView):
 #     serializer_class = ExamTypeSerializer

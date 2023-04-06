@@ -3,8 +3,6 @@ import { Navigate, Link } from "react-router-dom";
 import { connect } from 'react-redux'
 import LearnMore from "../components/LearnMore/LearnMore";
 
-
-
 const Home = () => {
     const [open, setOpen] = useState(false);
 
@@ -35,8 +33,6 @@ const Home = () => {
             <div className="col" align="center">
                 <button type="button" className="btn btn-info" onClick={() => setOpen(true)}>Learn More</button>
                 {open ? <LearnMore closeLearnMore={() => setOpen(false)} /> : null}
-
-                {/* {open ? <LearnMore text="Hello there!" closeLearnMore={() => setOpen(false)} /> : null} */}
             </div>
         </div>
     </div>
