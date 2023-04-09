@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Home from "./pages/Home.js";
+import LandingPage from "./pages/LandingPage";
 import Dashboard from "./pages/Dashboard.js";
 import Login from "./pages/Login.js";
 import Register from "./pages/Register.js";
@@ -32,7 +32,7 @@ const App = () => (
               </PrivateRouter>
             }
           />
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<LandingPage />} />
           <Route exact path="/register" element={<Register />} />
           <Route exact path="/login" element={<Login />} />
           <Route

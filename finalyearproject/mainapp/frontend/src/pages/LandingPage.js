@@ -3,7 +3,7 @@ import { Navigate, Link } from "react-router-dom";
 import { connect } from 'react-redux'
 import LearnMore from "../components/LearnMore/LearnMore";
 
-const Home = () => {
+const LandingPage = () => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -40,4 +40,4 @@ const Home = () => {
     )
 };
 
-export default Home;
+export default LandingPage;

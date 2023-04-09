@@ -1,9 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Navigate, Link } from "react-router-dom";
-import ViewMoods from "../components/ViewMoods";
-import ViewAssignments from "../components/ViewAssignments";
-import ViewExams from "../components/ViewExams";
+
+import DashboardAssignments from "../components/DashboardAssignments";
+import DashboardExams from "../components/DashboardExams";
+import DashboardMoods from "../components/DashboardMoods";
 
 const Dashboard = () => {
   return (
@@ -16,7 +17,7 @@ const Dashboard = () => {
           <div className="dashboard-container-items">
             <h5>Upcoming Assignments</h5>
             <p>Go to the assignments page to view all and add more.</p>
-            <ViewAssignments></ViewAssignments>
+            <DashboardAssignments></DashboardAssignments>
           </div>
         </div>
 
@@ -24,14 +25,14 @@ const Dashboard = () => {
           <div className="dashboard-container-items">
             <h5>Upcoming Exams</h5>
             <p>Go to the exams page to view all and add more.</p>
-            <ViewExams></ViewExams>
+            <DashboardExams></DashboardExams>
           </div>
         </div>
 
         <div class="col-2">
           <div className="dashboard-container-items">
             <h5>Mood Log</h5>
-            <ViewMoods></ViewMoods>
+            <DashboardMoods></DashboardMoods>
           </div>
         </div>
       </div>

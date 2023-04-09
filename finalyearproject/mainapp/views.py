@@ -56,7 +56,7 @@ class MoodAPI(APIView):
 
         mood_data = []
         for mood in Mood.objects.filter(author__username=username):
-        # for mood in Mood.objects.all():
+        #for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -98,12 +98,12 @@ class AssignmentAPI(APIView):
         for assignment in Assignment.objects.filter(author__username=username):
 
         #This if frontend is running on :3000 port 
-        # for assignment in Assignment.objects.all():
+        #for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
             }
-
+            assignment_item['id'] = assignment.id
             assignment_item['assignment_title'] = assignment.assignment_title
             assignment_item['assignment_desc'] = assignment.assignment_desc
             assignment_item['assignment_due_date'] = assignment.assignment_due_date
@@ -115,6 +115,18 @@ class AssignmentAPI(APIView):
         
         assignment_data.sort(key=lambda x: x['assignment_due_date'])
         return JsonResponse({'assignments': assignment_data})
+    
+    def patch(self, request, assignment_id):
+        updated_assignment = Assignment.objects.get(id=assignment_id)
+        serializer = AssignmentSerializer(updated_assignment, data=request.data, partial=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
     
 @method_decorator(csrf_exempt, name='dispatch')
 class ExamAPI(APIView):
@@ -146,12 +158,12 @@ class ExamAPI(APIView):
         for exam in Exam.objects.filter(author__username=username):
 
         #This if frontend is running on :3000 port 
-        # for exam in Exam.objects.all():
+        #for exam in Exam.objects.all():
             exam_item = {}
             user_data= {
                 'username' : exam.author.username,
             }
-
+            exam_item['id'] = exam.id
             exam_item['exam_name'] = exam.exam_name
             exam_item['exam_date'] = exam.exam_date
             exam_item['exam_type'] = exam.exam_type
@@ -160,6 +172,18 @@ class ExamAPI(APIView):
 
             exam_data.append(exam_item)
         return JsonResponse({'exams': exam_data})
+    
+    def patch(self, request, exam_id):
+        updated_exam = Exam.objects.get(id=exam_id)
+        serializer = ExamSerializer(updated_exam, data=request.data, partial=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
     
 @method_decorator(csrf_exempt, name='dispatch')
 class ApplicationAPI(APIView):
@@ -191,12 +215,13 @@ class ApplicationAPI(APIView):
         for application in Application.objects.filter(author__username=username):
 
         #This if frontend is running on :3000 port 
-        # for assignment in Assignment.objects.all():
+        #for application in Application.objects.all():
             application_item = {}
             user_data= {
                 'username' : application.author.username,
             }
 
+            application_item['id'] = application.id
             application_item['application_company'] = application.application_company
             application_item['application_deadline'] = application.application_deadline
             application_item['application_type'] = application.application_type
@@ -209,6 +234,18 @@ class ApplicationAPI(APIView):
         
         application_data.sort(key=lambda x: x['application_deadline'])
         return JsonResponse({'applications': application_data})
+
+    def patch(self, request, application_id):
+        updated_application = Application.objects.get(id=application_id)
+        serializer = ApplicationSerializer(updated_application, data=request.data, partial=True)
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
     
 
 ##### ----------------- AUTHENTICATION VIEW FUNCTIONS -------------------------------------

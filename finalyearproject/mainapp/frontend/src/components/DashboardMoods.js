@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
 import axios from 'axios';
 
-const ViewMoods = () => {
+const DashboardMoods = () => {
   const [moods, setMoods] = useState([]);
 
   useEffect(() => {
@@ -29,4 +29,4 @@ const ViewMoods = () => {
  );
 }
 
-export default ViewMoods
+export default DashboardMoods
