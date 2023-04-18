@@ -36,6 +36,20 @@ const ViewExams = () => {
     setRefreshButton(!refreshButton);
   };
 
+    // if status is either and date is also either (for now)
+    const currentExamsArray = exams.filter(
+      (exam) => (new Date(exam.exam_date) < new Date() && !exam.assignment_status) || (new Date(exam.exam_date) > new Date() )
+      );
+
+    //if date is in past and status is complete (true)
+    const pastExamsArray = exams.filter(
+      (exam) =>
+        new Date(exam.exam_date) < new Date() &&
+        exam.exam_status
+    );
+  
+
+
   return (
     <div>
       <button
@@ -45,7 +59,9 @@ const ViewExams = () => {
       >
         Refresh Exams
       </button>
-      {exams.map((exam, index) => (
+      <div className="current-container">
+        <h4>Current Exams</h4>
+      {currentExamsArray.map((exam, index) => (
         <div class="card bg-light mb-3" style={{ width: "18rem" }}>
           <div class="card-body">
             <h5 class="card-title">{exam.exam_name}</h5>
@@ -125,6 +141,91 @@ const ViewExams = () => {
           </div>
         </div>
       ))}
+      </div>
+      <div className="past-container">
+        <h4>Past Exams</h4>
+      {pastExamsArray.map((exam, index) => (
+        <div class="card bg-light mb-3" style={{ width: "18rem" }}>
+          <div class="card-body">
+            <h5 class="card-title">{exam.exam_name}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              Date: {exam.exam_date}
+            </h6>
+            <p>Exam Type: {exam.exam_type}</p>
+            <p>Author: {exam.author}</p>
+            <p>Status: {exam.exam_status ? "Complete" : "Incomplete"}</p>
+
+            <p>
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={() => {
+                  setOpenStatusModal(true);
+                  setExamId(exam.id);
+                  setExamName(exam.exam_name);
+                  setExamStatus(exam.exam_status);
+                }}
+              >
+                Update Status
+              </button>
+              {openStatusModal ? (
+                <UpdateStatusExam
+                  closeUpdateModal={() => setOpenStatusModal(false)}
+                  examId={examId}
+                  examName={examName}
+                  previousExamStatus={examStatus}
+                />
+              ) : null}
+            </p>
+            <p>
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={() => {
+                  setOpenDateModal(true);
+                  setExamId(exam.id);
+                  setExamName(exam.exam_name);
+                  setExamDate(exam.exam_date);
+                }}
+              >
+                Update Due Date
+              </button>
+
+              {openDateModal ? (
+                <UpdateDateExam
+                  closeUpdateModal={() => setOpenDateModal(false)}
+                  examId={examId}
+                  examName={examName}
+                  previousExamDate={examDate}
+                />
+              ) : null}
+            </p>
+            <p>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => {
+                  setOpenDeleteModal(true);
+                  setExamId(exam.id);
+                  setExamName(exam.exam_name);
+                }}
+              >
+                Delete
+              </button>
+
+              {openDeleteModal ? (
+                <DeleteExam
+                  closeDeleteModal={() => setOpenDeleteModal(false)}
+                  examId={examId}
+                  examName={examName}
+                />
+              ) : null}
+            </p>
+          </div>
+        </div>
+      ))}
+      </div>
+
     </div>
   );
 };

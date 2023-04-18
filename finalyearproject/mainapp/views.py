@@ -96,10 +96,10 @@ class AssignmentAPI(APIView):
         username = request.user.username
 
         # This if frontend is running on same port as Django
-        #for assignment in Assignment.objects.filter(author__username=username):
+        for assignment in Assignment.objects.filter(author__username=username):
 
         #This if frontend is running on :3000 port 
-        for assignment in Assignment.objects.all():
+        #for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
@@ -156,10 +156,10 @@ class ExamAPI(APIView):
         username = request.user.username
 
         # This if frontend is running on same port as Django
-        #for exam in Exam.objects.filter(author__username=username):
+        for exam in Exam.objects.filter(author__username=username):
 
         #This if frontend is running on :3000 port 
-        for exam in Exam.objects.all():
+        #for exam in Exam.objects.all():
             exam_item = {}
             user_data= {
                 'username' : exam.author.username,
@@ -213,10 +213,10 @@ class ApplicationAPI(APIView):
         username = request.user.username
 
         # This if frontend is running on same port as Django
-        #for application in Application.objects.filter(author__username=username):
+        for application in Application.objects.filter(author__username=username):
 
         #This if frontend is running on :3000 port 
-        for application in Application.objects.all():
+        #for application in Application.objects.all():
             application_item = {}
             user_data= {
                 'username' : application.author.username,

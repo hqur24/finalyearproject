@@ -134,6 +134,24 @@ bg-white {
 }
 
 .overdue-container {
-  border: red 2px solid;
-  background-color: rgba(255, 0, 0, 0.304);
+  border: red solid 1px;
+  background-color: rgba(240, 214, 214, 0.505);
+  padding: 1%;
+  margin: 1%;
+}
+
+.past-container {
+  border: rgb(185, 182, 255) solid 1px;
+  padding: 1%;
+  margin: 1%;
+}
+
+.current-container {
+  border: rgb(173, 173, 247) solid 1px;
+  padding: 1%;
+  margin: 1%;
+}
+
+.card {
+  min-width: 75%
 }
