@@ -46,7 +46,7 @@ const ViewMoods = () => {
             <p>
               <button
                 type="button"
-                className="btn btn-info"
+                className="btn btn-danger"
                 onClick={() => {
                   setOpenDeleteModal(true);
                   setMoodId(mood.id);
@@ -54,7 +54,7 @@ const ViewMoods = () => {
                   setMoodDate(mood.mood_date);
                 }}
               >
-                Delete Mood Entry
+                Delete
               </button>
 
               {openDeleteModal ? (

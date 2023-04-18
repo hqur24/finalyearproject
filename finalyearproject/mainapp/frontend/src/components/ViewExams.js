@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UpdateStatusExam from "./UpdateStatusModals/UpdateStatusExam";
 import UpdateDateExam from "./UpdateDateModals/UpdateDateExam";
+import DeleteExam from "./DeleteModals/DeleteExam";
 
 const ViewExams = () => {
   const [exams, setExams] = useState([]);
@@ -10,6 +11,8 @@ const ViewExams = () => {
   const [openStatusModal, setOpenStatusModal] = useState(false);
   //update date functionality
   const [openDateModal, setOpenDateModal] = useState(false);
+  // delete functionality
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const [examId, setExamId] = useState();
   const [examName, setExamName] = useState();
@@ -95,6 +98,27 @@ const ViewExams = () => {
                   examId={examId}
                   examName={examName}
                   previousExamDate={examDate}
+                />
+              ) : null}
+            </p>
+            <p>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => {
+                  setOpenDeleteModal(true);
+                  setExamId(exam.id);
+                  setExamName(exam.exam_name);
+                }}
+              >
+                Delete
+              </button>
+
+              {openDeleteModal ? (
+                <DeleteExam
+                  closeDeleteModal={() => setOpenDeleteModal(false)}
+                  examId={examId}
+                  examName={examName}
                 />
               ) : null}
             </p>

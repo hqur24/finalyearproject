@@ -133,3 +133,7 @@ bg-white {
   font-size: x-small;
 }
 
+.overdue-container {
+  border: red 2px solid;
+  background-color: rgba(255, 0, 0, 0.304);
+}

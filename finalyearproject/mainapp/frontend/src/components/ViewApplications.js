@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UpdateStatusApplication from "./UpdateStatusModals/UpdateStatusApplication";
 import UpdateDateApplication from "./UpdateDateModals/UpdateDateApplication";
+import DeleteApplication from "./DeleteModals/DeleteApplication";
 
 const ViewApplications = () => {
   const [applications, setApplications] = useState([]);
@@ -9,6 +10,9 @@ const ViewApplications = () => {
   const [openStatusModal, setOpenStatusModal] = useState(false);
   //update date functionality
   const [openDateModal, setOpenDateModal] = useState(false);
+    // delete functionality
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  
   const [applicationId, setApplicationId] = useState();
   const [applicationCompany, setApplicationCompany] = useState();
   const [applicationStatus, setApplicationStatus] = useState();
@@ -96,6 +100,27 @@ const ViewApplications = () => {
                   applicationId={applicationId}
                   applicationCompany={applicationCompany}
                   previousApplicationDeadline={applicationDeadline}
+                />
+              ) : null}
+            </p>
+            <p>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => {
+                  setOpenDeleteModal(true);
+                  setApplicationId(application.id);
+                  setApplicationCompany(application.application_company);
+                }}
+              >
+                Delete
+              </button>
+
+              {openDeleteModal ? (
+                <DeleteApplication
+                  closeDeleteModal={() => setOpenDeleteModal(false)}
+                  applicationId={applicationId}
+                  applicationCompany={applicationCompany}
                 />
               ) : null}
             </p>

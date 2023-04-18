@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import UpdateStatusAssignment from "./UpdateStatusModals/UpdateStatusAssignment";
 import UpdateDateAssignment from "./UpdateDateModals/UpdateDateAssignment";
+import DeleteAssignment from "./DeleteModals/DeleteAssignment";
 
 const ViewAssignments = () => {
   const [assignments, setAssignments] = useState([]);
@@ -9,6 +10,9 @@ const ViewAssignments = () => {
   const [openStatusModal, setOpenStatusModal] = useState(false);
   //update date functionality
   const [openDateModal, setOpenDateModal] = useState(false);
+  // delete functionality
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+
 
   const [assignmentId, setAssignmentId] = useState();
   const [assignmentTitle, setAssignmentTitle] = useState();
@@ -34,6 +38,7 @@ const ViewAssignments = () => {
   };
 
   return (
+         
     <div>
       <button
         type="button"
@@ -41,7 +46,7 @@ const ViewAssignments = () => {
         onClick={refreshButtonClick}
       >
         Refresh Assignments
-      </button>
+      </button>  
       {assignments.map((assignment, index) => (
         <div class="card bg-light mb-3" style={{ width: "18rem" }}>
           <div class="card-body">
@@ -51,7 +56,6 @@ const ViewAssignments = () => {
             </h6>
             <p>{assignment.assignment_desc}</p>
             <p>Author: {assignment.author}</p>
-            {/* <p>Status: {assignment.assignment_status.toString()} </p> */}
             <p>
               Status: {assignment.assignment_status ? "Complete" : "Incomplete"}
             </p>
@@ -99,6 +103,27 @@ const ViewAssignments = () => {
                   assignmentId={assignmentId}
                   assignmentTitle={assignmentTitle}
                   previousAssignmentDueDate={assignmentDueDate}
+                />
+              ) : null}
+            </p>
+            <p>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => {
+                  setOpenDeleteModal(true);
+                  setAssignmentId(assignment.id);
+                  setAssignmentTitle(assignment.assignment_title);
+                }}
+              >
+                Delete
+              </button>
+
+              {openDeleteModal ? (
+                <DeleteAssignment
+                  closeDeleteModal={() => setOpenDeleteModal(false)}
+                  assignmentId={assignmentId}
+                  assignmentTitle={assignmentTitle}
                 />
               ) : null}
             </p>
