@@ -1,8 +1,8 @@
-import React, { Component, useState, useEffect } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import "./UpdateModals.css";
 
-const UpdateAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle, previousAssignmentStatus }) => {
+const UpdateStatusAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle, previousAssignmentStatus }) => {
   const csrftoken = getCookie("csrftoken");
   const [assignmentStatus, setAssignmentStatus] = useState("false");
   const [responseMessage, setResponseMessage] = useState(null)
@@ -90,4 +90,4 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-export default UpdateAssignment;
+export default UpdateStatusAssignment;

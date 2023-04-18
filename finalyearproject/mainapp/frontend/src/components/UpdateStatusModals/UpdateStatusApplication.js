@@ -2,7 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import "./UpdateModals.css";
 
-const UpdateApplication = ({ closeUpdateModal, applicationId, applicationCompany, previousApplicationStatus }) => {
+const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationCompany, previousApplicationStatus }) => {
   const csrftoken = getCookie("csrftoken");
   const [applicationStatus, setApplicationStatus] = useState("false");
   const [responseMessage, setResponseMessage] = useState(null)
@@ -90,4 +90,4 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-export default UpdateApplication;
+export default UpdateStatusApplication;

@@ -10,6 +10,9 @@ const AddAssignment = () => {
   });
 
   const [user, setUser] = useState("")
+
+  const [submitResponseMessage, setSubmitResponseMessage] = useState(null);
+
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const response = await fetch("http://127.0.0.1:8000/accounts/currentuser/");
@@ -86,8 +89,10 @@ const AddAssignment = () => {
 
     if (response.ok) {
       console.log("successsssss");
+      setSubmitResponseMessage("Assignment succesfully added! Click refresh to see your changes.")
     } else {
       console.log("failureeeeeeee");
+      setSubmitResponseMessage("Error while adding assignment.")
     }
   };
 
@@ -151,6 +156,7 @@ const AddAssignment = () => {
               Submit
             </button>
           </div>
+          {submitResponseMessage}
         </div>
       </form>
     </div>

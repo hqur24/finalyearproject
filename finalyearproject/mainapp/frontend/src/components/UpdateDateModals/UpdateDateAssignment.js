@@ -1,24 +1,24 @@
-import React, { Component, useState, useEffect } from "react";
+import React, {useState } from "react";
 import axios from "axios";
 import "./UpdateModals.css";
 
-const UpdateExam = ({ closeUpdateModal, examId, examName, previousExamStatus }) => {
+const UpdateDateAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle, previousAssignmentDueDate }) => {
   const csrftoken = getCookie("csrftoken");
-  const [examStatus, setExamStatus] = useState("false");
+  const [assignmentDueDate, setAssignmentDueDate] = useState("false");
   const [responseMessage, setResponseMessage] = useState(null)
 
-  const handleSubmitStatus = () => {
-    console.log("previously", previousExamStatus)
-    console.log("now submitting NON BOOLEAN", examStatus)
-    console.log("now submitting  BOOLEAN", examStatus === "true")
+  const handleSubmitDate = () => {
+    console.log("previously", previousAssignmentDueDate)
+    console.log("now submitting NON BOOLEAN", assignmentDueDate)
+    //console.log("now submitting  BOOLEAN", assignmentStatus === "true")
 
-    if (previousExamStatus === (examStatus === "true")) {
-      setResponseMessage(`You cannot set this as ${examStatus === "true" ? "Complete" : "Not Completed"} because it already has this status.`)
+    if (previousAssignmentDueDate === assignmentDueDate) {
+      setResponseMessage(`You cannot set this as ${assignmentDueDate} //{assignmentDate === "true" ? "Complete" : "Not Completed"} because it already has this status.`)
     }
     else {
          axios
-        .patch(`http://127.0.0.1:8000/api/exams/${examId}/`, {
-          exam_status: examStatus === "true",
+        .patch(`http://127.0.0.1:8000/api/assignments/${assignmentId}/`, {
+          assignment_due_date: assignmentDueDate,
         }, {
           headers: {
             'X-CSRFToken': csrftoken
@@ -44,29 +44,28 @@ const UpdateExam = ({ closeUpdateModal, examId, examName, previousExamStatus }) 
         <br></br>
 
         <h5>
-          Updating Status for:
+          Updating Due Date for:{" "}
           <strong>
-            {examName} (ID={examId})
+            {assignmentTitle} (ID={assignmentId}){" "}
           </strong>
         </h5>
         <p>
           <div class="form-group">
-            <label>Status:</label>
-            <select
+            <label>Due Date:</label>
+            <input
+              type="date"
+              name="assignment_due_date"
               class="form-control"
-              id="exampleFormControlSelect1"
-              value={examStatus}
-              onChange={(e) => setExamStatus(e.target.value)}
-            >
-              <option value="false">Not Completed</option>
-              <option value="true">Completed</option>
-            </select>
+              id="date_picker_field"
+              value={assignmentDueDate}
+              onChange={(e) => setAssignmentDueDate(e.target.value)}
+            />
           </div>
           <br></br>
           <button
             type="button"
             className="btn btn-success"
-            onClick={handleSubmitStatus}
+            onClick={handleSubmitDate}
           >
             Submit
           </button>
@@ -90,4 +89,4 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-export default UpdateExam;
+export default UpdateDateAssignment;

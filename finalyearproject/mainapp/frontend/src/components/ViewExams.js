@@ -1,13 +1,21 @@
-import React, { Component, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UpdateExam from "./UpdateModals/UpdateExam";
+import UpdateStatusExam from "./UpdateStatusModals/UpdateStatusExam";
+import UpdateDateExam from "./UpdateDateModals/UpdateDateExam";
 
 const ViewExams = () => {
   const [exams, setExams] = useState([]);
-  const [openUpdateModal, setOpenUpdateModal] = useState(false);
+
+  // update status functionality
+  const [openStatusModal, setOpenStatusModal] = useState(false);
+  //update date functionality
+  const [openDateModal, setOpenDateModal] = useState(false);
+
   const [examId, setExamId] = useState();
   const [examName, setExamName] = useState();
   const [examStatus, setExamStatus] = useState();
+  const [examDate, setExamDate] = useState();
+  const [refreshButton, setRefreshButton] = useState(false);
 
   useEffect(() => {
     axios
@@ -19,10 +27,21 @@ const ViewExams = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [refreshButton]);
+
+  const refreshButtonClick = () => {
+    setRefreshButton(!refreshButton);
+  };
 
   return (
     <div>
+      <button
+        type="button"
+        className="btn btn-info mb-3"
+        onClick={refreshButtonClick}
+      >
+        Refresh Exams
+      </button>
       {exams.map((exam, index) => (
         <div class="card bg-light mb-3" style={{ width: "18rem" }}>
           <div class="card-body">
@@ -32,16 +51,14 @@ const ViewExams = () => {
             </h6>
             <p>Exam Type: {exam.exam_type}</p>
             <p>Author: {exam.author}</p>
-            <p>
-              Status: {exam.exam_status ? "Complete" : "Incomplete"}
-            </p>
+            <p>Status: {exam.exam_status ? "Complete" : "Incomplete"}</p>
 
             <p>
               <button
                 type="button"
                 className="btn btn-info"
                 onClick={() => {
-                  setOpenUpdateModal(true);
+                  setOpenStatusModal(true);
                   setExamId(exam.id);
                   setExamName(exam.exam_name);
                   setExamStatus(exam.exam_status);
@@ -49,12 +66,35 @@ const ViewExams = () => {
               >
                 Update Status
               </button>
-              {openUpdateModal ? (
-                <UpdateExam
-                  closeUpdateModal={() => setOpenUpdateModal(false)}
+              {openStatusModal ? (
+                <UpdateStatusExam
+                  closeUpdateModal={() => setOpenStatusModal(false)}
                   examId={examId}
                   examName={examName}
                   previousExamStatus={examStatus}
+                />
+              ) : null}
+            </p>
+            <p>
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={() => {
+                  setOpenDateModal(true);
+                  setExamId(exam.id);
+                  setExamName(exam.exam_name);
+                  setExamDate(exam.exam_date);
+                }}
+              >
+                Update Due Date
+              </button>
+
+              {openDateModal ? (
+                <UpdateDateExam
+                  closeUpdateModal={() => setOpenDateModal(false)}
+                  examId={examId}
+                  examName={examName}
+                  previousExamDate={examDate}
                 />
               ) : null}
             </p>

@@ -61,6 +61,7 @@ class MoodAPI(APIView):
             user_data= {
                 'username' : mood.author.username,
             }
+            mood_item['id'] = mood.id 
             mood_item['mood_date'] = mood.mood_date
             mood_item['mood_choice'] = mood.mood_choice
             mood_item['author'] = user_data['username']
