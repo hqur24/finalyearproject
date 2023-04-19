@@ -10,7 +10,6 @@ const ViewMoods = () => {
   const [moodChoice, setMoodChoice] = useState();
   const [moodDate, setMoodDate] = useState();
 
-
   useEffect(() => {
     axios
       .get("http://127.0.0.1:8000/items/moods/")
@@ -39,33 +38,39 @@ const ViewMoods = () => {
       {moods.map((mood, index) => (
         <div class="card bg-light mb-3" style={{ width: "18rem" }}>
           <div class="card-body">
-            <h5 class="card-title">
-              {mood.mood_date}: {mood.mood_choice}
-            </h5>
-            <p>Author: {mood.author}</p>
-            <p>
-              <button
-                type="button"
-                className="btn btn-danger"
-                onClick={() => {
-                  setOpenDeleteModal(true);
-                  setMoodId(mood.id);
-                  setMoodChoice(mood.mood_choice);
-                  setMoodDate(mood.mood_date);
-                }}
-              >
-                Delete
-              </button>
+            <div className="card-heading">
+              <h5 class="card-title">
+                {mood.mood_date} </h5>
+              <div className="inline-buttons">
+                <button
+                  type="button"
+                  className="btn btn-danger delete-btn"
+                  onClick={() => {
+                    setOpenDeleteModal(true);
+                    setMoodId(mood.id);
+                    setMoodChoice(mood.mood_choice);
+                    setMoodDate(mood.mood_date);
+                  }}
+                >
+                  Delete
+                </button>
 
-              {openDeleteModal ? (
-                <DeleteMood
-                  closeDeleteModal={() => setOpenDeleteModal(false)}
-                  moodId={moodId}
-                  moodChoice={moodChoice}
-                  moodDate={moodDate}
-                />
-              ) : null}
-            </p>
+                {openDeleteModal ? (
+                  <DeleteMood
+                    closeDeleteModal={() => setOpenDeleteModal(false)}
+                    moodId={moodId}
+                    moodChoice={moodChoice}
+                    moodDate={moodDate}
+                  />
+                ) : null}
+              </div>
+            </div>
+            <h4>
+                {mood.mood_choice}
+              </h4>
+
+            <p>Author: {mood.author}</p>
+            <p></p>
           </div>
         </div>
       ))}

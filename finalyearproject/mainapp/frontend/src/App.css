@@ -1,45 +1,9 @@
-.App {
-  text-align: center;
+body {
+  background-color: #DDE8FA;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* ---------- Container DIVs Styling ----------  */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.head {
-  background-color: #282c34;
-}
 .container-fluid {
   background-color: #DDE8FA;
   min-height: 100%;
@@ -90,54 +54,131 @@
   padding-top: 0; */
 }
 
-.error-text {
-  color: red;
-  font-size: larger;
+/* ---------- Dashboard Styling ----------  */
+
+.container-dashboard {
+  background-color: aliceblue;
+  margin: 1%;
+  justify-content: center;
 }
-
-
 .dashboard-container-items {
   background-color: #dee6f2;
-  left: 5%;
-  right: 10%;
-  top: 1%;
-  bottom: 1%;
-  /* position: absolute; */
-  padding: 1%;
-  margin: 3%;
+  padding: 2%;
+  margin: 1%;
 }
 
 .dashboard-container-moods {
   background-color: #dee6f2;
-  left: 5%;
-  right: 10%;
-  top: 1%;
-  bottom: 1%;
-  /* position: absolute; */
-  padding: 1%;
-  margin: 3%;
+  padding: 2%;
+  margin: 1%;
 }
 
 bg-white {
   background-color: white;
 }
 
+/* ---------- Item Pages Styling ----------  */
+
+.container-itempage {
+  justify-content: center;
+  margin: 1%;
+
+}
+.pages-container-items {
+  margin: 2%;
+  padding: 2%;
+  background-color: #dee6f2;
+
+}
+
+.card-map-items {
+  min-width: 75%;
+  background-color: rgb(255, 255, 255);
+}
 
 
-.title-text {
+.card-heading {
+  display: inline-block;
+  min-width: 100%;
+}
+
+/* Styling for Item cards - map function  */
+.card-title {
+  display: inline-block;
+}
+
+.item-card {
+  min-width: 75%;
+}
+
+/* Button Styling - Item pages  */
+.update-btn {
+  margin: 1%;
+}
+
+.delete-btn {
+  float: right;
+  font-size: 75%;
+}
+
+.inline-buttons {
+  display: inline-block;
+  float: right;
+}
+
+.card-buttons {
   text-align: center;
 }
 
+/* Text Styling - Item Pages  */
+.title-text {
+  text-align: center;
+}
 
 #helpText {
   font-size: x-small;
 }
 
+.error-text {
+  color: red;
+  font-size: larger;
+}
+
+/* Container Grouping Styling  */
 .overdue-container {
   border: red solid 1px;
   background-color: rgba(240, 214, 214, 0.505);
   padding: 1%;
   margin: 1%;
+  animation: overdueShake 1.5s ease-in-out 0s 1 normal forwards;
+}
+
+@keyframes overdueShake {
+	0%,
+	100% {
+		transform: translateX(0);
+	}
+
+	10%,
+	30%,
+	50%,
+	70% {
+		transform: translateX(-6px);
+	}
+
+	20%,
+	40%,
+	60% {
+		transform: translateX(6px);
+	}
+
+	80% {
+		transform: translateX(3px);
+	}
+
+	90% {
+		transform: translateX(-3px);
+	}
 }
 
 .past-container {
@@ -152,6 +193,3 @@ bg-white {
   margin: 1%;
 }
 
-.card {
-  min-width: 75%
-}

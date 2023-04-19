@@ -8,11 +8,11 @@ import DashboardMoods from "../components/DashboardMoods";
 
 const Dashboard = () => {
   return (
-    <div>
-      <div class="row title-text">
+    <div className="container-dashboard">
+      <div class="row title-text ">
         <h3>Dashboard</h3>
       </div>
-      <div class="row">
+      <div class="row justify-content-center">
         <div class="col-4">
           <div className="dashboard-container-items">
             <h5>Upcoming Assignments</h5>
@@ -29,8 +29,8 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div class="col-2">
-          <div className="dashboard-container-items">
+        <div class="col-3">
+          <div className="dashboard-container-moods">
             <h5>Mood Log</h5>
             <DashboardMoods></DashboardMoods>
           </div>

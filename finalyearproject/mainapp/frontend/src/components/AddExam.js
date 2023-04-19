@@ -88,6 +88,7 @@ const AddExam = () => {
 
   return (
     <div>
+      <h5>Add Exam</h5>
       <form onSubmit={handleSubmit}>
         <div class="form-group row">
           <label class="col-4 col-form-label" for="exam_name">

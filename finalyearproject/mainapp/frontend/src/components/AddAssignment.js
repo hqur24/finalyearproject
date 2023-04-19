@@ -98,6 +98,7 @@ const AddAssignment = () => {
 
   return (
     <div>
+      <h5>Add Assignment</h5>
       <form onSubmit={handleSubmit}>
         <div class="form-group row">
           <label class="col-4 col-form-label" for="assignment_title">

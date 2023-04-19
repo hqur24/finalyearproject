@@ -93,7 +93,7 @@ const AddMood = () => {
   };
   return (
     <div>
-      <div>
+      <h5>Log your Mood</h5>
         <form onSubmit={handleSubmit}>
           <div class="form-group row">
             <label for="exam_type" class="col-4 col-form-label">
@@ -146,7 +146,6 @@ const AddMood = () => {
             </div>
           </div>
         </form>
-      </div>
     </div>
   );
 };

@@ -27,7 +27,7 @@ const Navbar = ({isAuthenticated, logout}) => {
       <NavLink className="nav-link active" to="/applications">Applications</NavLink>
       </li>
       <li className="nav-item">
-      <NavLink className="nav-link active" to="/moods">Moods</NavLink>
+      <NavLink className="nav-link active" to="/moods">Mood Tracker</NavLink>
       </li>
     </ul>
     <ul className="navbar-nav ml-auto">
