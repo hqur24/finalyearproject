@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
+import FormatDate from "./FormatDate";
 
 const DashboardExams = () => {
   const [exams, setExams] = useState([]);
@@ -19,11 +20,11 @@ const DashboardExams = () => {
   return (
     <div>
       {exams.map((exam, index) => (
-        <div class="card bg-light mb-3" style={{ width: "18rem" }}>
+        <div class="card bg-light mb-3 dashboard-card" style={{ width: "18rem" }}>
           <div class="card-body">
             <h5 class="card-title">{exam.exam_name}</h5>
             <h6 class="card-subtitle mb-2 text-muted">
-              Date: {exam.exam_date}
+              Date: <FormatDate dateString={exam.exam_date} />
             </h6>
             <p>Exam Type: {exam.exam_type}</p>
             <p>Author: {exam.author}</p>

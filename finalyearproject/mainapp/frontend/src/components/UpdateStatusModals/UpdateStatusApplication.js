@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
-import "./UpdateModals.css";
+import "./UpdateStatusModals.css";
 
 const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationCompany, previousApplicationStatus }) => {
   const csrftoken = getCookie("csrftoken");

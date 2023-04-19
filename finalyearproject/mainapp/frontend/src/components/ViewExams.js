@@ -3,6 +3,7 @@ import axios from "axios";
 import UpdateStatusExam from "./UpdateStatusModals/UpdateStatusExam";
 import UpdateDateExam from "./UpdateDateModals/UpdateDateExam";
 import DeleteExam from "./DeleteModals/DeleteExam";
+import FormatDate from "./FormatDate";
 
 const ViewExams = () => {
   const [exams, setExams] = useState([]);
@@ -38,14 +39,17 @@ const ViewExams = () => {
 
   // if status is either and date is also either (for now)
   const currentExamsArray = exams.filter(
-    (exam) =>
-      (new Date(exam.exam_date) < new Date() && !exam.assignment_status) ||
-      new Date(exam.exam_date) > new Date()
+    (exam) =>  !exam.exam_status
+      // (new Date(exam.exam_date) < new Date() && !exam.assignment_status) 
+      // ||(new Date(exam.exam_date) > new Date())
+
   );
 
   //if date is in past and status is complete (true)
   const pastExamsArray = exams.filter(
-    (exam) => new Date(exam.exam_date) < new Date() && exam.exam_status
+    // (exam) => new Date(exam.exam_date) < new Date() && exam.exam_status
+    (exam) =>  exam.exam_status
+
   );
 
   const ceaLength = currentExamsArray.length;
@@ -94,7 +98,7 @@ const ViewExams = () => {
                   </div>
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">
-                  Date: {exam.exam_date}
+                  Date: <FormatDate dateString={exam.exam_date}/>
                 </h6>
                 <p>Exam Type: {exam.exam_type}</p>
                 <p>Author: {exam.author}</p>
@@ -151,7 +155,7 @@ const ViewExams = () => {
 
       {peaLength >= 1 && (
         <div className="past-container">
-          <h4>Past Exams</h4>
+          <h4>Completed Exams</h4>
           {pastExamsArray.map((exam, index) => (
             <div class="card bg-light mb-3 item-card" style={{ width: "18rem" }}>
               <div class="card-body">
@@ -181,7 +185,7 @@ const ViewExams = () => {
                 </div>
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">
-                  Date: {exam.exam_date}
+                Date: <FormatDate dateString={exam.exam_date}/>
                 </h6>
                 <p>Exam Type: {exam.exam_type}</p>
                 <p>Author: {exam.author}</p>

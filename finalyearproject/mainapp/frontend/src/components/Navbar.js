@@ -1,13 +1,12 @@
 import React, { Fragment } from "react";
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import {connect } from 'react-redux';
 import { logout } from "../actions/authActions";
 
 const Navbar = ({isAuthenticated, logout}) => {
-
     return (
     <div>
-<nav className="navbar navbar-expand-lg bg-white">
+  <nav className="navbar navbar-expand-lg bg-white" >
   <a className="navbar-brand" href="#">S.P.A</a>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>

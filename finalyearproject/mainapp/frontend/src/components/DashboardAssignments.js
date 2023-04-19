@@ -1,5 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
+import FormatDate from "./FormatDate";
 
 const ViewAssignments = () => {
   const [assignments, setAssignments] = useState([]);
@@ -19,12 +20,11 @@ const ViewAssignments = () => {
   return (
     <div>
       {assignments.map((assignment, index) => (
-        <div class="card bg-light mb-3" style={{ width: "18rem" }}>
+        <div class="card bg-light mb-3 dashboard-card" style={{ width: "18rem" }}>
           <div class="card-body">
             <h5 class="card-title">{assignment.assignment_title}</h5>
             <h6 class="card-subtitle mb-2 text-muted">
-              Due date: {assignment.assignment_due_date}
-            </h6>
+              Due date: <FormatDate dateString={assignment.assignment_due_date}/> </h6>
             <p>{assignment.assignment_desc}</p>
             <p>Author: {assignment.author}</p>
             <p>

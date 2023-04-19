@@ -1,6 +1,6 @@
 import React, {useState } from "react";
 import axios from "axios";
-import "./UpdateModals.css";
+import "./UpdateDateModals.css";
 
 const UpdateDateAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle, previousAssignmentDueDate }) => {
   const csrftoken = getCookie("csrftoken");

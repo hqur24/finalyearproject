@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import axios from "axios";
-import "./UpdateModals.css";
+import "./UpdateStatusModals.css";
 
 const UpdateStatusAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle, previousAssignmentStatus }) => {
   const csrftoken = getCookie("csrftoken");

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DeleteMood from "./DeleteModals/DeleteMood";
+import FormatDate from "./FormatDate";
 
 const ViewMoods = () => {
   const [moods, setMoods] = useState([]);
@@ -40,7 +41,7 @@ const ViewMoods = () => {
           <div class="card-body">
             <div className="card-heading">
               <h5 class="card-title">
-                {mood.mood_date} </h5>
+                <FormatDate dateString={mood.mood_date}/> </h5>
               <div className="inline-buttons">
                 <button
                   type="button"

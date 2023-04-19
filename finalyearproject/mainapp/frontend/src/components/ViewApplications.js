@@ -3,6 +3,7 @@ import axios from "axios";
 import UpdateStatusApplication from "./UpdateStatusModals/UpdateStatusApplication";
 import UpdateDateApplication from "./UpdateDateModals/UpdateDateApplication";
 import DeleteApplication from "./DeleteModals/DeleteApplication";
+import FormatDate from "./FormatDate";
 
 const ViewApplications = () => {
   const [applications, setApplications] = useState([]);
@@ -43,9 +44,10 @@ const ViewApplications = () => {
       !application.application_status
   );
 
-  // if date is in future and status is either
+  // if date is in future and status is incomplete (false)
   const currentApplicationsArray = applications.filter(
-    (application) => new Date(application.application_deadline) > new Date()
+    (application) => new Date(application.application_deadline) > new Date()  
+    && !application.application_status
   );
 
   //if status is complete (true) and date can be either
@@ -99,7 +101,7 @@ const ViewApplications = () => {
                   </div>
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">
-                  Deadline: {application.application_deadline}
+                  Deadline: <FormatDate dateString={application.application_deadline}/>
                 </h6>
                 <p>Application Type: {application.application_type}</p>
                 <p>Application Notes: {application.application_notes} </p>
@@ -191,7 +193,7 @@ const ViewApplications = () => {
                   </div>
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">
-                  Deadline: {application.application_deadline}
+                Deadline: <FormatDate dateString={application.application_deadline}/>
                 </h6>
                 <p>Application Type: {application.application_type}</p>
                 <p>Application Notes: {application.application_notes} </p>
@@ -283,7 +285,7 @@ const ViewApplications = () => {
                 </div>
 
                 <h6 class="card-subtitle mb-2 text-muted">
-                  Deadline: {application.application_deadline}
+                Deadline: <FormatDate dateString={application.application_deadline}/>
                 </h6>
                 <p>Application Type: {application.application_type}</p>
                 <p>Application Notes: {application.application_notes} </p>
