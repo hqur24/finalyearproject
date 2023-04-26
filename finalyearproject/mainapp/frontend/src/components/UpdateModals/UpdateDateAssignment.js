@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, {useState } from "react";
 import axios from "axios";
-import "./UpdateDateModals.css";
+import "./UpdateModals.css";
 
-const UpdateDateExam = ({ closeUpdateModal, examId, examName, previousExamDate}) => {
+const UpdateDateAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle, previousAssignmentDueDate }) => {
   const csrftoken = getCookie("csrftoken");
-  const [examDate, setExamDate] = useState("false");
+  const [assignmentDueDate, setAssignmentDueDate] = useState("false");
   const [responseMessage, setResponseMessage] = useState(null)
 
   const handleSubmitDate = () => {
-    console.log("previously", previousExamDate)
-    console.log("now submitting", examDate)
+    console.log("previously", previousAssignmentDueDate)
+    console.log("now submitting NON BOOLEAN", assignmentDueDate)
+    //console.log("now submitting  BOOLEAN", assignmentStatus === "true")
 
-    if (previousExamDate === examDate) {
-      setResponseMessage(`You cannot set this as ${examDate} because it already has this date.`)
+    if (previousAssignmentDueDate === assignmentDueDate) {
+      setResponseMessage(`You cannot set this as ${assignmentDueDate} //{assignmentDate === "true" ? "Complete" : "Not Completed"} because it already has this status.`)
     }
     else {
          axios
-        .patch(`http://127.0.0.1:8000/api/exams/${examId}/`, {
-          exam_date: examDate,
+        .patch(`http://127.0.0.1:8000/api/assignments/${assignmentId}/`, {
+          assignment_due_date: assignmentDueDate,
         }, {
           headers: {
             'X-CSRFToken': csrftoken
@@ -35,17 +36,17 @@ const UpdateDateExam = ({ closeUpdateModal, examId, examName, previousExamDate})
   }
 
   return (
-    <div className="popup-container">
-      <div className="popup-body">
-        <button className="btn close-button" onClick={closeUpdateModal}>
+    <div className="update-popup-container">
+      <div className="update-popup-body">
+        <button className="btn update-close-button" onClick={closeUpdateModal}>
           X
         </button>
         <br></br>
 
         <h5>
-          Updating Exam Date for:{" "}
+          Updating Due Date for:{" "}
           <strong>
-            {examName} (ID={examId}){" "}
+            {assignmentTitle} (ID={assignmentId}){" "}
           </strong>
         </h5>
         <p>
@@ -56,8 +57,8 @@ const UpdateDateExam = ({ closeUpdateModal, examId, examName, previousExamDate})
               name="assignment_due_date"
               class="form-control"
               id="date_picker_field"
-              value={examDate}
-              onChange={(e) => setExamDate(e.target.value)}
+              value={assignmentDueDate}
+              onChange={(e) => setAssignmentDueDate(e.target.value)}
             />
           </div>
           <br></br>
@@ -88,4 +89,4 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-export default UpdateDateExam;
+export default UpdateDateAssignment;

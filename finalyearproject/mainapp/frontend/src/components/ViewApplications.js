@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UpdateStatusApplication from "./UpdateStatusModals/UpdateStatusApplication";
-import UpdateDateApplication from "./UpdateDateModals/UpdateDateApplication";
+import UpdateStatusApplication from "./UpdateModals/UpdateStatusApplication";
+import UpdateDateApplication from "./UpdateModals/UpdateDateApplication";
 import DeleteApplication from "./DeleteModals/DeleteApplication";
 import FormatDate from "./FormatDate";
 
@@ -71,7 +71,7 @@ const ViewApplications = () => {
 
       {ooaLength >= 1 && (
         <div className="overdue-container">
-          <h4>Overdue Applications!</h4>
+          <h4 className="typewriter-text">Overdue Applications!</h4>
           {overdueApplicationsArray.map((application) => (
             <div class="card bg-light mb-3 item-card" style={{ width: "18rem" }}>
               <div class="card-body">

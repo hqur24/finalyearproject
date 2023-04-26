@@ -20,8 +20,28 @@ body {
   min-height: 100%;
   padding: 2%
 }
-
 .landingpage-container {
+  /* margin-left: 4%;
+  margin-bottom: 5%;
+  margin-top: 5%;
+  margin-right: 4%; */
+  margin-top: 5%;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
+  /* display: flex;
+  flex-direction: column; */
+position: relative;
+  align-items: center;
+  justify-content: center;
+    width: 75vw;
+  height: 75vh;
+  /* min-height: 800%; */
+  padding: 2%;
+  background-color: aliceblue;
+}
+
+.landingpage-containner {
   background-color: aliceblue;
   left: 10%;
   right: 10%;
@@ -29,7 +49,16 @@ body {
   bottom: 10%;
   position: absolute;
   padding: 5%;
+  
 }
+
+.landinglogo {
+  max-width: 40vw;
+  margin: 2vw;
+
+}
+
+
 
 .form-container {
     background-color: aliceblue;
@@ -56,6 +85,28 @@ body {
   padding-top: 0; */
 }
 
+
+/* ---------- Navbar Styling ----------  */
+
+.navbar {
+  padding: 1vh
+}
+
+.navbar-brand img {
+  width: 200px;
+  object-fit: contain;
+  margin: 1%;
+}
+
+.nav-link:hover {
+  font-weight: bold;
+  font-size: medium;
+}
+
+.menuimg {
+  opacity: 65%;
+}
+
 /* ---------- Dashboard Styling ----------  */
 
 .container-dashboard {
@@ -64,13 +115,13 @@ body {
   justify-content: center;
 }
 .dashboard-container-items {
-  background-color: #dee6f2;
+  background-color: #DDE8FA;
   padding: 2%;
   margin: 1%;
 }
 
 .dashboard-container-moods {
-  background-color: #dee6f2;
+  background-color: #DDE8FA;
   padding: 2%;
   margin: 1%;
 }
@@ -94,7 +145,7 @@ bg-white {
 .pages-container-items {
   margin: 2%;
   padding: 2%;
-  background-color: #dee6f2;
+  background-color: #DDE8FA;
 
 }
 
@@ -154,39 +205,33 @@ bg-white {
 /* Container Grouping Styling  */
 .overdue-container {
   border: red solid 1px;
-  background-color: rgba(240, 214, 214, 0.505);
+  background-color: rgba(255, 0, 0, 0.107);
   padding: 1%;
   margin: 1%;
-  animation: overdueShake 1.5s ease-in-out 0s 1 normal forwards;
+  position: relative;
+  transition: top 0.3s ease-in-out;
+  position: relative;
+}
+.overdue-container:hover {
+  background-color: rgba(255, 0, 0, 0.25);
 }
 
-@keyframes overdueShake {
-	0%,
-	100% {
-		transform: translateX(0);
-	}
-
-	10%,
-	30%,
-	50%,
-	70% {
-		transform: translateX(-6px);
-	}
-
-	20%,
-	40%,
-	60% {
-		transform: translateX(6px);
-	}
-
-	80% {
-		transform: translateX(3px);
-	}
-
-	90% {
-		transform: translateX(-3px);
-	}
+.typewriter-text {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typewriter 3s forwards;
+  width: 0;
 }
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 
 .past-container {
   padding: 1%;
@@ -198,3 +243,12 @@ bg-white {
   margin: 1%;
 }
 
+/* ---------- Landing Page Styling ----------  */
+
+
+#projectText {
+  font-size: small;
+  color: grey;
+  font-style: italic;
+bottom: 0;
+position: absolute;}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./UpdateDateModals.css";
+import "./UpdateModals.css";
 
 const UpdateDateAssignment = ({
   closeUpdateModal,
@@ -44,9 +44,9 @@ const UpdateDateAssignment = ({
   };
 
   return (
-    <div className="popup-container">
-      <div className="popup-body">
-        <button className="btn close-button" onClick={closeUpdateModal}>
+    <div className="update-popup-container">
+      <div className="update-popup-body">
+        <button className="btn update-close-button" onClick={closeUpdateModal}>
           X
         </button>
         <br></br>

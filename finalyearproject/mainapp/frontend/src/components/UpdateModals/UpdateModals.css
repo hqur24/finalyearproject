@@ -1,0 +1,35 @@
+.update-popup-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.25);
+  overflow: auto;
+  z-index: 1;
+
+}
+
+.update-popup-body {
+  background-color: #ffffff;
+  margin-left: auto; 
+  margin-right: auto;
+  padding: 2%;
+  width: 40%; 
+  margin-top: 20vh;
+  margin-bottom: 20vh;
+  text-align: center;
+}
+
+.update-close-button {
+  background-color: lightgray;
+  display: flex;
+  float: right;
+
+}
+
+.update-close-button:hover {
+  background-color: grey;
+}

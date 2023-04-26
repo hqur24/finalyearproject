@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
-import "./UpdateStatusModals.css";
+import "./UpdateModals.css";
 
 const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationCompany, previousApplicationStatus }) => {
   const csrftoken = getCookie("csrftoken");
@@ -36,9 +36,9 @@ const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationC
   }
 
   return (
-    <div className="popup-container">
-      <div className="popup-body">
-        <button className="btn close-button" onClick={closeUpdateModal}>
+    <div className="update-popup-container">
+      <div className="update-popup-body">
+        <button className="btn update-close-button" onClick={closeUpdateModal}>
           X
         </button>
         <br></br>
@@ -50,10 +50,10 @@ const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationC
           </strong>
         </h5>
         <p>
-          <div class="form-group">
+          <div className="form-group">
             <label>Status:</label>
             <select
-              class="form-control"
+              className="form-control"
               id="exampleFormControlSelect1"
               value={applicationStatus}
               onChange={(e) => setApplicationStatus(e.target.value)}

@@ -67,6 +67,7 @@ class MoodAPI(APIView):
             mood_item['author'] = user_data['username']
 
             mood_data.append(mood_item)
+        mood_data.sort(key=lambda x: x['mood_date'], reverse=True)
         return JsonResponse({'moods': mood_data})
 
 @method_decorator(csrf_exempt, name='dispatch')

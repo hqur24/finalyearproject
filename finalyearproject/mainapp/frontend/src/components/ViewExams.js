@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UpdateStatusExam from "./UpdateStatusModals/UpdateStatusExam";
-import UpdateDateExam from "./UpdateDateModals/UpdateDateExam";
+import UpdateStatusExam from "./UpdateModals/UpdateStatusExam";
+import UpdateDateExam from "./UpdateModals/UpdateDateExam";
 import DeleteExam from "./DeleteModals/DeleteExam";
 import FormatDate from "./FormatDate";
 

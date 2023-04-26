@@ -1,24 +1,24 @@
-import React, { Component, useState, useEffect } from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import "./UpdateStatusModals.css";
+import "./UpdateModals.css";
 
-const UpdateStatusExam = ({ closeUpdateModal, examId, examName, previousExamStatus }) => {
+const UpdateStatusAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle, previousAssignmentStatus }) => {
   const csrftoken = getCookie("csrftoken");
-  const [examStatus, setExamStatus] = useState("false");
+  const [assignmentStatus, setAssignmentStatus] = useState("false");
   const [responseMessage, setResponseMessage] = useState(null)
 
   const handleSubmitStatus = () => {
-    console.log("previously", previousExamStatus)
-    console.log("now submitting NON BOOLEAN", examStatus)
-    console.log("now submitting  BOOLEAN", examStatus === "true")
+    console.log("previously", previousAssignmentStatus)
+    console.log("now submitting NON BOOLEAN", assignmentStatus)
+    console.log("now submitting  BOOLEAN", assignmentStatus === "true")
 
-    if (previousExamStatus === (examStatus === "true")) {
-      setResponseMessage(`You cannot set this as ${examStatus === "true" ? "Complete" : "Not Completed"} because it already has this status.`)
+    if (previousAssignmentStatus === (assignmentStatus === "true")) {
+      setResponseMessage(`You cannot set this as ${assignmentStatus === "true" ? "Complete" : "Not Completed"} because it already has this status.`)
     }
     else {
          axios
-        .patch(`http://127.0.0.1:8000/api/exams/${examId}/`, {
-          exam_status: examStatus === "true",
+        .patch(`http://127.0.0.1:8000/api/assignments/${assignmentId}/`, {
+          assignment_status: assignmentStatus === "true",
         }, {
           headers: {
             'X-CSRFToken': csrftoken
@@ -36,27 +36,27 @@ const UpdateStatusExam = ({ closeUpdateModal, examId, examName, previousExamStat
   }
 
   return (
-    <div className="popup-container">
-      <div className="popup-body">
-        <button className="btn close-button" onClick={closeUpdateModal}>
+    <div className="update-popup-container">
+      <div className="update-popup-body">
+        <button className="btn update-close-button" onClick={closeUpdateModal}>
           X
         </button>
         <br></br>
 
         <h5>
-          Updating Status for:
+          Updating Status for:{" "}
           <strong>
-            {examName} (ID={examId})
+            {assignmentTitle} (ID={assignmentId}){" "}
           </strong>
         </h5>
         <p>
-          <div class="form-group">
+          <div className="form-group">
             <label>Status:</label>
             <select
-              class="form-control"
+              className="form-control"
               id="exampleFormControlSelect1"
-              value={examStatus}
-              onChange={(e) => setExamStatus(e.target.value)}
+              value={assignmentStatus}
+              onChange={(e) => setAssignmentStatus(e.target.value)}
             >
               <option value="false">Not Completed</option>
               <option value="true">Completed</option>
@@ -90,4 +90,4 @@ function getCookie(name) {
   }
   return cookieValue;
 }
-export default UpdateStatusExam;
+export default UpdateStatusAssignment;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import UpdateStatusAssignment from "./UpdateStatusModals/UpdateStatusAssignment";
-import UpdateDateAssignment from "./UpdateDateModals/UpdateDateAssignment";
+import UpdateStatusAssignment from "./UpdateModals/UpdateStatusAssignment";
+import UpdateDateAssignment from "./UpdateModals/UpdateDateAssignment";
 import DeleteAssignment from "./DeleteModals/DeleteAssignment";
 import FormatDate from "./FormatDate";
 
@@ -70,11 +70,12 @@ const ViewAssignments = () => {
         Refresh Assignments
       </button>
       {ooaLength >= 1 && (
-        <div className="overdue-container">
-          <h4>Overdue Assignments!</h4>
+        <div className="overdue-parent">
+          <div className="overdue-container">
+          <h4 className="typewriter-text">Overdue Assignments!</h4>
           {overdueAssignmentsArray.map((assignment, index) => (
             <div
-              key={index}
+              // key={index}
               className="card bg-light mb-3 item-card"
               style={{ width: "18rem" }}
             >
@@ -110,7 +111,7 @@ const ViewAssignments = () => {
                 <p>{assignment.assignment_desc}</p>
                 <p>Author: {assignment.author}</p>
                 <p>
-                  Status:
+                  Status: 
                   {assignment.assignment_status ? "Complete" : "Incomplete"}
                 </p>{" "}
                 <div className="card-buttons">
@@ -118,6 +119,7 @@ const ViewAssignments = () => {
                     type="button"
                     className="btn btn-info update-btn"
                     onClick={() => {
+                      console.log("rendered")
                       setOpenStatusModal(true);
                       setAssignmentId(assignment.id);
                       setAssignmentTitle(assignment.assignment_title);
@@ -160,6 +162,7 @@ const ViewAssignments = () => {
               </div>
             </div>
           ))}
+          </div>
         </div>
       )}
 
@@ -263,7 +266,7 @@ const ViewAssignments = () => {
           <h4>Completed Assignments</h4>
           {pastAssignmentsArray.map((assignment, index) => (
             <div
-              key={index}
+              // key={index}
               className="card bg-light mb-3 item-card"
               style={{ width: "18rem" }}
             >

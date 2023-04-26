@@ -34,9 +34,9 @@ const DeleteApplication = ({
   
 
   return (
-    <div className="popup-container">
-      <div className="popup-body">
-        <button className="btn close-button" onClick={closeDeleteModal}>
+    <div className="delete-popup-container">
+      <div className="delete-popup-body">
+        <button className="btn delete-close-button" onClick={closeDeleteModal}>
           X
         </button>
         <br></br>
