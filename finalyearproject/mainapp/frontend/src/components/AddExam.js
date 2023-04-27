@@ -9,7 +9,10 @@ const AddExam = () => {
     author: "",
   });
 
+  const csrftoken = getCookie("csrftoken");
   const [user, setUser] = useState("")
+  const [submitResponseMessage, setSubmitResponseMessage] = useState(null);
+
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const response = await fetch("http://127.0.0.1:8000/accounts/currentuser/");
@@ -71,18 +74,21 @@ const AddExam = () => {
 
     console.log("author should be set to", user)
 
-    const response = await fetch("http://localhost:8000/api/exams/", {
+    const response = await fetch("http://127.0.0.1:8000/items/exams/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
       },
       body: JSON.stringify(data),
     });
 
     if (response.ok) {
       console.log("successsssss");
+      setSubmitResponseMessage("Exam succesfully added! Click the refresh button to view your changes.")
     } else {
       console.log("failureeeeeeee");
+      setSubmitResponseMessage("Error while adding exam. Please try again.")
     }
   };
 
@@ -154,10 +160,24 @@ const AddExam = () => {
               Submit
             </button>
           </div>
+          {submitResponseMessage}
         </div>
       </form>
     </div>
   );
 };
-
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 export default AddExam;

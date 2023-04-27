@@ -5,7 +5,7 @@ from rest_framework import viewsets, generics, status, permissions, serializers,
 from .forms import RegistrationForm, LoginForm
 from .serializers import ExamTypeSerializer, MoodSerializer, AssignmentSerializer, ExamSerializer, ApplicationSerializer, UserSerializer
 from .models import CustomUser, Mood, Exam, Assignment, Application
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie, csrf_protect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
@@ -13,50 +13,47 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.db.models import Q
 
-# Create your views here.
-
-#EDIT FOR REDIRECTION
-# def index(request):
-#     if request.user.is_authenticated:
-#         return HttpResponse("logged in")
-#     else:
-#         return HttpResponse("not logged in")
-    
-
-
+from mlai.mood_recommendation import analyse_mood
 
 ##### ------------------ ITEM (Moods, Assignments, Exams) VIEW FUNCTIONS ------------------------
 @method_decorator(csrf_exempt, name='dispatch')
 class MoodAPI(APIView):
-    permission_classes =(permissions.AllowAny,)
+    #permission_classes =(permissions.IsAuthenticated,)
 
-    def post(self, request, *args, **kwargs):
-        data = request.data.copy()
-        data['author'] = int|(request.user.id)
-        print('Request data:', data)
+    def post(self, request):
+        username = request.user.username
+
+        if not request.user.is_authenticated:
+            return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        data = request.data
+        inputted_date = data.get('mood_date')
+
+        #Filtering query which checks that there arent any existing entries from the same user for the same date already in the database.
+        existing_check = Mood.objects.filter(Q(author__username=username) & Q(mood_date=inputted_date)).first()
+
+        #If entry exists, return conflict error. 
+        if existing_check:
+            return Response({'exists': 'A mood entry for this user and date already exists.'}, status=status.HTTP_409_CONFLICT)
 
         serializer = MoodSerializer(data=data)
-        # if serializer.is_valid(raise_exception=True):
-        #     serializer.save()
-        #     print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            print('serializer.data[\'author\']:', serializer.data['author'])
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
-        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         username = request.user.username
-        #print('Current user:', username)
-
+        print('Current user:', username)
+      
         mood_data = []
-        #for mood in Mood.objects.filter(author__username=username):
-        for mood in Mood.objects.all():
+        for mood in Mood.objects.filter(author__username=username):
+        #for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -72,35 +69,30 @@ class MoodAPI(APIView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AssignmentAPI(APIView):
-    permission_classes =(permissions.AllowAny, )
+    permission_classes =(permissions.IsAuthenticated, )
 
     def post(self, request, *args, **kwargs):
-        data = request.data.copy()
+        if not request.user.is_authenticated:
+            return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        data = request.data
         data['author'] = int(request.user.id)
-        print('Request data:', data)
 
         serializer = AssignmentSerializer(data=data)
-        # if serializer.is_valid(raise_exception=True):
-        #     serializer.save()
-        #     print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+            print('serializer.data[\'author\']:', serializer.data['author'])
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
-        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         assignment_data = []
         username = request.user.username
 
-        # This if frontend is running on same port as Django
-        #for assignment in Assignment.objects.filter(author__username=username):
-
-        #This if frontend is running on :3000 port 
-        for assignment in Assignment.objects.all():
+        for assignment in Assignment.objects.filter(author__username=username):
+        #for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
@@ -132,16 +124,17 @@ class AssignmentAPI(APIView):
     
 @method_decorator(csrf_exempt, name='dispatch')
 class ExamAPI(APIView):
-    permission_classes =(permissions.AllowAny, )
+    #permission_classes =(permissions.AllowAny, )
+
     def post(self, request, *args, **kwargs):
-        data = request.data.copy()
-        data['author'] = int|(request.user.id)
-        print('Request data:', data)
+        if not request.user.is_authenticated:
+            return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        data = request.data
+        data['author'] = int(request.user.id)
 
         serializer = ExamSerializer(data=data)
-        # if serializer.is_valid(raise_exception=True):
-        #     serializer.save()
-        #     print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
+
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -149,18 +142,13 @@ class ExamAPI(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
-        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
     def get(self, request):
         exam_data = []
         username = request.user.username
 
-        # This if frontend is running on same port as Django
-        #for exam in Exam.objects.filter(author__username=username):
-
-        #This if frontend is running on :3000 port 
-        for exam in Exam.objects.all():
+        for exam in Exam.objects.filter(author__username=username):
+        #for exam in Exam.objects.all():
             exam_item = {}
             user_data= {
                 'username' : exam.author.username,
@@ -192,14 +180,13 @@ class ApplicationAPI(APIView):
     permission_classes =(permissions.AllowAny, )
 
     def post(self, request, *args, **kwargs):
-        data = request.data.copy()
+        if not request.user.is_authenticated:
+            return Response({'error': 'User not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)
+
+        data = request.data
         data['author'] = int(request.user.id)
-        print('Request data:', data)
 
         serializer = ApplicationSerializer(data=data)
-        # if serializer.is_valid(raise_exception=True):
-        #     serializer.save()
-        #     print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -207,22 +194,17 @@ class ApplicationAPI(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
-        #return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         application_data = []
         username = request.user.username
 
-        # This if frontend is running on same port as Django
-        #for application in Application.objects.filter(author__username=username):
-
-        #This if frontend is running on :3000 port 
-        for application in Application.objects.all():
+        for application in Application.objects.filter(author__username=username):
+        #for application in Application.objects.all():
             application_item = {}
             user_data= {
                 'username' : application.author.username,
             }
-
             application_item['id'] = application.id
             application_item['application_company'] = application.application_company
             application_item['application_deadline'] = application.application_deadline
@@ -249,6 +231,17 @@ class ApplicationAPI(APIView):
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
     
+##### ----------------- MOOD MACHINE LEARNING VIEW FUNCTIONS -------------------------------------
+def mlai_mood(request):
+    # Get the current user's username
+    username = request.user.username
+
+    # Predict the user's mood
+    analysed_mood = analyse_mood(request)
+    string_data = str(analysed_mood)
+
+    # Render the response#
+    return JsonResponse({'analysed mood data': string_data})
 
 ##### ----------------- AUTHENTICATION VIEW FUNCTIONS -------------------------------------
 #Register View Function
@@ -257,23 +250,10 @@ class RegisterAPI(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-    #     try:
-    #         serializer = UserSerializer(data=request.data)
-    #         if serializer.is_valid():
-    #             serializer.create(request.data)
-    #             return Response({"success": "User Created Successfully"})#, "data": serializer.data})
-
-    #     except exceptions.ValidationError as e :
-    #         return Response({"error": 'Error occured'})
-        
-        # else:
-        #     return Response({"error": "An error occurred."})
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.create(request.data)
             return Response({"success": "User Created Successfully"})#, "data": serializer.data})
-
-            # return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response({"error": "An error occurred."})
 
@@ -340,8 +320,6 @@ class GetCurrentUserAPI(APIView):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
-
-    
 #------------------- DJANGO REST FRAMEWORK VIEW FUNCTIONS (mainly for browsable rest api) -----------------------------
 #These work with serializers 
 class UserView(viewsets.ModelViewSet):

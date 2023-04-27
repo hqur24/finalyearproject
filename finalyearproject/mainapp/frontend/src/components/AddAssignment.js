@@ -10,6 +10,7 @@ const AddAssignment = () => {
   });
 
   const [user, setUser] = useState("")
+  const csrftoken = getCookie("csrftoken");
 
   const [submitResponseMessage, setSubmitResponseMessage] = useState(null);
 
@@ -79,20 +80,21 @@ const AddAssignment = () => {
 
     console.log("author should be set to", user)
 
-    const response = await fetch("http://localhost:8000/api/assignments/", {
+    const response = await fetch("http://127.0.0.1:8000/items/assignments/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "X-CSRFToken": csrftoken,
       },
       body: JSON.stringify(data),
     });
 
     if (response.ok) {
       console.log("successsssss");
-      setSubmitResponseMessage("Assignment succesfully added! Click refresh to see your changes.")
+      setSubmitResponseMessage("Assignment succesfully added! Click the refresh button to see your changes.")
     } else {
       console.log("failureeeeeeee");
-      setSubmitResponseMessage("Error while adding assignment.")
+      setSubmitResponseMessage("Error while adding assignment. Please try again.")
     }
   };
 
@@ -163,5 +165,18 @@ const AddAssignment = () => {
     </div>
   );
 };
-
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}
 export default AddAssignment;

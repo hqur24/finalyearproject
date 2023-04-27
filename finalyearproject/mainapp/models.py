@@ -62,7 +62,8 @@ class Mood(models.Model):
         }
 
     def __str__(self):
-        return self.mood_choice
+        string = self.mood_choice,self.mood_date, self.author.username
+        return str(string)
 
 class Assignment(models.Model):
     assignment_title = models.CharField(max_length = 254)
