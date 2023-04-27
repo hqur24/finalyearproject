@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../actions/authActions";
@@ -6,6 +6,24 @@ import logo from "../assets/logo.png";
 import togglerIcon from "../assets/navbaricon.png";
 
 const Navbar = ({ isAuthenticated, logout }) => {
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      const response = await fetch(
+        "http://127.0.0.1:8000/accounts/currentuser/"
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.username);
+        console.log("setting user:", data.username, data.id);
+      } else {
+        console.log("Error fetching current user");
+      }
+    };
+
+    fetchCurrentUser();
+  }, []);
   return (
     <div>
       <nav className="navbar navbar-expand-lg bg-white">
@@ -55,13 +73,28 @@ const Navbar = ({ isAuthenticated, logout }) => {
           </ul>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item active">
-            <NavLink className="nav-link active" to="/help">
+              <NavLink className="nav-link" to="/help">
                 Help
               </NavLink>
             </li>
             <li className="nav-item active">
               <a className="nav-link" onClick={logout} href="#!">
                 LOGOUT <span className="sr-only">(current)</span>
+              </a>
+            </li>
+            <li className="nav-item active">
+              <a
+                className="nav-link"
+                style={{
+                  fontSize: "x-small",
+                  fontStyle: "italic",
+                  color: "lightslategrey",
+                  maxWidth: "5vw",
+                  textAlign: "center",
+                  pointerEvents:"none"
+                }}
+              >
+                Logged in as: {user}
               </a>
             </li>
           </ul>

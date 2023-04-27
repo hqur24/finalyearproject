@@ -52,8 +52,8 @@ class MoodAPI(APIView):
         print('Current user:', username)
       
         mood_data = []
-        for mood in Mood.objects.filter(author__username=username):
-        #for mood in Mood.objects.all():
+        #for mood in Mood.objects.filter(author__username=username):
+        for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -69,7 +69,7 @@ class MoodAPI(APIView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AssignmentAPI(APIView):
-    permission_classes =(permissions.IsAuthenticated, )
+    #permission_classes =(permissions.IsAuthenticated, )
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -91,8 +91,8 @@ class AssignmentAPI(APIView):
         assignment_data = []
         username = request.user.username
 
-        for assignment in Assignment.objects.filter(author__username=username):
-        #for assignment in Assignment.objects.all():
+        #for assignment in Assignment.objects.filter(author__username=username):
+        for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
@@ -147,8 +147,8 @@ class ExamAPI(APIView):
         exam_data = []
         username = request.user.username
 
-        for exam in Exam.objects.filter(author__username=username):
-        #for exam in Exam.objects.all():
+        #for exam in Exam.objects.filter(author__username=username):
+        for exam in Exam.objects.all():
             exam_item = {}
             user_data= {
                 'username' : exam.author.username,
@@ -199,8 +199,8 @@ class ApplicationAPI(APIView):
         application_data = []
         username = request.user.username
 
-        for application in Application.objects.filter(author__username=username):
-        #for application in Application.objects.all():
+        #for application in Application.objects.filter(author__username=username):
+        for application in Application.objects.all():
             application_item = {}
             user_data= {
                 'username' : application.author.username,

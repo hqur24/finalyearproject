@@ -19,10 +19,22 @@ const DashboardMoods = () => {
 
   return (
     <div>
-      {moods.map((mood, index) => (
-        <div class="card bg-light mb-3 dashboard-card" style={{ width: "18rem" }}>
+      <p>
+        Showing 4 most recent entries. To view more, please go to the Mood
+        Tracker page.
+      </p>
+      <hr></hr>
+      {moods.slice(0, 4).map((mood, index) => (
+        <div
+          class="card bg-light mb-3 dashboard-card"
+          style={{ width: "18rem" }}
+        >
           <div class="card-body">
-            <h6 class="card-title"> < FormatDate dateString={mood.mood_date}/>{}</h6>
+            <h6 class="card-title">
+              {" "}
+              <FormatDate dateString={mood.mood_date} />
+              {}
+            </h6>
             <h5>{mood.mood_choice}</h5>
             <p>Author: {mood.author}</p>
           </div>
