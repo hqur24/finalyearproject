@@ -1,6 +1,7 @@
 import React from 'react'
 import ViewMoods from '../components/ViewMoods'
 import AddMood from '../components/AddMood'
+import MoodAnalysis from '../components/MoodAnalysis'
 
 const Moods = () => {
   return (
@@ -14,7 +15,8 @@ const Moods = () => {
 
         <h5 style={{textAlign:"center"}}>Mood Tracker</h5>
         <p style={{textAlign:"center"}}>Added items will appear here.</p>
-        <ViewMoods></ViewMoods>    
+        <ViewMoods></ViewMoods>   
+        <MoodAnalysis></MoodAnalysis> 
     </div>
     </div>
 

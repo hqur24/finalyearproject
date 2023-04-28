@@ -6,7 +6,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
-from .views import MoodAPI, ExamAPI, AssignmentAPI, ApplicationAPI, RegisterAPI, LoginAPI, LogoutAPI, AuthenticationCheckAPI, CSRFTokenRetrieveAPI, UsersViewAPI, GetCurrentUserAPI, mlai_mood
+from .views import MoodAPI, ExamAPI, AssignmentAPI, ApplicationAPI, RegisterAPI, LoginAPI, LogoutAPI, AuthenticationCheckAPI, CSRFTokenRetrieveAPI, UsersViewAPI, GetCurrentUserAPI, MoodAnalysisAPI
 
 
 router = routers.DefaultRouter()
@@ -34,7 +34,7 @@ urlpatterns = [
     path('items/applications/', ApplicationAPI.as_view()),
     path('items/assignments/<int:assignment_id>/',
          AssignmentAPI.as_view(), name='assignment-individual'),
-    path('items/analyse_mood', mlai_mood, name='analyse_mood'),
+    path('items/mood_analysis/<int:id>/', MoodAnalysisAPI.as_view(), name='moodanalysis'),
 
     path('api/', include(router.urls)),
 

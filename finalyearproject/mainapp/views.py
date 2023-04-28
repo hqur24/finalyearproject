@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 
-from mlai.mood_recommendation import analyse_mood
+from mlai.mood_analysis import generate_dataframe, generate_piechart #analyse_mood, 
 
 ##### ------------------ ITEM (Moods, Assignments, Exams) VIEW FUNCTIONS ------------------------
 @method_decorator(csrf_exempt, name='dispatch')
@@ -52,8 +52,8 @@ class MoodAPI(APIView):
         print('Current user:', username)
       
         mood_data = []
-        #for mood in Mood.objects.filter(author__username=username):
-        for mood in Mood.objects.all():
+        for mood in Mood.objects.filter(author__username=username):
+        #for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -91,8 +91,8 @@ class AssignmentAPI(APIView):
         assignment_data = []
         username = request.user.username
 
-        #for assignment in Assignment.objects.filter(author__username=username):
-        for assignment in Assignment.objects.all():
+        for assignment in Assignment.objects.filter(author__username=username):
+        #for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
@@ -147,8 +147,8 @@ class ExamAPI(APIView):
         exam_data = []
         username = request.user.username
 
-        #for exam in Exam.objects.filter(author__username=username):
-        for exam in Exam.objects.all():
+        for exam in Exam.objects.filter(author__username=username):
+        #for exam in Exam.objects.all():
             exam_item = {}
             user_data= {
                 'username' : exam.author.username,
@@ -161,6 +161,7 @@ class ExamAPI(APIView):
             exam_item['author'] = user_data['username']
 
             exam_data.append(exam_item)
+        print(type(exam_data))
         return JsonResponse({'exams': exam_data})
     
     def patch(self, request, exam_id):
@@ -199,8 +200,8 @@ class ApplicationAPI(APIView):
         application_data = []
         username = request.user.username
 
-        #for application in Application.objects.filter(author__username=username):
-        for application in Application.objects.all():
+        for application in Application.objects.filter(author__username=username):
+        #for application in Application.objects.all():
             application_item = {}
             user_data= {
                 'username' : application.author.username,
@@ -232,16 +233,15 @@ class ApplicationAPI(APIView):
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
     
 ##### ----------------- MOOD MACHINE LEARNING VIEW FUNCTIONS -------------------------------------
-def mlai_mood(request):
+class MoodAnalysisAPI(APIView):
+    def get(self, request, id):
     # Get the current user's username
-    username = request.user.username
-
-    # Predict the user's mood
-    analysed_mood = analyse_mood(request)
-    string_data = str(analysed_mood)
-
-    # Render the response#
-    return JsonResponse({'analysed mood data': string_data})
+        #id = request.user.id
+        print(id)
+        df = generate_dataframe(id)
+        df = generate_piechart(df)
+        return JsonResponse({'occurrences': df})
+    
 
 ##### ----------------- AUTHENTICATION VIEW FUNCTIONS -------------------------------------
 #Register View Function

@@ -79,8 +79,6 @@ const ViewMoods = () => {
           </div>
         ))}
       </div>
-      <h6>Mood Analysis</h6>
-      <p>Mood Analysis function to go here</p>
     </div>
   );
 };
