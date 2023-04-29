@@ -20,13 +20,23 @@ def generate_dataframe(id):
 
 
 
-def generate_piechart(df):
+def generate_barchart(df):
     occurrences = df['mood_choice'].value_counts().to_dict()
     print(type(occurrences))
     #occurrences = dict(occurrences)
     print(occurrences)
     return occurrences
 
-
-    # occurrences.plot.pie(figsize=(5, 5), autopct='%1.1f%%', startangle=90)
-    # plt.show()
+def generate_dates(df):
+    df = df.sort_values(by=['mood_date'])
+    print("DATES", df.to_string())
+    firstrow = df.head(1)
+    lastrow = df.tail(1)
+    if firstrow.equals(lastrow) == True:
+        return None
+    df = pd.concat([firstrow, lastrow])
+    df.insert(loc=0, column='Value', value=['First Entry', 'Latest Entry'])
+    df = df.set_index('Value')
+    dates = df.to_dict(orient='index')
+    print(df)
+    return dates

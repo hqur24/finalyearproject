@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 
-from mlai.mood_analysis import generate_dataframe, generate_piechart #analyse_mood, 
+from mlai.mood_analysis import generate_dataframe, generate_barchart, generate_dates #analyse_mood, 
 
 ##### ------------------ ITEM (Moods, Assignments, Exams) VIEW FUNCTIONS ------------------------
 @method_decorator(csrf_exempt, name='dispatch')
@@ -239,8 +239,9 @@ class MoodAnalysisAPI(APIView):
         #id = request.user.id
         print(id)
         df = generate_dataframe(id)
-        df = generate_piechart(df)
-        return JsonResponse({'occurrences': df})
+        barchart = generate_barchart(df)
+        dates = generate_dates(df)
+        return JsonResponse({'occurrences': barchart, 'dates': dates})
     
 
 ##### ----------------- AUTHENTICATION VIEW FUNCTIONS -------------------------------------
