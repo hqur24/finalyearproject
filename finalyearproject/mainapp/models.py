@@ -62,8 +62,9 @@ class Mood(models.Model):
         }
 
     def __str__(self):
-        string = self.mood_choice,self.mood_date, self.author.username
-        return str(string)
+        return "({}, {}, {})".format(self.get_mood_choice_display(), self.mood_date.strftime("%Y-%m-%d"), self.author)
+        # string = self.mood_choice,self.mood_date, self.author.username
+        # return str(string)
 
 class Assignment(models.Model):
     assignment_title = models.CharField(max_length = 254)
@@ -73,13 +74,17 @@ class Assignment(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1) #set to 1 as default but overriden with user logged in
 
     def __str__(self):
-        return self.assignment_title
+        # return self.assignment_title
+        return f"({self.assignment_title}, {self.assignment_desc}, {self.assignment_due_date}, {self.assignment_status}, {self.author.username})"
+
 
     def to_dict(self):
         return{
             'assignment_title': self.assignment_title,
             'assignment_desc': self.assignment_desc,
             'assignment_due_date': self.assignment_due_date,
+            'assignment_status': self.assignment_status,
+            'author': self.author,
         }
 
 class Exam(models.Model):
@@ -103,13 +108,16 @@ class Exam(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1) #set to 1 as default but overriden with user logged in
 
     def __str__(self):
-        return self.exam_name
+        return f"({self.exam_name}, {self.exam_date}, {self.exam_type}, {self.exam_status}, {self.author.username})"
+        # return self.exam_name
 
     def to_dict(self):
         return{
             'exam_name': self.exam_name,
             'exam_date': self.exam_date,
             'exam_type': self.exam_type,
+            'exam_status':self.exam_status,
+            'author':self.author
         }
     
 
@@ -119,7 +127,7 @@ class Application(models.Model):
     Internship = "Internship"
     Other = "Other"
 
-    EXAM_CHOICES = [
+    APPLICATION_CHOICES = [
         (GraduateJob, "Graduate Job"),
         (Internship, "Internship"),
         (Other, "Other Type"),
@@ -127,18 +135,21 @@ class Application(models.Model):
 
     application_company = models.CharField(max_length=254)
     application_deadline = models.DateField(default=date.today)
-    application_type = models.CharField(max_length=15,choices=EXAM_CHOICES, default=GraduateJob)
+    application_type = models.CharField(max_length=15,choices=APPLICATION_CHOICES, default=GraduateJob)
     application_notes = models.CharField(max_length = 750)
     application_status = models.BooleanField(default=False)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=1) #set to 1 as default but overriden with user logged in
 
     def __str__(self):
-        return self.application_company
+        # return self.application_company
+        return f"({self.application_company}, {self.application_deadline}, {self.application_type}, {self.application_notes}, {self.application_status}, {self.author.username})"
 
     def to_dict(self):
         return{
             'application_company': self.application_company,
             'application_deadline': self.application_deadline,
             'application_type': self.application_type,
-            'application_notes': self.application_status,
+            'application_notes': self.application_notes,
+            'application_status':self.application_status,
+            'author':self.author,
         }    

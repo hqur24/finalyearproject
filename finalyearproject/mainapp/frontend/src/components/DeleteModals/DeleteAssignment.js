@@ -14,7 +14,8 @@ const DeleteAssignment = ({
 
        axios
         .delete(
-          `http://127.0.0.1:8000/api/assignments/${assignmentId}/`,
+          // `http://127.0.0.1:8000/api/assignments/${assignmentId}/`,
+          `http://127.0.0.1:8000/items/assignments/${assignmentId}/`,
           {
             headers: {
               "X-CSRFToken": csrftoken,

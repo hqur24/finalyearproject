@@ -17,7 +17,9 @@ const UpdateStatusAssignment = ({ closeUpdateModal, assignmentId, assignmentTitl
     }
     else {
          axios
-        .patch(`http://127.0.0.1:8000/api/assignments/${assignmentId}/`, {
+        // .patch(`http://127.0.0.1:8000/api/assignments/${assignmentId}/`, {
+          .patch(`http://127.0.0.1:8000/items/assignments/${assignmentId}/`, {
+
           assignment_status: assignmentStatus === "true",
         }, {
           headers: {

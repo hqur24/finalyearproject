@@ -9,7 +9,8 @@ const DeleteMood = ({ closeDeleteModal, moodId, moodChoice, moodDate }) => {
 
   const handleDelete = () => {
     axios
-      .delete(`http://127.0.0.1:8000/api/moods/${moodId}/`, {
+      // .delete(`http://127.0.0.1:8000/api/moods/${moodId}/`, {
+        .delete(`http://127.0.0.1:8000/items/moods/${moodId}/`, {
         headers: {
           "X-CSRFToken": csrftoken,
         },

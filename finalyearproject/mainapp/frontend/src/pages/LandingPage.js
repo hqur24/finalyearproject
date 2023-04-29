@@ -9,6 +9,18 @@ const LandingPage = () => {
 
   return (
     <div className="container-fluid">
+      <div class="bubbles">
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+        <div class="bubble"></div>
+      </div>
       <div className="landingpage-container">
         <div className="row align-items-center">
           <center>
@@ -43,7 +55,6 @@ const LandingPage = () => {
             {open ? <LearnMore closeLearnMore={() => setOpen(false)} /> : null}
           </div>
         </div>
-        <div id="projectText"><p>A final year computer science project at Queen Mary University of London.</p></div>
       </div>
     </div>
   );

@@ -15,7 +15,8 @@ const DeleteApplication = ({
 
        axios
         .delete(
-          `http://127.0.0.1:8000/api/applications/${applicationId}/`,
+          // `http://127.0.0.1:8000/api/applications/${applicationId}/`,
+          `http://127.0.0.1:8000/items/applications/${applicationId}/`,
           {
             headers: {
               "X-CSRFToken": csrftoken,

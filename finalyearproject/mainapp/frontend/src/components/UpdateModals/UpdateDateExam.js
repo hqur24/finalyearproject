@@ -16,7 +16,8 @@ const UpdateDateExam = ({ closeUpdateModal, examId, examName, previousExamDate})
     }
     else {
          axios
-        .patch(`http://127.0.0.1:8000/api/exams/${examId}/`, {
+        // .patch(`http://127.0.0.1:8000/api/exams/${examId}/`, {
+          .patch(`http://127.0.0.1:8000/items/exams/${examId}/`, {
           exam_date: examDate,
         }, {
           headers: {

@@ -8,7 +8,7 @@ const AddMood = () => {
   });
 
   const csrftoken = getCookie("csrftoken");
-  const [user, setUser] = useState("")
+  const [user, setUser] = useState("");
   const [submitResponseMessage, setSubmitResponseMessage] = useState(null);
 
   useEffect(() => {

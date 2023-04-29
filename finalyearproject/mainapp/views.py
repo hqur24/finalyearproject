@@ -52,8 +52,8 @@ class MoodAPI(APIView):
         print('Current user:', username)
       
         mood_data = []
-        for mood in Mood.objects.filter(author__username=username):
-        #for mood in Mood.objects.all():
+        #for mood in Mood.objects.filter(author__username=username):
+        for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -91,8 +91,8 @@ class AssignmentAPI(APIView):
         assignment_data = []
         username = request.user.username
 
-        for assignment in Assignment.objects.filter(author__username=username):
-        #for assignment in Assignment.objects.all():
+        #for assignment in Assignment.objects.filter(author__username=username):
+        for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,

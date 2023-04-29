@@ -41,7 +41,25 @@ const ViewMoods = () => {
       <h6>All Moods ({totalMoods})</h6>
       <div className="card-row">
         {moods.map((mood, index) => (
-          <div class="card bg-light mb-3 mood-card" style={{ width: "18rem" }}>
+          // <div class="card bg-light mb-3 mood-card" style={{ width: "18rem" }}>
+          <div
+            className={`card mb-3 mood-card ${
+              mood.mood_choice === "Happy"
+                ? "bg-happy"
+                : mood.mood_choice === "Sad"
+                ? "bg-sad"
+                : mood.mood_choice === "Excited"
+                ? "bg-excited"
+                : mood.mood_choice === "Tired"
+                ? "bg-tired"
+                : mood.mood_choice === "Angry"
+                ? "bg-angry"
+                : "bg-light"
+                // : "bg-light"
+            }`}
+            style={{ width: "18rem" }}
+            key={index}
+          >
             <div class="card-body">
               <div className="card-heading">
                 <h5 class="card-title">
