@@ -1,13 +1,14 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import FormatDate from "./FormatDate";
+const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
 
 const DashboardMoods = () => {
   const [moods, setMoods] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/items/moods/")
+      .get(`${API_URL}/items/moods/`)
       .then((response) => {
         const moods = response.data.moods;
         setMoods(moods);

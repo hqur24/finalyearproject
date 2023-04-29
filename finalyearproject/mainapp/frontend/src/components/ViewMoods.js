@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DeleteMood from "./DeleteModals/DeleteMood";
 import FormatDate from "./FormatDate";
+const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
 
 const ViewMoods = () => {
   const [moods, setMoods] = useState([]);
@@ -14,7 +15,7 @@ const ViewMoods = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/items/moods/")
+      .get(`${API_URL}/items/moods/`)
       .then((response) => {
         const moods = response.data.moods;
         setMoods(moods);
@@ -55,16 +56,16 @@ const ViewMoods = () => {
                 : mood.mood_choice === "Angry"
                 ? "bg-angry"
                 : "bg-light"
-                // : "bg-light"
+              // : "bg-light"
             }`}
             style={{ width: "18rem" }}
             key={index}
           >
             <div class="card-body">
               <div className="card-heading">
-                <h5 class="card-title">
+                <h6 class="card-title">
                   <FormatDate dateString={mood.mood_date} />{" "}
-                </h5>
+                </h6>
                 <div className="inline-buttons">
                   <button
                     type="button"
@@ -91,7 +92,7 @@ const ViewMoods = () => {
               </div>
               <h4>{mood.mood_choice}</h4>
 
-              <p>Author: {mood.author}</p>
+              {/* <p>Author: {mood.author}</p> */}
               <p></p>
             </div>
           </div>

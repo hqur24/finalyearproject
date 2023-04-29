@@ -4,6 +4,7 @@ import UpdateStatusApplication from "./UpdateModals/UpdateStatusApplication";
 import UpdateDateApplication from "./UpdateModals/UpdateDateApplication";
 import DeleteApplication from "./DeleteModals/DeleteApplication";
 import FormatDate from "./FormatDate";
+const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
 
 const ViewApplications = () => {
   const [applications, setApplications] = useState([]);
@@ -23,7 +24,7 @@ const ViewApplications = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/items/applications/")
+      .get(`${API_URL}/items/applications/`)
       .then((response) => {
         const applications = response.data.applications;
         setApplications(applications);

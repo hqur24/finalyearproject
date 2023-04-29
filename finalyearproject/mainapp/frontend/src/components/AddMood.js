@@ -1,5 +1,7 @@
 
 import React, { useState, useEffect } from "react";
+const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
+
 const AddMood = () => {
   const [moodData, setMoodData] = useState({
     mood_choice: "",
@@ -13,7 +15,7 @@ const AddMood = () => {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      const response = await fetch("http://127.0.0.1:8000/accounts/currentuser/");
+      const response = await fetch(`${API_URL}/accounts/currentuser/`);
   
       if (response.ok) {
         const data = await response.json();
@@ -81,7 +83,7 @@ const AddMood = () => {
 
     console.log("author should be set to", user)
 
-    const response = await fetch("http://127.0.0.1:8000/items/moods/", {
+    const response = await fetch(`${API_URL}/items/moods/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

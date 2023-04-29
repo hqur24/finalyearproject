@@ -1,13 +1,14 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import FormatDate from "./FormatDate";
+const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
 
 const ViewAssignments = () => {
   const [assignments, setAssignments] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/items/assignments/")
+      .get(`${API_URL}/items/assignments/`)
       .then((response) => {
         const assignments = response.data.assignments;
         setAssignments(assignments);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Plot from "react-plotly.js";
 import FormatDate from "./FormatDate.js";
-const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
+const API_URL = process.env.REACT_APP_API_URL || 'http://127.0.0.1:8000';
 
 const MoodAnalysis = () => {
   const [totalEntries, setTotalEntries] = useState("");
@@ -24,9 +24,7 @@ const MoodAnalysis = () => {
       if (response.ok) {
         const data = await response.json();
         setUserId(data.id);
-        console.log("setting user:", data.username, data.id);
       } else {
-        console.log("Error fetching current user FOR ANALYSIS");
         setUserId(0);
       }
     };
@@ -36,17 +34,17 @@ const MoodAnalysis = () => {
 
   const getOccurrences = () => {
     fetch(`${API_URL}/items/mood_analysis/${userId}/`)
+    //fetch(`${API_URL}/items/mood_analysis/1/`)
+
     // fetch(`http://127.0.0.1:8000/items/mood_analysis/1/`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const { occurrences } = data;
         const totalEntries = Object.values(occurrences).reduce(
           (acc, value) => acc + value,
           0
         );
         setTotalEntries(totalEntries);
-        getDates({ totalEntries });
         if (totalEntries < 5) {
           setResponseMessageBar(
             "Not enough data to generate a graph. Please add at least 5 entries, and then try again."
@@ -61,11 +59,12 @@ const MoodAnalysis = () => {
   };
 
   const getDates = () => {
-    fetch(`${API_URL}/items/mood_analysis/${userId}/`)
+   fetch(`${API_URL}/items/mood_analysis/${userId}/`)
+    //fetch(`${API_URL}/items/mood_analysis/1/`)
+
     // fetch(`http://127.0.0.1:8000/items/mood_analysis/1/`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const { dates } = data;
         if (dates == null) {
           setResponseMessageDates(

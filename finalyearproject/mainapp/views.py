@@ -15,7 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 
-from mlai.mood_analysis import generate_dataframe, generate_barchart, generate_dates #analyse_mood, 
+from moodanalysis.mood_analysis import generate_dataframe, generate_barchart, generate_dates #analyse_mood, 
 
 ##### ------------------ ITEM (Moods, Assignments, Exams) VIEW FUNCTIONS ------------------------
 @method_decorator(csrf_exempt, name='dispatch')
@@ -52,8 +52,8 @@ class MoodAPI(APIView):
         print('Current user:', username)
       
         mood_data = []
-        #for mood in Mood.objects.filter(author__username=username):
-        for mood in Mood.objects.all():
+        for mood in Mood.objects.filter(author__username=username):
+        #for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -91,8 +91,8 @@ class AssignmentAPI(APIView):
         assignment_data = []
         username = request.user.username
 
-        #for assignment in Assignment.objects.filter(author__username=username):
-        for assignment in Assignment.objects.all():
+        for assignment in Assignment.objects.filter(author__username=username):
+        #for assignment in Assignment.objects.all():
             assignment_item = {}
             user_data= {
                 'username' : assignment.author.username,
@@ -237,7 +237,7 @@ class MoodAnalysisAPI(APIView):
     def get(self, request, id):
     # Get the current user's username
         #id = request.user.id
-        print(id)
+        #print(id)
         df = generate_dataframe(id)
         barchart = generate_barchart(df)
         dates = generate_dates(df)

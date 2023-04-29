@@ -9,27 +9,19 @@ def generate_dataframe(id):
         cursor.execute(f"SELECT mainapp_mood.id, mainapp_customuser.id, mood_date, mood_choice FROM mainapp_mood INNER JOIN mainapp_customuser ON mainapp_mood.author_id = mainapp_customuser.id WHERE mainapp_mood.author_id='{id}'")
         
         rows = cursor.fetchall()
-    #print(rows)
     dataframe = pd.DataFrame(rows, columns=['mood_id', 'author_id', 'mood_date', 'mood_choice'])
-    print(dataframe.to_string())
-
-    print("types:" , dataframe.dtypes)
     dataframe['mood_date'] = pd.to_datetime(dataframe['mood_date'])
-    print("updated:" , dataframe.dtypes)
     return dataframe
 
 
 
 def generate_barchart(df):
     occurrences = df['mood_choice'].value_counts().to_dict()
-    print(type(occurrences))
-    #occurrences = dict(occurrences)
-    print(occurrences)
+    #print(occurrences)
     return occurrences
 
 def generate_dates(df):
     df = df.sort_values(by=['mood_date'])
-    print("DATES", df.to_string())
     firstrow = df.head(1)
     lastrow = df.tail(1)
     if firstrow.equals(lastrow) == True:
@@ -38,5 +30,5 @@ def generate_dates(df):
     df.insert(loc=0, column='Value', value=['First Entry', 'Latest Entry'])
     df = df.set_index('Value')
     dates = df.to_dict(orient='index')
-    print(df)
+    #print(df)
     return dates

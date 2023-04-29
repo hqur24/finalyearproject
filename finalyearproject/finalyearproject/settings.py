@@ -15,6 +15,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+API_URL = os.environ.get('API_URL', 'http://127.0.0.1:8000/')
+
 
 
 # Quick-start development settings - unsuitable for production

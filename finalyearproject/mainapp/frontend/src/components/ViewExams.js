@@ -4,6 +4,7 @@ import UpdateStatusExam from "./UpdateModals/UpdateStatusExam";
 import UpdateDateExam from "./UpdateModals/UpdateDateExam";
 import DeleteExam from "./DeleteModals/DeleteExam";
 import FormatDate from "./FormatDate";
+const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
 
 const ViewExams = () => {
   const [exams, setExams] = useState([]);
@@ -23,7 +24,7 @@ const ViewExams = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:8000/items/exams/")
+      .get(`${API_URL}/items/exams/`)
       .then((response) => {
         const exams = response.data.exams;
         setExams(exams);
