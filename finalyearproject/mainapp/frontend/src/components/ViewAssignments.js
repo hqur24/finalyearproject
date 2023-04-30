@@ -73,96 +73,101 @@ const ViewAssignments = () => {
       {ooaLength >= 1 && (
         <div className="overdue-parent">
           <div className="overdue-container">
-          <h4 className="typewriter-text">Overdue Assignments!</h4>
-          {overdueAssignmentsArray.map((assignment, index) => (
-            <div
-              // key={index}
-              className="card bg-light mb-3 item-card"
-              style={{ width: "18rem" }}
-            >
-              <div className="card-body">
-                <div className="card-heading">
-                  <h5 className="card-title">{assignment.assignment_title}</h5>
-                  <div className="inline-buttons">
+            <h4 className="typewriter-text">Overdue Assignments!</h4>
+            {overdueAssignmentsArray.map((assignment, index) => (
+              <div
+                // key={index}
+                className="card bg-light mb-3 item-card"
+                style={{ width: "18rem" }}
+              >
+                <div className="card-body">
+                  <div className="card-heading">
+                    <h5 className="card-title">
+                      {assignment.assignment_title}
+                    </h5>
+                    <div className="inline-buttons">
+                      <button
+                        type="button"
+                        className="btn btn-danger delete-btn"
+                        onClick={() => {
+                          setOpenDeleteModal(true);
+                          setAssignmentId(assignment.id);
+                          setAssignmentTitle(assignment.assignment_title);
+                        }}
+                      >
+                        Delete
+                      </button>
+
+                      {openDeleteModal ? (
+                        <DeleteAssignment
+                          closeDeleteModal={() => setOpenDeleteModal(false)}
+                          assignmentId={assignmentId}
+                          assignmentTitle={assignmentTitle}
+                        />
+                      ) : null}
+                    </div>
+                  </div>
+                  <h6 className="card-subtitle mb-2 text-muted">
+                    Due date: {" "}
+                    <FormatDate dateString={assignment.assignment_due_date} />
+                  </h6>
+                  <hr></hr>
+                  <p style={{ marginBottom: 0 }}>
+                  <strong> Assignment Description: </strong>{" "}
+                </p>
+                <p>{assignment.assignment_desc}</p>
+                <p>
+                  <strong> Status: </strong>
+                  {assignment.assignment_status ? "Complete" : "Incomplete"}
+                </p>{" "}
+                  <div className="card-buttons">
                     <button
                       type="button"
-                      className="btn btn-danger delete-btn"
+                      className="btn btn-info update-btn"
                       onClick={() => {
-                        setOpenDeleteModal(true);
+                        console.log("rendered");
+                        setOpenStatusModal(true);
                         setAssignmentId(assignment.id);
                         setAssignmentTitle(assignment.assignment_title);
+                        setAssignmentStatus(assignment.assignment_status);
                       }}
                     >
-                      Delete
+                      Update Status
                     </button>
 
-                    {openDeleteModal ? (
-                      <DeleteAssignment
-                        closeDeleteModal={() => setOpenDeleteModal(false)}
+                    {openStatusModal ? (
+                      <UpdateStatusAssignment
+                        closeUpdateModal={() => setOpenStatusModal(false)}
                         assignmentId={assignmentId}
                         assignmentTitle={assignmentTitle}
+                        previousAssignmentStatus={assignmentStatus}
+                      />
+                    ) : null}
+                    <button
+                      type="button"
+                      className="btn btn-info update-btn"
+                      onClick={() => {
+                        setOpenDateModal(true);
+                        setAssignmentId(assignment.id);
+                        setAssignmentTitle(assignment.assignment_title);
+                        setAssignmentDueDate(assignment.assignment_due_date);
+                      }}
+                    >
+                      Update Due Date
+                    </button>
+
+                    {openDateModal ? (
+                      <UpdateDateAssignment
+                        closeUpdateModal={() => setOpenDateModal(false)}
+                        assignmentId={assignmentId}
+                        assignmentTitle={assignmentTitle}
+                        previousAssignmentDueDate={assignmentDueDate}
                       />
                     ) : null}
                   </div>
                 </div>
-                <h6 className="card-subtitle mb-2 text-muted">
-                  Due date: 
-                  <FormatDate dateString={assignment.assignment_due_date} />
-                </h6>
-                <p>{assignment.assignment_desc}</p>
-                <p>Author: {assignment.author}</p>
-                <p>
-                  Status: 
-                  {assignment.assignment_status ? "Complete" : "Incomplete"}
-                </p>{" "}
-                <div className="card-buttons">
-                  <button
-                    type="button"
-                    className="btn btn-info update-btn"
-                    onClick={() => {
-                      console.log("rendered")
-                      setOpenStatusModal(true);
-                      setAssignmentId(assignment.id);
-                      setAssignmentTitle(assignment.assignment_title);
-                      setAssignmentStatus(assignment.assignment_status);
-                    }}
-                  >
-                    Update Status
-                  </button>
-
-                  {openStatusModal ? (
-                    <UpdateStatusAssignment
-                      closeUpdateModal={() => setOpenStatusModal(false)}
-                      assignmentId={assignmentId}
-                      assignmentTitle={assignmentTitle}
-                      previousAssignmentStatus={assignmentStatus}
-                    />
-                  ) : null}
-                  <button
-                    type="button"
-                    className="btn btn-info update-btn"
-                    onClick={() => {
-                      setOpenDateModal(true);
-                      setAssignmentId(assignment.id);
-                      setAssignmentTitle(assignment.assignment_title);
-                      setAssignmentDueDate(assignment.assignment_due_date);
-                    }}
-                  >
-                    Update Due Date
-                  </button>
-
-                  {openDateModal ? (
-                    <UpdateDateAssignment
-                      closeUpdateModal={() => setOpenDateModal(false)}
-                      assignmentId={assignmentId}
-                      assignmentTitle={assignmentTitle}
-                      previousAssignmentDueDate={assignmentDueDate}
-                    />
-                  ) : null}
-                </div>
               </div>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
       )}
@@ -202,15 +207,18 @@ const ViewAssignments = () => {
                 </div>
 
                 <h6 class="card-subtitle mb-2 text-muted">
-                  Due date: {" "}
+                  Due date:{" "}
                   <FormatDate dateString={assignment.assignment_due_date} />
                 </h6>
-                <p>{assignment.assignment_desc}</p>
-                <p>Author: {assignment.author}</p>
-                <p>
-                  Status:
-                  {assignment.assignment_status ? "Complete" : "Incomplete"}
+                <hr></hr>
+                  <p style={{ marginBottom: 0 }}>
+                  <strong> Assignment Description: </strong>{" "}
                 </p>
+                <p>{assignment.assignment_desc}</p>
+                <p>
+                  <strong> Status: </strong>
+                  {assignment.assignment_status ? "Complete" : "Incomplete"}
+                </p>{" "}
 
                 <div className="card-buttons">
                   <button
@@ -300,12 +308,15 @@ const ViewAssignments = () => {
                   Due date:{" "}
                   <FormatDate dateString={assignment.assignment_due_date} />
                 </h6>
-                <p>{assignment.assignment_desc}</p>
-                <p>Author: {assignment.author}</p>
-                <p>
-                  Status:
-                  {assignment.assignment_status ? "Complete" : "Incomplete"}
+                <hr></hr>
+                  <p style={{ marginBottom: 0 }}>
+                  <strong> Assignment Description: </strong>{" "}
                 </p>
+                <p>{assignment.assignment_desc}</p>
+                <p>
+                  <strong> Status: </strong>
+                  {assignment.assignment_status ? "Complete" : "Incomplete"}
+                </p>{" "}
                 <div className="card-buttons">
                   <button
                     type="button"

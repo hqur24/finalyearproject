@@ -27,8 +27,21 @@ const DashboardMoods = () => {
       <hr></hr>
       {moods.slice(0, 4).map((mood, index) => (
         <div
-          class="card bg-light mb-3 dashboard-card"
-          style={{ width: "18rem" }}
+          className={`card mb-3 mood-card ${
+            mood.mood_choice === "Happy"
+              ? "bg-happy"
+              : mood.mood_choice === "Sad"
+              ? "bg-sad"
+              : mood.mood_choice === "Excited"
+              ? "bg-excited"
+              : mood.mood_choice === "Tired"
+              ? "bg-tired"
+              : mood.mood_choice === "Angry"
+              ? "bg-angry"
+              : "bg-light"
+            // : "bg-light"
+          }`}
+          style={{ minWidth: "60%", maxWidth: "85%" }}
         >
           <div class="card-body">
             <h6 class="card-title">
@@ -37,7 +50,6 @@ const DashboardMoods = () => {
               {}
             </h6>
             <h5>{mood.mood_choice}</h5>
-            <p>Author: {mood.author}</p>
           </div>
         </div>
       ))}

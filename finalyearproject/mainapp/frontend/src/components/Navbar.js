@@ -4,13 +4,16 @@ import { connect } from "react-redux";
 import { logout } from "../actions/authActions";
 import logo from "../assets/logo.png";
 import togglerIcon from "../assets/navbaricon.png";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const Navbar = ({ isAuthenticated, logout }) => {
   const [user, setUser] = useState("");
   useEffect(() => {
     const fetchCurrentUser = async () => {
       const response = await fetch(
-        "http://127.0.0.1:8000/accounts/currentuser/"
+        // "http://127.0.0.1:8000/accounts/currentuser/"
+        `${API_URL}/accounts/currentuser/`,
+
       );
 
       if (response.ok) {

@@ -1,8 +1,8 @@
 import pandas as pd
 from django.db import connection
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+# from sklearn.tree import DecisionTreeClassifier
+# from sklearn.model_selection import train_test_split
+# from sklearn.metrics import accuracy_score
 
 def generate_dataframe(id):
     with connection.cursor() as cursor:

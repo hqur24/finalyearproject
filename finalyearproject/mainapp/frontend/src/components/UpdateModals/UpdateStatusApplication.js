@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import "./UpdateModals.css";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationCompany, previousApplicationStatus }) => {
   const csrftoken = getCookie("csrftoken");
@@ -18,7 +19,7 @@ const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationC
     else {
          axios
         // .patch(`http://127.0.0.1:8000/api/applications/${applicationId}/`, {
-          .patch(`http://127.0.0.1:8000/items/applications/${applicationId}/`, {
+          .patch(`${API_URL}/items/applications/${applicationId}/`, {
           application_status: applicationStatus === "true",
         }, {
           headers: {

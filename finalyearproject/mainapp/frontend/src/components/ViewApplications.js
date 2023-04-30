@@ -47,8 +47,9 @@ const ViewApplications = () => {
 
   // if date is in future and status is incomplete (false)
   const currentApplicationsArray = applications.filter(
-    (application) => new Date(application.application_deadline) > new Date()  
-    && !application.application_status
+    (application) =>
+      new Date(application.application_deadline) > new Date() &&
+      !application.application_status
   );
 
   //if status is complete (true) and date can be either
@@ -74,45 +75,55 @@ const ViewApplications = () => {
         <div className="overdue-container">
           <h4 className="typewriter-text">Overdue Applications!</h4>
           {overdueApplicationsArray.map((application) => (
-            <div class="card bg-light mb-3 item-card" style={{ width: "18rem" }}>
+            <div
+              class="card bg-light mb-3 item-card"
+              style={{ width: "18rem" }}
+            >
               <div class="card-body">
                 <div className="card-heading">
-                          <h5 class="card-title">{application.application_company}</h5>
-        
-                  <div className="inline-buttons">
-                  <button
-                    type="button"
-                    className="btn btn-danger delete-btn"
-                    onClick={() => {
-                      setOpenDeleteModal(true);
-                      setApplicationId(application.id);
-                      setApplicationCompany(application.application_company);
-                    }}
-                  >
-                    Delete
-                  </button>
+                  <h5 class="card-title">{application.application_company}</h5>
 
-                  {openDeleteModal ? (
-                    <DeleteApplication
-                      closeDeleteModal={() => setOpenDeleteModal(false)}
-                      applicationId={applicationId}
-                      applicationCompany={applicationCompany}
-                    />
-                  ) : null}
+                  <div className="inline-buttons">
+                    <button
+                      type="button"
+                      className="btn btn-danger delete-btn"
+                      onClick={() => {
+                        setOpenDeleteModal(true);
+                        setApplicationId(application.id);
+                        setApplicationCompany(application.application_company);
+                      }}
+                    >
+                      Delete
+                    </button>
+
+                    {openDeleteModal ? (
+                      <DeleteApplication
+                        closeDeleteModal={() => setOpenDeleteModal(false)}
+                        applicationId={applicationId}
+                        applicationCompany={applicationCompany}
+                      />
+                    ) : null}
                   </div>
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">
-                  Deadline: <FormatDate dateString={application.application_deadline}/>
+                  Deadline:{" "}
+                  <FormatDate dateString={application.application_deadline} />
                 </h6>
-                <p>Application Type: {application.application_type}</p>
-                <p>Application Notes: {application.application_notes} </p>
-                <p>Author: {application.author}</p>
+                <hr></hr>
                 <p>
-                  Status: {application.application_status ? "Past" : "Current"}
+                  <strong> Application Type: </strong>{" "}
+                  {application.application_type}
                 </p>
-
-                  <div className="card-buttons">
-                    <button
+                <p style={{ marginBottom: 0 }}>
+                  <strong> Application Notes: </strong>{" "}
+                </p>
+                <p>{application.application_notes}</p>
+                <p>
+                  <strong> Status: </strong>
+                  {application.application_status ? "Complete" : "Incomplete"}
+                </p>{" "}
+                <div className="card-buttons">
+                  <button
                     type="button"
                     className="btn btn-info update-btn"
                     onClick={() => {
@@ -154,8 +165,7 @@ const ViewApplications = () => {
                       previousApplicationDeadline={applicationDeadline}
                     />
                   ) : null}
-                  </div>
-                     
+                </div>
               </div>
             </div>
           ))}
@@ -166,44 +176,55 @@ const ViewApplications = () => {
         <div className="current-container">
           <h4>Current Applications</h4>
           {currentApplicationsArray.map((application) => (
-            <div class="card bg-light mb-3 item-card" style={{ width: "18rem" }}>
+            <div
+              class="card bg-light mb-3 item-card"
+              style={{ width: "18rem" }}
+            >
               <div class="card-body">
                 <div className="card-heading">
-                <h5 class="card-title">{application.application_company}</h5>
+                  <h5 class="card-title">{application.application_company}</h5>
 
                   <div className="inline-buttons">
-                  <button
-                    type="button"
-                    className="btn btn-danger delete-btn"
-                    onClick={() => {
-                      setOpenDeleteModal(true);
-                      setApplicationId(application.id);
-                      setApplicationCompany(application.application_company);
-                    }}
-                  >
-                    Delete
-                  </button>
+                    <button
+                      type="button"
+                      className="btn btn-danger delete-btn"
+                      onClick={() => {
+                        setOpenDeleteModal(true);
+                        setApplicationId(application.id);
+                        setApplicationCompany(application.application_company);
+                      }}
+                    >
+                      Delete
+                    </button>
 
-                  {openDeleteModal ? (
-                    <DeleteApplication
-                      closeDeleteModal={() => setOpenDeleteModal(false)}
-                      applicationId={applicationId}
-                      applicationCompany={applicationCompany}
-                    />
-                  ) : null}
+                    {openDeleteModal ? (
+                      <DeleteApplication
+                        closeDeleteModal={() => setOpenDeleteModal(false)}
+                        applicationId={applicationId}
+                        applicationCompany={applicationCompany}
+                      />
+                    ) : null}
                   </div>
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">
-                Deadline: <FormatDate dateString={application.application_deadline}/>
+                  Deadline:{" "}
+                  <FormatDate dateString={application.application_deadline} />
                 </h6>
-                <p>Application Type: {application.application_type}</p>
-                <p>Application Notes: {application.application_notes} </p>
-                <p>Author: {application.author}</p>
+                <hr></hr>
                 <p>
-                  Status: {application.application_status ? "Past" : "Current"}
+                  <strong> Application Type: </strong>{" "}
+                  {application.application_type}
                 </p>
+                <p style={{ marginBottom: 0 }}>
+                  <strong> Application Notes: </strong>{" "}
+                </p>
+                <p>{application.application_notes}</p>
+                <p>
+                  <strong> Status: </strong>
+                  {application.application_status ? "Complete" : "Incomplete"}
+                </p>{" "}
                 <div div className="card-buttons">
-                    <button
+                  <button
                     type="button"
                     className="btn btn-info update-btn"
                     onClick={() => {
@@ -245,8 +266,7 @@ const ViewApplications = () => {
                       previousApplicationDeadline={applicationDeadline}
                     />
                   ) : null}
-                  </div>
-                
+                </div>
               </div>
             </div>
           ))}
@@ -257,45 +277,56 @@ const ViewApplications = () => {
         <div className="past-container">
           <h4>Past Applications</h4>
           {pastApplicationsArray.map((application) => (
-            <div class="card bg-light mb-3 item-card" style={{ width: "18rem" }}>
+            <div
+              class="card bg-light mb-3 item-card"
+              style={{ width: "18rem" }}
+            >
               <div class="card-body">
                 <div className="card-heading">
-                      <h5 class="card-title">{application.application_company}</h5>
+                  <h5 class="card-title">{application.application_company}</h5>
 
                   <div className="inline-buttons">
-                  <button
-                    type="button"
-                    className="btn btn-danger delete-btn"
-                    onClick={() => {
-                      setOpenDeleteModal(true);
-                      setApplicationId(application.id);
-                      setApplicationCompany(application.application_company);
-                    }}
-                  >
-                    Delete
-                  </button>
+                    <button
+                      type="button"
+                      className="btn btn-danger delete-btn"
+                      onClick={() => {
+                        setOpenDeleteModal(true);
+                        setApplicationId(application.id);
+                        setApplicationCompany(application.application_company);
+                      }}
+                    >
+                      Delete
+                    </button>
 
-                  {openDeleteModal ? (
-                    <DeleteApplication
-                      closeDeleteModal={() => setOpenDeleteModal(false)}
-                      applicationId={applicationId}
-                      applicationCompany={applicationCompany}
-                    />
-                  ) : null}
+                    {openDeleteModal ? (
+                      <DeleteApplication
+                        closeDeleteModal={() => setOpenDeleteModal(false)}
+                        applicationId={applicationId}
+                        applicationCompany={applicationCompany}
+                      />
+                    ) : null}
                   </div>
                 </div>
 
                 <h6 class="card-subtitle mb-2 text-muted">
-                Deadline: <FormatDate dateString={application.application_deadline}/>
+                  Deadline:{" "}
+                  <FormatDate dateString={application.application_deadline} />
                 </h6>
-                <p>Application Type: {application.application_type}</p>
-                <p>Application Notes: {application.application_notes} </p>
-                <p>Author: {application.author}</p>
+                <hr></hr>
                 <p>
-                  Status: {application.application_status ? "Past" : "Current"}
+                  <strong> Application Type: </strong>{" "}
+                  {application.application_type}
                 </p>
+                <p style={{ marginBottom: 0 }}>
+                  <strong> Application Notes: </strong>{" "}
+                </p>
+                <p>{application.application_notes}</p>
+                <p>
+                  <strong> Status: </strong>
+                  {application.application_status ? "Complete" : "Incomplete"}
+                </p>{" "}
 
-                  <div className="card-buttons">
+                <div className="card-buttons">
                   <button
                     type="button"
                     className="btn btn-info update-btn"
@@ -338,7 +369,7 @@ const ViewApplications = () => {
                       previousApplicationDeadline={applicationDeadline}
                     />
                   ) : null}
-                  </div>
+                </div>
               </div>
             </div>
           ))}

@@ -120,6 +120,7 @@ const AddMood = () => {
                 class="form-control"
                 id="date_picker_field"
                 value={moodData.mood_date}
+                required="required"
                 onChange={handleDateChange}
               />
               <small id="helpText" class="form-text text-muted">

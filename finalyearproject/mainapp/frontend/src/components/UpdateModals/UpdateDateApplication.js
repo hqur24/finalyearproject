@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./UpdateModals.css";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const UpdateDateAssignment = ({
   closeUpdateModal,

@@ -47,7 +47,7 @@ const MoodAnalysis = () => {
         setTotalEntries(totalEntries);
         if (totalEntries < 5) {
           setResponseMessageBar(
-            "Not enough data to generate a graph. Please add at least 5 entries, and then try again."
+            "Not enough data to generate a chart. Please add at least 5 entries, and then try again."
           );
           setShowBarGraph(false);
         } else {
@@ -80,13 +80,15 @@ const MoodAnalysis = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <hr></hr>
 
       <h5>Mood Analysis</h5>
-      <button type="button" className="btn btn-info" onClick={getDates}>
+      <div>
+           <button type="button" className="btn btn-info analysis-btn" onClick={getDates}>
         Generate Quick Facts
       </button>
+      <br></br>
       {showFacts === 3 && dates ? (
         <div className="mood-facts-note">
          <h5>Quick Mood Facts</h5>
@@ -110,7 +112,7 @@ const MoodAnalysis = () => {
         </div>
       ) : null}
 
-      <button type="button" className="btn btn-info" onClick={getOccurrences}>
+      <button type="button" className="btn btn-info analysis-btn" onClick={getOccurrences}>
         Generate Bar Chart
       </button>
       <p className="error-text">{responseMessageBar}</p>
@@ -146,6 +148,8 @@ const MoodAnalysis = () => {
           }}
         />
       )}
+      </div>
+   
     </div>
   );
 };

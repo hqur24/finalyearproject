@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./DeleteModals.css";
 import FormatDate from "../FormatDate";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const DeleteMood = ({ closeDeleteModal, moodId, moodChoice, moodDate }) => {
   const csrftoken = getCookie("csrftoken");
@@ -10,7 +11,7 @@ const DeleteMood = ({ closeDeleteModal, moodId, moodChoice, moodDate }) => {
   const handleDelete = () => {
     axios
       // .delete(`http://127.0.0.1:8000/api/moods/${moodId}/`, {
-        .delete(`http://127.0.0.1:8000/items/moods/${moodId}/`, {
+        .delete(`${API_URL}/items/moods/${moodId}/`, {
         headers: {
           "X-CSRFToken": csrftoken,
         },

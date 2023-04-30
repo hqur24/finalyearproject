@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const CSRFToken = () => {
 
@@ -23,7 +24,7 @@ const CSRFToken = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`http://127.0.0.1:8000/accounts/csrf_token/`);
+                await axios.get(`${API_URL}/accounts/csrf_token/`);
             } catch (err) {
 
             }

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "./DeleteModals.css";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const DeleteApplication = ({
   closeDeleteModal,
@@ -16,7 +17,7 @@ const DeleteApplication = ({
        axios
         .delete(
           // `http://127.0.0.1:8000/api/applications/${applicationId}/`,
-          `http://127.0.0.1:8000/items/applications/${applicationId}/`,
+          `${API_URL}/items/applications/${applicationId}/`,
           {
             headers: {
               "X-CSRFToken": csrftoken,

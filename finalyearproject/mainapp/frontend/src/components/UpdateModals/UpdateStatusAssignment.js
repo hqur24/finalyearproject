@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import axios from "axios";
 import "./UpdateModals.css";
+const API_URL = process.env.REACT_APP_API_URL;
 
 const UpdateStatusAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle, previousAssignmentStatus }) => {
   const csrftoken = getCookie("csrftoken");
@@ -18,7 +19,7 @@ const UpdateStatusAssignment = ({ closeUpdateModal, assignmentId, assignmentTitl
     else {
          axios
         // .patch(`http://127.0.0.1:8000/api/assignments/${assignmentId}/`, {
-          .patch(`http://127.0.0.1:8000/items/assignments/${assignmentId}/`, {
+          .patch(`${API_URL}/items/assignments/${assignmentId}/`, {
 
           assignment_status: assignmentStatus === "true",
         }, {

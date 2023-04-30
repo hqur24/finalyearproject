@@ -48,7 +48,7 @@ const DashboardExams = () => {
           {currentExamsArray.slice(0,4).map((exam, index) => (
             <div
               class="card bg-light mb-3 item-card"
-              style={{ width: "18rem" }}
+              style={{ maxWidth: "18rem" }}
             >
               <div class="card-body">
                 <div className="card-heading">
@@ -58,9 +58,9 @@ const DashboardExams = () => {
                 <h6 class="card-subtitle mb-2 text-muted">
                   Due date: <FormatDate dateString={exam.exam_date} />
                 </h6>
-                <p>Exam Type: {exam.exam_type}</p>
-                <p>Author: {exam.author}</p>
-                <p>Status: {exam.exam_status ? "Complete" : "Incomplete"}</p>
+                <hr></hr>
+                <p> <strong>Exam Type:  </strong>{exam.exam_type}</p>
+                <p> <strong>Status: </strong> {exam.exam_status ? "Complete" : "Incomplete"}</p>
               </div>
             </div>
           ))}

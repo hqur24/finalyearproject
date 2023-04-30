@@ -235,6 +235,7 @@ bg-white {
   white-space: nowrap;
   animation: typewriter 3s forwards;
   width: 0;
+  padding: 1%;
 }
 
 @keyframes typewriter {
@@ -343,41 +344,69 @@ position: relative;
 
 
 .bg-happy {
-  /* background-color: rgb(255, 237, 247); */
   color: rgb(251, 33, 131);
+  transition: background-color 1s ease 0s;
+}
+
+.bg-happy:hover {
+  background-color: #f8eef1;
 }
 
 .bg-sad {
-  color: rgb(86, 43, 226)
-  /* background-color: rgb(233, 229, 249); */
+  color: rgb(60, 57, 226);
+  transition: background-color 1s ease 0s;
+}
+
+.bg-sad:hover {
+  background-color: #ebeaf8 ;
 }
 
 .bg-excited {
-  color: rgb(232, 181, 28)
-  /* background-color: rgb(251, 251, 228); */
+  color: rgb(232, 181, 28);
+  transition: background-color 1s ease 0s;
+}
+
+.bg-excited:hover {
+  background-color: #f7f1de ;
+
 }
 
 .bg-tired {
-  color: rgb(17, 122, 38)
-  /* background-color: rgb(234, 255, 248); */
+  color: rgb(17, 122, 38);
+  transition: background-color 1s ease 0s;
+}
+
+.bg-tired:hover{
+  background-color: #eff7f1 ;
+
 }
 
 .bg-angry {
-  color: rgb(187, 41, 41)
-  /* background-color: rgb(248, 226, 226); */
+  color: rgb(187, 41, 41);
+  transition: background-color 1s ease 0s;
 }
 
+.bg-angry:hover {
+  background-color: #E8DCD9 ;
+
+}
 .mood-facts-note {
-  margin: 2%;
+  margin: 1rem;
   padding: 2%; 
   box-shadow: 3px 3px 5px rgba(33, 33, 33, 0.35);
   background-color: rgb(253, 253, 200);
   transition: background-color 1s ease 0s, max-width 1s ease 0s, max-height 1s ease 0s;
   border-bottom-right-radius: 60px 15px;
-  max-width: 30%;
+  min-width: 30%;
+  width: 350px;
+  max-width: 75%;
 }
 
 .mood-facts-note:hover {
   background-color: rgb(246, 246, 149);
 
+}
+
+.analysis-btn {
+  margin: 1%;
 }

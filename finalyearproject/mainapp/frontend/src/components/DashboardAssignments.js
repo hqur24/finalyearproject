@@ -51,20 +51,23 @@ const ViewAssignments = () => {
             <div
               // key={index}
               className="card bg-light mb-3 item-card overdue-card"
-              style={{ width: "18rem" }}
+              style={{ maxWidth: "18rem" }}
             >
               <div className="card-body">
                 <div className="card-heading">
                   <h5 className="card-title">{assignment.assignment_title}</h5>
                 </div>
                 <h6 className="card-subtitle mb-2 text-muted">
-                  Due date:
+                  Due date:{" "}
                   <FormatDate dateString={assignment.assignment_due_date} />
                 </h6>
+                <hr></hr>
+                <p style={{ marginBottom: 0 }}>
+                  <strong> Assignment Description: </strong>{" "}
+                </p>
                 <p>{assignment.assignment_desc}</p>
-                <p>Author: {assignment.author}</p>
                 <p>
-                  Status:
+                  <strong> Status: </strong>
                   {assignment.assignment_status ? "Complete" : "Incomplete"}
                 </p>{" "}
               </div>
@@ -75,10 +78,10 @@ const ViewAssignments = () => {
       {caaLength >= 1 && (
         <div className="current-container">
           <h6>Current</h6>
-          {currentAssignmentsArray.slice(0,4).map((assignment, index) => (
+          {currentAssignmentsArray.slice(0, 4).map((assignment, index) => (
             <div
               class="card bg-light mb-3 item-card"
-              style={{ width: "18rem" }}
+              style={{ maxWidth: "18rem" }}
             >
               <div class="card-body">
                 <div className="card-heading">
@@ -89,10 +92,13 @@ const ViewAssignments = () => {
                   Due date:{" "}
                   <FormatDate dateString={assignment.assignment_due_date} />
                 </h6>
+                <hr></hr>
+                <p style={{ marginBottom: 0 }}>
+                  <strong> Assignment Description: </strong>{" "}
+                </p>
                 <p>{assignment.assignment_desc}</p>
-                <p>Author: {assignment.author}</p>
                 <p>
-                  Status:
+                  <strong>Status: </strong>
                   {assignment.assignment_status ? "Complete" : "Incomplete"}
                 </p>
               </div>

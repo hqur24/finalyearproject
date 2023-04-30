@@ -15,8 +15,14 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# API_URL = os.environ.get('API_URL', 'http://127.0.0.1:8000')
+
+# API URLS - UNCOMMENT BASED ON WHICH ENVIRONMENT YOU ARE USING. LOCAL OR DEPLOYMENT. 
+#-------------------------------------------------------------
+
+#API_URL = os.environ.get('API_URL', 'http://127.0.0.1:8000')
 API_URL = os.environ.get('API_URL', 'http://hqur24.pythonanywhere.com')
+
+#-------------------------------------------------------------
 
 
 # Quick-start development settings - unsuitable for production

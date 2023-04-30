@@ -101,9 +101,9 @@ const ViewExams = () => {
                 <h6 class="card-subtitle mb-2 text-muted">
                   Date: <FormatDate dateString={exam.exam_date}/>
                 </h6>
-                <p>Exam Type: {exam.exam_type}</p>
-                <p>Author: {exam.author}</p>
-                <p>Status: {exam.exam_status ? "Complete" : "Incomplete"}</p>
+                <hr></hr>
+                <p> <strong>Exam Type:  </strong>{exam.exam_type}</p>
+                <p> <strong>Status: </strong> {exam.exam_status ? "Complete" : "Incomplete"}</p>
 
                 <div className="card-buttons">
                   <button
@@ -188,9 +188,9 @@ const ViewExams = () => {
                 <h6 class="card-subtitle mb-2 text-muted">
                 Date: <FormatDate dateString={exam.exam_date}/>
                 </h6>
-                <p>Exam Type: {exam.exam_type}</p>
-                <p>Author: {exam.author}</p>
-                <p>Status: {exam.exam_status ? "Complete" : "Incomplete"}</p>
+                <hr></hr>
+                <p> <strong>Exam Type:  </strong>{exam.exam_type}</p>
+                <p> <strong>Status: </strong> {exam.exam_status ? "Complete" : "Incomplete"}</p>
 
                   <div className="card-buttons">
                   <button
