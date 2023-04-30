@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 #-------------------------------------------------------------
 
 #API_URL = os.environ.get('API_URL', 'http://127.0.0.1:8000')
-API_URL = os.environ.get('API_URL', 'http://hqur24.pythonanywhere.com')
+API_URL = os.environ.get('API_URL', 'https://hqur24.pythonanywhere.com')
 
 #-------------------------------------------------------------
 
