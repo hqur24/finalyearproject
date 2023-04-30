@@ -20,6 +20,9 @@ router.register(r'applications', views.ApplicationView, 'application')
 urlpatterns = [
     # path('', views.index, name='index'),
     # path('api/', include(router.urls)),
+
+    # -----------------------------------------------------------
+    # Authentication URLs 
     path('accounts/login/', LoginAPI.as_view(), name='login'),
     path('accounts/register/', RegisterAPI.as_view(), name='register'),
     path('accounts/authenticated/',
@@ -28,13 +31,30 @@ urlpatterns = [
     path('accounts/csrf_token/', CSRFTokenRetrieveAPI.as_view(), name='csrf'),
     path('accounts/currentuser/', GetCurrentUserAPI.as_view(), name='currentuser'),
     path('accounts/viewusers/', UsersViewAPI.as_view(), name='usersview'),
+
+    # -----------------------------------------------------------
+    # Item APIs
     path('items/moods/', MoodAPI.as_view()),
+    path('items/moods/<int:mood_id>/',
+         MoodAPI.as_view(), name='mood-individual'),
+
     path('items/assignments/', AssignmentAPI.as_view(), name='assignments'),
-    path('items/exams/', ExamAPI.as_view()),
-    path('items/applications/', ApplicationAPI.as_view()),
     path('items/assignments/<int:assignment_id>/',
          AssignmentAPI.as_view(), name='assignment-individual'),
-    path('items/mood_analysis/<int:id>/', MoodAnalysisAPI.as_view(), name='moodanalysis'),
+
+    path('items/exams/', ExamAPI.as_view()),
+    path('items/exams/<int:exam_id>/',
+         ExamAPI.as_view(), name='exam-individual'),
+
+    path('items/applications/', ApplicationAPI.as_view()),
+        path('items/applications/<int:application_id>/',
+         ApplicationAPI.as_view(), name='application-individual'),
+
+    # -----------------------------------------------------------
+
+    #  Mood Analysis API 
+    path('items/mood_analysis/<int:id>/',
+         MoodAnalysisAPI.as_view(), name='moodanalysis'),
 
     path('api/', include(router.urls)),
 

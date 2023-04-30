@@ -3,7 +3,7 @@ import axios from "axios";
 import "./DeleteModals.css";
 import FormatDate from "../FormatDate";
 const API_URL = process.env.REACT_APP_API_URL;
-
+console.log("delete api url", API_URL)
 const DeleteMood = ({ closeDeleteModal, moodId, moodChoice, moodDate }) => {
   const csrftoken = getCookie("csrftoken");
   const [responseMessage, setResponseMessage] = useState(null);
