@@ -1,7 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import FormatDate from "./FormatDate";
-const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const ViewAssignments = () => {
   const [assignments, setAssignments] = useState([]);

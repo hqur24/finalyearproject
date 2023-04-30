@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const AddMood = () => {
   const [moodData, setMoodData] = useState({

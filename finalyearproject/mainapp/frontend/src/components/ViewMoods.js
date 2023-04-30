@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DeleteMood from "./DeleteModals/DeleteMood";
 import FormatDate from "./FormatDate";
-const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const ViewMoods = () => {
   const [moods, setMoods] = useState([]);

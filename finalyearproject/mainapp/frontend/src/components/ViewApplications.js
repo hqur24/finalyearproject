@@ -4,7 +4,7 @@ import UpdateStatusApplication from "./UpdateModals/UpdateStatusApplication";
 import UpdateDateApplication from "./UpdateModals/UpdateDateApplication";
 import DeleteApplication from "./DeleteModals/DeleteApplication";
 import FormatDate from "./FormatDate";
-const API_URL = process.env.REACT_APP_API_URL || 'http://hqur24.pythonanywhere.com';
+const API_URL = process.env.REACT_APP_API_URL;
 
 const ViewApplications = () => {
   const [applications, setApplications] = useState([]);

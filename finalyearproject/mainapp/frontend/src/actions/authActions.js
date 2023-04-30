@@ -12,6 +12,10 @@ import {
   GET_USER_SUCCESS,
   GET_USER_FAIL,
 } from "./types";
+const API_URL = process.env.REACT_APP_API_URL;
+console.log("API ENV VARIABLE", API_URL)
+console.log("Hello")
+
 
 export const authenticationCheck = () => async (dispatch) => {
   const config = {
@@ -20,9 +24,10 @@ export const authenticationCheck = () => async (dispatch) => {
       "Content-Type": "application/json",
     },
   };
-
+  
   const response = await axios.get(
-    `http://127.0.0.1:8000/accounts/authenticated/`,
+    // `http://127.0.0.1:8000/accounts/authenticated/`,
+    `${API_URL}/accounts/authenticated/`,
     config
   );
   console.log(response.data.isAuthenticated);
@@ -59,7 +64,8 @@ export const login = (username, password) => async (dispatch) => {
 
   const body = JSON.stringify({ username, password });
   const response = await axios.post(
-    `http://127.0.0.1:8000/accounts/login/`,
+    `${API_URL}/accounts/login/`,
+    // `http://127.0.0.1:8000/accounts/login/`,
     body,
     config
   );
@@ -91,7 +97,9 @@ export const logout = () => async (dispatch) => {
 
   try {
     const response = await axios.post(
-      `http://127.0.0.1:8000/accounts/logout/`,
+      // `http://127.0.0.1:8000/accounts/logout/`,
+      `${API_URL}/accounts/logout/`,
+
       body,
       config
     );
@@ -124,7 +132,9 @@ export const register = (username, email, password) => async (dispatch) => {
 
   const body = JSON.stringify({ username, email, password });
   const response = await axios.post(
-    `http://127.0.0.1:8000/accounts/register/`,
+    // `http://127.0.0.1:8000/accounts/register/`,
+    `${API_URL}/accounts/register/`,
+
     body,
     config
   );
@@ -149,7 +159,9 @@ export const getUser = (id) => async (dispatch) => {
       },
     };
     const response = await axios.get(
-      `http://127.0.0.1:8000/accounts/currentuser/`,
+      // `http://127.0.0.1:8000/accounts/currentuser/`,
+      `${API_URL}/accounts/currentuser/`,
+
       config
     );
     console.log("hello", response.user.id);
