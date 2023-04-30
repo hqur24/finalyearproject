@@ -52,8 +52,8 @@ class MoodAPI(APIView):
         print('Current user:', username)
       
         mood_data = []
-        for mood in Mood.objects.filter(author__username=username):
-        #for mood in Mood.objects.all():
+        #for mood in Mood.objects.filter(author__username=username):
+        for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -66,6 +66,15 @@ class MoodAPI(APIView):
             mood_data.append(mood_item)
         mood_data.sort(key=lambda x: x['mood_date'], reverse=True)
         return JsonResponse({'moods': mood_data})
+    
+    def delete(self, request, mood_id):
+        deleted_mood= Mood.objects.get(id=mood_id)
+        try:
+            deleted_mood.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AssignmentAPI(APIView):
@@ -118,6 +127,15 @@ class AssignmentAPI(APIView):
             serializer.save()
             print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        
+    def delete(self, request, assignment_id):
+        deleted_assignment = Assignment.objects.get(id=assignment_id)
+        try:
+            deleted_assignment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
         
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
@@ -175,6 +193,15 @@ class ExamAPI(APIView):
         
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        
+    def delete(self, request, exam_id):
+        deleted_exam = Exam.objects.get(id=exam_id)
+        try:
+            deleted_exam.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
     
 @method_decorator(csrf_exempt, name='dispatch')
 class ApplicationAPI(APIView):
@@ -228,6 +255,15 @@ class ApplicationAPI(APIView):
             serializer.save()
             print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
+        
+        except serializers.ValidationError as e:
+            return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
+        
+    def delete(self, request, application_id):
+        deleted_application = Application.objects.get(id=application_id)
+        try:
+            deleted_application.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
         
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
