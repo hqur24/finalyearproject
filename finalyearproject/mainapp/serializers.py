@@ -23,6 +23,17 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Email already exists")
         
         return CustomUser.objects.create_user(**validated_data)
+    
+class ExtraUserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(max_length=254)
+    email = serializers.CharField(max_length=254)
+    password = serializers.CharField(min_length=6, write_only=True)
+    date_created = serializers.ReadOnlyField(source='date_joined')
+
+    class Meta:
+        model = CustomUser
+        fields = 'id', 'username', 'email', 'password', 'date_created'
+
 
 
 class MoodSerializer(serializers.ModelSerializer):
