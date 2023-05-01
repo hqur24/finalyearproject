@@ -9,10 +9,6 @@ const UpdateStatusAssignment = ({ closeUpdateModal, assignmentId, assignmentTitl
   const [responseMessage, setResponseMessage] = useState(null)
 
   const handleSubmitStatus = () => {
-    console.log("previously", previousAssignmentStatus)
-    console.log("now submitting NON BOOLEAN", assignmentStatus)
-    console.log("now submitting  BOOLEAN", assignmentStatus === "true")
-
     if (previousAssignmentStatus === (assignmentStatus === "true")) {
       setResponseMessage(`You cannot set this as ${assignmentStatus === "true" ? "Complete" : "Not Completed"} because it already has this status.`)
     }
@@ -28,7 +24,6 @@ const UpdateStatusAssignment = ({ closeUpdateModal, assignmentId, assignmentTitl
           }
         })
         .then((response) => {
-          console.log(response);
           closeUpdateModal();
         })
         .catch((error) => {

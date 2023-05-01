@@ -42,18 +42,16 @@ class MoodAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         username = request.user.username
-        print('Current user:', username)
       
         mood_data = []
-        #for mood in Mood.objects.filter(author__username=username):
-        for mood in Mood.objects.all():
+        for mood in Mood.objects.filter(author__username=username):
+        #for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -91,7 +89,6 @@ class AssignmentAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
@@ -125,7 +122,6 @@ class AssignmentAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         
         except serializers.ValidationError as e:
@@ -156,7 +152,6 @@ class ExamAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
@@ -179,7 +174,6 @@ class ExamAPI(APIView):
             exam_item['author'] = user_data['username']
 
             exam_data.append(exam_item)
-        print(type(exam_data))
         return JsonResponse({'exams': exam_data})
     
     def patch(self, request, exam_id):
@@ -188,7 +182,6 @@ class ExamAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         
         except serializers.ValidationError as e:
@@ -218,7 +211,6 @@ class ApplicationAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
@@ -253,7 +245,6 @@ class ApplicationAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         
         except serializers.ValidationError as e:
@@ -271,9 +262,6 @@ class ApplicationAPI(APIView):
 ##### ----------------- MOOD MACHINE LEARNING VIEW FUNCTIONS -------------------------------------
 class MoodAnalysisAPI(APIView):
     def get(self, request, id):
-    # Get the current user's username
-        #id = request.user.id
-        #print(id)
         df = generate_dataframe(id)
         barchart = generate_barchart(df)
         dates = generate_dates(df)
@@ -306,7 +294,6 @@ class LoginAPI(APIView):
         if user:
             login(request, user)
             serializer = UserSerializer(user)
-            #print(request.session)
             request.session.modified = True
             return Response({'success': 'Logged in successfully' , 'User' : serializer.data['username']})#, JsonResponse({'authenticated': True})
         else:

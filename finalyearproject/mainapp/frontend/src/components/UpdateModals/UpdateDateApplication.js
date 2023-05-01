@@ -14,8 +14,6 @@ const UpdateDateAssignment = ({
   const [responseMessage, setResponseMessage] = useState(null);
 
   const handleSubmitDate = () => {
-    console.log("previously", previousApplicationDeadline);
-    console.log("now submitting NON BOOLEAN", applicationDeadline);
 
     if (previousApplicationDeadline === applicationDeadline) {
       setResponseMessage(
@@ -36,7 +34,6 @@ const UpdateDateAssignment = ({
           }
         )
         .then((response) => {
-          console.log(response);
           closeUpdateModal();
         })
         .catch((error) => {

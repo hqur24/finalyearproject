@@ -9,8 +9,6 @@ const UpdateDateExam = ({ closeUpdateModal, examId, examName, previousExamDate})
   const [responseMessage, setResponseMessage] = useState(null)
 
   const handleSubmitDate = () => {
-    console.log("previously", previousExamDate)
-    console.log("now submitting", examDate)
 
     if (previousExamDate === examDate) {
       setResponseMessage(`You cannot set this as ${examDate} because it already has this date.`)
@@ -26,7 +24,6 @@ const UpdateDateExam = ({ closeUpdateModal, examId, examName, previousExamDate})
           }
         })
         .then((response) => {
-          console.log(response);
           closeUpdateModal();
         })
         .catch((error) => {

@@ -17,14 +17,12 @@ const AddApplication = () => {
 
       useEffect(() => {
         const fetchCurrentUser = async () => {
-          // const response = await fetch("http://127.0.0.1:8000/accounts/currentuser/");
           const response = await fetch(`${API_URL}/accounts/currentuser/`);
 
           
           if (response.ok) {
             const data = await response.json();
             setUser(data.id);
-            console.log("setting user:", data.username, data.id)
           } else {
             console.log("Error fetching current user");
           }
@@ -80,9 +78,7 @@ const AddApplication = () => {
           ...applicationData,
           author: user,
         };
-    
-        console.log("author should be set to", user)
-    
+       
         const response = await fetch(`${API_URL}/items/applications/`, {
           method: "POST",
           headers: {
@@ -93,10 +89,8 @@ const AddApplication = () => {
         });
     
         if (response.ok) {
-          console.log("successsssss");
           setSubmitResponseMessage("Application succesfully added! Click the refresh button to see your changes.")
         } else {
-          console.log("failureeeeeeee");
           setSubmitResponseMessage("Error occurred when adding application. Please try again")
 
         }

@@ -25,7 +25,6 @@ const DeleteAssignment = ({
           }
         )
         .then((response) => {
-          console.log(response);
           closeDeleteModal();
         })
         .catch((error) => {

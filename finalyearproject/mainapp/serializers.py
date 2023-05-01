@@ -39,18 +39,6 @@ class MoodSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
 
-    # def to_internal_value(self, data):
-    #     print('to_internal_value', data)
-    #     return super().to_internal_value(data)
-
-    # def to_internal_value(self, data):
-    #     data['author'] = int(data['author'])
-    #     return super().to_internal_value(data)
-
-    # def to_representation(self, instance):
-    #     print('to_representation', instance)
-    #     return super().to_representation(instance)
-    
     class Meta:
         model = Assignment
         fields = '__all__'

@@ -14,8 +14,6 @@ import {
 } from "./types";
 const API_URL = process.env.REACT_APP_API_URL;
 console.log("API ENV VARIABLE", API_URL)
-console.log("Hello")
-
 
 export const authenticationCheck = () => async (dispatch) => {
   const config = {
@@ -30,10 +28,8 @@ export const authenticationCheck = () => async (dispatch) => {
     `${API_URL}/accounts/authenticated/`,
     config
   );
-  console.log(response.data.isAuthenticated);
 
   if (response.data.success || response.data.isAuthenticated === "success") {
-    // console.log(response.data.isAuthenticated)
     dispatch({
       type: AUTHENTICATION_SUCCESS,
       payload: true,
@@ -42,7 +38,6 @@ export const authenticationCheck = () => async (dispatch) => {
     response.data.error ||
     response.data.isAuthenticated === "failure"
   ) {
-    // console.log(response.data)
     dispatch({
       type: AUTHENTICATION_FAIL,
       payload: false,
@@ -51,8 +46,6 @@ export const authenticationCheck = () => async (dispatch) => {
 };
 
 export const login = (username, password) => async (dispatch) => {
-  console.log("username:", username);
-  console.log("password:", password);
 
   const config = {
     headers: {
@@ -114,7 +107,6 @@ export const logout = () => async (dispatch) => {
       });
     }
   } catch (err) {
-    console.log(err);
     dispatch({
       type: LOGOUT_FAIL,
     });
@@ -164,7 +156,6 @@ export const getUser = (id) => async (dispatch) => {
 
       config
     );
-    console.log("hello", response.user.id);
     if (response.data.success) {
       dispatch({
         type: GET_USER_SUCCESS,
@@ -176,7 +167,6 @@ export const getUser = (id) => async (dispatch) => {
       });
     }
   } catch (error) {
-    console.log(error);
     dispatch({
       type: GET_USER_FAIL,
     });

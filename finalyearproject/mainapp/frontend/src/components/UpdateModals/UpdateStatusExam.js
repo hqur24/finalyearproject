@@ -9,9 +9,6 @@ const UpdateStatusExam = ({ closeUpdateModal, examId, examName, previousExamStat
   const [responseMessage, setResponseMessage] = useState(null)
 
   const handleSubmitStatus = () => {
-    console.log("previously", previousExamStatus)
-    console.log("now submitting NON BOOLEAN", examStatus)
-    console.log("now submitting  BOOLEAN", examStatus === "true")
 
     if (previousExamStatus === (examStatus === "true")) {
       setResponseMessage(`You cannot set this as ${examStatus === "true" ? "Complete" : "Not Completed"} because it already has this status.`)
@@ -27,7 +24,6 @@ const UpdateStatusExam = ({ closeUpdateModal, examId, examName, previousExamStat
           }
         })
         .then((response) => {
-          console.log(response);
           closeUpdateModal();
         })
         .catch((error) => {
