@@ -25,7 +25,6 @@ const DeleteApplication = ({
           }
         )
         .then((response) => {
-          console.log(response);
           closeDeleteModal();
         })
         .catch((error) => {

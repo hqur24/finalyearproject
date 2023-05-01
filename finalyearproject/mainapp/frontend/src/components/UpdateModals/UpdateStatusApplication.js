@@ -9,9 +9,6 @@ const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationC
   const [responseMessage, setResponseMessage] = useState(null)
 
   const handleSubmitStatus = () => {
-    console.log("previously", previousApplicationStatus)
-    console.log("now submitting NON BOOLEAN", applicationStatus)
-    console.log("now submitting  BOOLEAN", applicationStatus === "true")
 
     if (previousApplicationStatus === (applicationStatus === "true")) {
       setResponseMessage(`You cannot set this as ${applicationStatus === "true" ? "a past application" : "a Current application"} because it already has this status.`)
@@ -27,7 +24,6 @@ const UpdateStatusApplication = ({ closeUpdateModal, applicationId, applicationC
           }
         })
         .then((response) => {
-          console.log(response);
           closeUpdateModal();
         })
         .catch((error) => {

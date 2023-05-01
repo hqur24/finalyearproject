@@ -24,7 +24,6 @@ const DeleteExam = ({
           }
         )
         .then((response) => {
-          console.log(response);
           closeDeleteModal();
         })
         .catch((error) => {

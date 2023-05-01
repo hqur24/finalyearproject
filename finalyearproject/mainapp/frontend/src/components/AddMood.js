@@ -20,7 +20,6 @@ const AddMood = () => {
       if (response.ok) {
         const data = await response.json();
         setUser(data.id);
-        console.log("setting user:", data.username, data.id)
       } else {
         console.log("Error fetching current user");
       }
@@ -53,8 +52,6 @@ const AddMood = () => {
     const sevenDayCheck = new Date().addHours(-168);
     date = date.addMinutes(59);
     const todayDate = new Date();
-    console.log("seven day:", sevenDayCheck);
-    console.log("today:", todayDate);
 
     if (date > todayDate) {
       event.target.setCustomValidity(
@@ -81,8 +78,6 @@ const AddMood = () => {
       author: user,
     };
 
-    console.log("author should be set to", user)
-
     const response = await fetch(`${API_URL}/items/moods/`, {
       method: "POST",
       headers: {
@@ -93,15 +88,12 @@ const AddMood = () => {
     });
 
     if (response.ok) {
-      console.log("successsssss")
       setSubmitResponseMessage("Mood succesfully added! Click the refresh button to view your changes.")
     }
     else if (response.status === 409) {
-        console.log("Mood entry already exists for user at this date.")
         setSubmitResponseMessage("A mood entry for this user and date already exists. Please try again.");
 
     } else {
-      console.log("failureeeeeeee");
       setSubmitResponseMessage("Error occured when adding your mood entry. Please try again.")
     }
   };

@@ -9,9 +9,6 @@ const UpdateDateAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle,
   const [responseMessage, setResponseMessage] = useState(null)
 
   const handleSubmitDate = () => {
-    console.log("previously", previousAssignmentDueDate)
-    console.log("now submitting NON BOOLEAN", assignmentDueDate)
-    //console.log("now submitting  BOOLEAN", assignmentStatus === "true")
 
     if (previousAssignmentDueDate === assignmentDueDate) {
       setResponseMessage(`You cannot set this as ${assignmentDueDate} //{assignmentDate === "true" ? "Complete" : "Not Completed"} because it already has this status.`)
@@ -27,7 +24,6 @@ const UpdateDateAssignment = ({ closeUpdateModal, assignmentId, assignmentTitle,
           }
         })
         .then((response) => {
-          console.log(response);
           closeUpdateModal();
         })
         .catch((error) => {

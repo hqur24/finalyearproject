@@ -17,7 +17,6 @@ def generate_dataframe(id):
 
 def generate_barchart(df):
     occurrences = df['mood_choice'].value_counts().to_dict()
-    #print(occurrences)
     return occurrences
 
 def generate_dates(df):

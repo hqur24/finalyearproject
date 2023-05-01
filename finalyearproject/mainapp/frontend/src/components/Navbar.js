@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { logout } from "../actions/authActions";
 import logo from "../assets/logo.png";
 import togglerIcon from "../assets/navbaricon.png";
+import profileIcon from "../assets/profileicon.png";
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 const Navbar = ({ isAuthenticated, logout }) => {
@@ -12,14 +14,12 @@ const Navbar = ({ isAuthenticated, logout }) => {
     const fetchCurrentUser = async () => {
       const response = await fetch(
         // "http://127.0.0.1:8000/accounts/currentuser/"
-        `${API_URL}/accounts/currentuser/`,
-
+        `${API_URL}/accounts/currentuser/`
       );
 
       if (response.ok) {
         const data = await response.json();
         setUser(data.username);
-        console.log("setting user:", data.username, data.id);
       } else {
         console.log("Error fetching current user");
       }
@@ -73,7 +73,13 @@ const Navbar = ({ isAuthenticated, logout }) => {
                 Mood Tracker
               </NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link active" to="/points">
+                Points Hub
+              </NavLink>
+            </li>
           </ul>
+
           <ul className="navbar-nav ml-auto">
             <li className="nav-item active">
               <NavLink className="nav-link" to="/help">
@@ -85,22 +91,30 @@ const Navbar = ({ isAuthenticated, logout }) => {
                 LOGOUT <span className="sr-only">(current)</span>
               </a>
             </li>
-            <li className="nav-item active">
-              <a
-                className="nav-link"
+
+            <li className="nav-item active"></li>
+          </ul>
+          <span class="navbar-text" style={{ justifyContent: "right" }}>
+            <NavLink
+              className="nav-link"
+              to="/profile"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <img className="profile-img" src={profileIcon} alt="My Logo" />
+              <span
                 style={{
-                  fontSize: "x-small",
-                  fontStyle: "italic",
+                  fontSize: "small",
                   color: "lightslategrey",
-                  maxWidth: "5vw",
-                  textAlign: "center",
-                  pointerEvents:"none"
                 }}
               >
-                Logged in as: {user}
-              </a>
-            </li>
-          </ul>
+                {user}
+              </span>
+            </NavLink>
+          </span>
         </div>
       </nav>
     </div>

@@ -22,7 +22,6 @@ const AddAssignment = () => {
       if (response.ok) {
         const data = await response.json();
         setUser(data.id);
-        console.log("setting user:", data.username, data.id)
       } else {
         console.log("Error fetching current user");
       }
@@ -79,8 +78,6 @@ const AddAssignment = () => {
       author: user,
     };
 
-    console.log("author should be set to", user)
-
     const response = await fetch(`${API_URL}/items/assignments/`, {
       method: "POST",
       headers: {
@@ -91,10 +88,8 @@ const AddAssignment = () => {
     });
 
     if (response.ok) {
-      console.log("successsssss");
       setSubmitResponseMessage("Assignment succesfully added! Click the refresh button to see your changes.")
     } else {
-      console.log("failureeeeeeee");
       setSubmitResponseMessage("Error while adding assignment. Please try again.")
     }
   };

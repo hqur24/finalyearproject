@@ -3,8 +3,9 @@ from django.http import HttpRequest, HttpResponse, JsonResponse
 import datetime, json
 from rest_framework import viewsets, generics, status, permissions, serializers, exceptions
 from .forms import RegistrationForm, LoginForm
-from .serializers import ExamTypeSerializer, MoodSerializer, AssignmentSerializer, ExamSerializer, ApplicationSerializer, UserSerializer
-from .models import CustomUser, Mood, Exam, Assignment, Application
+# from .serializers import ExamTypeSerializer, MoodSerializer, AssignmentSerializer, ExamSerializer, ApplicationSerializer, UserSerializer
+# from .models import CustomUser, Mood, Exam, Assignment, Application
+from .serializers import *
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie, csrf_protect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -15,7 +16,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 
-from moodanalysis.mood_analysis import generate_dataframe, generate_barchart, generate_dates #analyse_mood, 
+from moodanalysis.mood_analysis import *
+from pointsystem.point_system import *
 
 ##### ------------------ ITEM (Moods, Assignments, Exams) VIEW FUNCTIONS ------------------------
 @method_decorator(csrf_exempt, name='dispatch')
@@ -42,18 +44,16 @@ class MoodAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
         username = request.user.username
-        print('Current user:', username)
       
         mood_data = []
-        #for mood in Mood.objects.filter(author__username=username):
-        for mood in Mood.objects.all():
+        for mood in Mood.objects.filter(author__username=username):
+        #for mood in Mood.objects.all():
             mood_item = {}
             user_data= {
                 'username' : mood.author.username,
@@ -91,7 +91,6 @@ class AssignmentAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
@@ -125,7 +124,6 @@ class AssignmentAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         
         except serializers.ValidationError as e:
@@ -156,7 +154,6 @@ class ExamAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
@@ -179,7 +176,6 @@ class ExamAPI(APIView):
             exam_item['author'] = user_data['username']
 
             exam_data.append(exam_item)
-        print(type(exam_data))
         return JsonResponse({'exams': exam_data})
     
     def patch(self, request, exam_id):
@@ -188,7 +184,6 @@ class ExamAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         
         except serializers.ValidationError as e:
@@ -218,7 +213,6 @@ class ApplicationAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except serializers.ValidationError as e:
             return Response(e.detail, status=status.HTTP_400_BAD_REQUEST)
@@ -253,7 +247,6 @@ class ApplicationAPI(APIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            print('serializer.data[\'author\']:', serializer.data['author'])  # <-- Debugging statement
             return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
         
         except serializers.ValidationError as e:
@@ -271,13 +264,25 @@ class ApplicationAPI(APIView):
 ##### ----------------- MOOD MACHINE LEARNING VIEW FUNCTIONS -------------------------------------
 class MoodAnalysisAPI(APIView):
     def get(self, request, id):
-    # Get the current user's username
-        #id = request.user.id
-        #print(id)
         df = generate_dataframe(id)
         barchart = generate_barchart(df)
         dates = generate_dates(df)
         return JsonResponse({'occurrences': barchart, 'dates': dates})
+    
+class PointSystemAPI(APIView):
+    def get(self, request, id):
+        assignments_no = count_assignments(id)
+        exams_no = count_exams(id)
+        applications_no = count_applications(id)
+        moods_no = count_moods(id)
+
+        points_calc = calculate_points(assignments_no, exams_no, applications_no, moods_no)
+        level_calc = calculate_level(points_calc)
+        away_calc = calculate_points_away(points_calc)
+        return JsonResponse({'points': points_calc, 'level': level_calc, 'away': away_calc})
+    
+        # return JsonResponse({'points': points_calc, 'level': level_calc, 'assignments num': assignments_no, 'exams num': exams_no, 'applications num': applications_no, 'moods num': moods_no})
+
     
 
 ##### ----------------- AUTHENTICATION VIEW FUNCTIONS -------------------------------------
@@ -306,7 +311,6 @@ class LoginAPI(APIView):
         if user:
             login(request, user)
             serializer = UserSerializer(user)
-            #print(request.session)
             request.session.modified = True
             return Response({'success': 'Logged in successfully' , 'User' : serializer.data['username']})#, JsonResponse({'authenticated': True})
         else:
@@ -355,6 +359,13 @@ class GetCurrentUserAPI(APIView):
 
     def get(self, request, format=None):
         serializer = UserSerializer(request.user)
+        return Response(serializer.data)
+    
+class GetExtraCurrentUserAPI(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, format=None):
+        serializer = ExtraUserSerializer(request.user)
         return Response(serializer.data)
 
 #------------------- DJANGO REST FRAMEWORK VIEW FUNCTIONS (mainly for browsable rest api) -----------------------------

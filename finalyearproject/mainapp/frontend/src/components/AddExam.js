@@ -21,7 +21,6 @@ const AddExam = () => {
       if (response.ok) {
         const data = await response.json();
         setUser(data.id);
-        console.log("setting user:", data.username, data.id)
       } else {
         console.log("Error fetching current user");
       }
@@ -73,8 +72,6 @@ const AddExam = () => {
       author: user,
     };
 
-    console.log("author should be set to", user)
-
     const response = await fetch(`${API_URL}/items/exams/`, {
       method: "POST",
       headers: {
@@ -85,10 +82,8 @@ const AddExam = () => {
     });
 
     if (response.ok) {
-      console.log("successsssss");
       setSubmitResponseMessage("Exam succesfully added! Click the refresh button to view your changes.")
     } else {
-      console.log("failureeeeeeee");
       setSubmitResponseMessage("Error while adding exam. Please try again.")
     }
   };

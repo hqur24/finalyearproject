@@ -59,7 +59,6 @@ const ViewAssignments = () => {
   const caaLength = currentAssignmentsArray.length;
   const paaLength = pastAssignmentsArray.length;
 
-  console.log("current length", caaLength);
 
   return (
     <div>
@@ -125,7 +124,6 @@ const ViewAssignments = () => {
                       type="button"
                       className="btn btn-info update-btn"
                       onClick={() => {
-                        console.log("rendered");
                         setOpenStatusModal(true);
                         setAssignmentId(assignment.id);
                         setAssignmentTitle(assignment.assignment_title);

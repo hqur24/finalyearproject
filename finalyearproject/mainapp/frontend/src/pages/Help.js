@@ -52,6 +52,16 @@ const Help = () => {
               inaccurate, please just delete it and continue to use the
               application regularly.
             </p>
+            <h6>
+              How are points calculated? Why are mood entries given higher
+              weighting?
+            </h6>
+            <p>
+              The formula used for calculating our point system can be found on
+              the Points Hub page in detail, but is also provided below.
+            </p>
+            <p> Points = (A x 0.5) + (E x 0.5) + (P x 0.5) + (M x 0.7) </p>
+            <p>The reason for the mood entries been given a higehr weighting is to encourage the tracking of mood an wellbeing. As a platform, a main aim is to encourage students to not only focus on their meeting their academic deadlines, but to also take care of their wellbeing alongside. </p>
           </div>
         </div>
       </div>

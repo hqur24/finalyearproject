@@ -23,6 +23,17 @@ class UserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Email already exists")
         
         return CustomUser.objects.create_user(**validated_data)
+    
+class ExtraUserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(max_length=254)
+    email = serializers.CharField(max_length=254)
+    password = serializers.CharField(min_length=6, write_only=True)
+    date_created = serializers.ReadOnlyField(source='date_joined')
+
+    class Meta:
+        model = CustomUser
+        fields = 'id', 'username', 'email', 'password', 'date_created'
+
 
 
 class MoodSerializer(serializers.ModelSerializer):
@@ -39,18 +50,6 @@ class MoodSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     author = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all())
 
-    # def to_internal_value(self, data):
-    #     print('to_internal_value', data)
-    #     return super().to_internal_value(data)
-
-    # def to_internal_value(self, data):
-    #     data['author'] = int(data['author'])
-    #     return super().to_internal_value(data)
-
-    # def to_representation(self, instance):
-    #     print('to_representation', instance)
-    #     return super().to_representation(instance)
-    
     class Meta:
         model = Assignment
         fields = '__all__'

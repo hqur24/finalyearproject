@@ -11,7 +11,9 @@ import Assignments from "./pages/Assignments.js";
 import Exams from "./pages/Exams";
 import Moods from "./pages/Moods";
 import Applications from "./pages/Applications";
+import Points from "./pages/Points";
 import Help from "./pages/Help";
+import Profile from "./pages/Profile";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -68,11 +70,27 @@ const App = () => (
               </PrivateRouter>
             }
           />
+                    <Route
+            path="/points"
+            element={
+              <PrivateRouter>
+                <Points />
+              </PrivateRouter>
+            }
+          />
           <Route
             path="/help"
             element={
               <PrivateRouter>
                 <Help />
+              </PrivateRouter>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRouter>
+                <Profile />
               </PrivateRouter>
             }
           />

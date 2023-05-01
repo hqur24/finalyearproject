@@ -6,8 +6,7 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework import routers
-from .views import MoodAPI, ExamAPI, AssignmentAPI, ApplicationAPI, RegisterAPI, LoginAPI, LogoutAPI, AuthenticationCheckAPI, CSRFTokenRetrieveAPI, UsersViewAPI, GetCurrentUserAPI, MoodAnalysisAPI
-
+from .views import *
 
 router = routers.DefaultRouter()
 # router.register(r'users', views.UserView, 'user')
@@ -30,6 +29,7 @@ urlpatterns = [
     path('accounts/logout/', LogoutAPI.as_view(), name='logout'),
     path('accounts/csrf_token/', CSRFTokenRetrieveAPI.as_view(), name='csrf'),
     path('accounts/currentuser/', GetCurrentUserAPI.as_view(), name='currentuser'),
+    path('accounts/currentuserextra/', GetExtraCurrentUserAPI.as_view(), name='extrauser'),
     path('accounts/viewusers/', UsersViewAPI.as_view(), name='usersview'),
 
     # -----------------------------------------------------------
@@ -55,6 +55,10 @@ urlpatterns = [
     #  Mood Analysis API 
     path('items/mood_analysis/<int:id>/',
          MoodAnalysisAPI.as_view(), name='moodanalysis'),
+
+    # Point System API
+    path('items/point_system/<int:id>/',
+         PointSystemAPI.as_view(), name='pointsystem'),
 
     path('api/', include(router.urls)),
 
