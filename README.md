@@ -1,4 +1,4 @@
-### Setup Instructions
+### Detailed Setup Instructions
 Please follow the steps below to run the application locally:
 1.  In your terminal/command line interface, navigate to the directory you want the app to be, and create/activate your virtual environment if needed.
 2. Clone this repository using the link above. 
