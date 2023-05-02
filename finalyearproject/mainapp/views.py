@@ -283,7 +283,6 @@ class PointSystemAPI(APIView):
     
         # return JsonResponse({'points': points_calc, 'level': level_calc, 'assignments num': assignments_no, 'exams num': exams_no, 'applications num': applications_no, 'moods num': moods_no})
 
-    
 
 ##### ----------------- AUTHENTICATION VIEW FUNCTIONS -------------------------------------
 #Register View Function
