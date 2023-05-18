@@ -23,7 +23,7 @@ const UpdateDateAssignment = ({
       axios
         .patch(
           // `http://127.0.0.1:8000/api/applications/${applicationId}/`,
-          `http://127.0.0.1:8000/items/applications/${applicationId}/`,
+          `${API_URL}/items/applications/${applicationId}/`,
           {
             application_deadline: applicationDeadline,
           },
