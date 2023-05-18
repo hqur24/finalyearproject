@@ -61,7 +61,7 @@ const Help = () => {
               the Points Hub page in detail, but is also provided below.
             </p>
             <p> Points = (A x 0.5) + (E x 0.5) + (P x 0.5) + (M x 0.7) </p>
-            <p>The reason for the mood entries been given a higehr weighting is to encourage the tracking of mood an wellbeing. As a platform, a main aim is to encourage students to not only focus on their meeting their academic deadlines, but to also take care of their wellbeing alongside. </p>
+            <p>The reason for the mood entries been given a higher weighting is to encourage the tracking of mood an wellbeing. As a platform, a main aim is to encourage students to not only focus on their meeting their academic deadlines, but to also take care of their wellbeing alongside. </p>
           </div>
         </div>
       </div>
