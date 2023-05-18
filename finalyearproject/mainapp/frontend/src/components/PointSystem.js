@@ -13,10 +13,11 @@ const PointSystem = () => {
   const [showPoints, setShowPoints] = useState(1);
   const [errorMsg, setErrorMsg] = useState("");
 
+  const [progressBarValue, setProgressBarValue] = useState();
 
-    useEffect(() => {
-      const fetchCurrentUser = () => {
-        fetch(`${API_URL}/accounts/currentuser/`)
+  useEffect(() => {
+    const fetchCurrentUser = () => {
+      fetch(`${API_URL}/accounts/currentuser/`)
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -33,21 +34,24 @@ const PointSystem = () => {
           setErrorMsg(error.message);
           setShowPoints(3);
         });
-      };
+    };
 
     fetchCurrentUser();
   }, []);
 
   const getValues = () => {
-    fetch(`${API_URL}/items/point_system/${userId}/`)
+    //fetch(`${API_URL}/items/point_system/8/`)
+      fetch(`${API_URL}/items/point_system/${userId}/`)
+
       .then((response) => response.json())
       .then((data) => {
-        const { points, level, away } = data;
+        const { points, level, away, progress } = data;
         setPoints(points);
         setLevelNumber(level);
         setAwayPoints(away);
         calculateLevel(level);
         setShowPoints(2);
+        setProgressBarValue(progress);
       });
   };
 
@@ -87,7 +91,10 @@ const PointSystem = () => {
           <h3>{points}</h3>
           <h5> Current Level: </h5>
           <h3>
-            {levelName} <div style={{display:"inline", fontSize:"75%"}}>(Level {levelNumber})</div>
+            {levelName}{" "}
+            <div style={{ display: "inline", fontSize: "75%" }}>
+              (Level {levelNumber})
+            </div>
           </h3>
           <p style={{ fontWeight: "bold" }}>
             You are currently{" "}
@@ -101,6 +108,19 @@ const PointSystem = () => {
             Remember - mood entries account for more points than the others, so
             don't forget to add them!
           </p>
+          <h6>Progress to the next level:</h6>
+          <div class="progress">
+            <div
+              className="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              style={{ width: `${progressBarValue}%` }}
+              aria-valuenow={progressBarValue}
+              aria-valuemin="0"
+              aria-valuemax={progressBarValue}
+            >
+              {progressBarValue}%
+            </div>
+          </div>{" "}
         </div>
       )}
       {showPoints === 3 && <p>{errorMsg}</p>}

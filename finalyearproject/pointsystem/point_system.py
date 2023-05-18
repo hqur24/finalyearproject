@@ -71,8 +71,22 @@ def calculate_points_away(points):
         away = 40-points
     elif points < 50:
         away = 50-points
-    # else:
-    #     away = 0
     away = round(away, 2)
-
     return away
+
+def calculate_progress_bar(points, away):
+    if points<10:
+        progressval = (points / 10 )* 100
+    elif points<20:
+        progressval = ((points - 10) / (10)) * 100
+    elif points<30:
+        progressval = ((points - 20) / (20)) * 100
+    elif points<40:
+        progressval = ((points - 30) / (30)) * 100
+    elif points<50:
+        progressval = ((points - 40) / (40)) * 100
+    elif points<60:
+        progressval = 100
+        
+    progressval = round(progressval, 2)
+    return progressval

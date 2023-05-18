@@ -267,7 +267,10 @@ class MoodAnalysisAPI(APIView):
         df = generate_dataframe(id)
         barchart = generate_barchart(df)
         dates = generate_dates(df)
-        return JsonResponse({'occurrences': barchart, 'dates': dates})
+        weekdaycounts = weekday_count(df)
+        happycounts = happy_weekday_count(df)
+        dategroup = group_date(df)
+        return JsonResponse({'occurrences': barchart, 'dates': dates, 'weekdays': weekdaycounts, 'happy': happycounts, 'timeCounts': dategroup})
     
 class PointSystemAPI(APIView):
     def get(self, request, id):
@@ -279,7 +282,8 @@ class PointSystemAPI(APIView):
         points_calc = calculate_points(assignments_no, exams_no, applications_no, moods_no)
         level_calc = calculate_level(points_calc)
         away_calc = calculate_points_away(points_calc)
-        return JsonResponse({'points': points_calc, 'level': level_calc, 'away': away_calc})
+        progress_calc = calculate_progress_bar(points_calc, away_calc)
+        return JsonResponse({'points': points_calc, 'level': level_calc, 'away': away_calc, 'progress': progress_calc})
     
         # return JsonResponse({'points': points_calc, 'level': level_calc, 'assignments num': assignments_no, 'exams num': exams_no, 'applications num': applications_no, 'moods num': moods_no})
 
